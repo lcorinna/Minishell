@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:33:09 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/04/09 17:09:05 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/04/09 19:14:00 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 
 void	ft_signal_processing(int sig)
 {
-	// printf("%d\n", sig);
+	printf("%d\n", sig);
 	if (sig == 2)
 	{
 		write(1, "\n", 1);
@@ -57,27 +57,48 @@ void	ft_signal_processing(int sig)
 	// minishell$
 }
 
-int	main(int argc, char **argv)
+int	main(int argc, char **argv, char **envp)
 {
 	struct sigaction	sa;
+	char				*str;
 
 	sa.sa_handler = &ft_signal_processing;
 	sa.sa_flags = SA_SIGINFO;
 	// signal(SIGINT, handler);
 	// signal(SIGTERM, handler);
-	sigaction(SIGINT, &sa, NULL); // "c"
-	sigaction(SIGQUIT, &sa, NULL); // "\"
-	sigaction(SIGTERM, &sa, NULL); // "d"
+	sigaction(SIGINT, &sa, NULL); //  сигнал "control + c"
+	sigaction(SIGQUIT, &sa, NULL); // сигнал "control + \"
+	// sigaction(SIGTERM, &sa, NULL); // сигнал "control + d" не обрабатывать
+	ft_envp(envp);
 	while (1)
 	{
-		readline("minishell$ ");
+		str = readline("minishell$ ");
+		if (!str)
+		{
+			ft_putstr_fd("exit\n", 1);
+			break;
+		}
 		signal(SIGINT, &ft_signal_processing);
 		// signal(SIGQUIT, SIG_IGN);
 		// signal(SIGTERM, SIG_IGN);
 	}
+	ft_clean_struct(lalala);
 	argc = 0;
 	argv = NULL;
+	envp = NULL;
 	return (0);
 }
+
+// 1. инициализация структур
+// 2. цикл (1)
+// 	2.1 ридлайн
+// 	2.2 лексер
+// 	2.3 парсер
+// 	2.4 экзекве
+// 3. диструктор
+
+// struct env
+// char * key
+// char * value
 
 // gcc -lreadline test.c && ./a.out

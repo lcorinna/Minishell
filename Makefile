@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+         #
+#    By: merlich <merlich@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/20 19:17:52 by lcorinna          #+#    #+#              #
-#    Updated: 2022/04/09 17:00:59 by lcorinna         ###   ########.fr        #
+#    Updated: 2022/04/09 18:46:12 by merlich          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
- NAME			=	minishell
+NAME			=	minishell
 
 FILES			=	test.c
 					# main.c 			free_env.c		split.c			utils.c			\
@@ -35,7 +35,7 @@ FILES			=	test.c
 					# exec_cmd_list_check.c	ft_link.c			exec_utils_2.c
 
 HOMEBREW_PREFIX := $(shell test -n "$$(which brew)" \
-                        && brew config | grep HOMEBREW_PREFIX | cut -d' ' -f2)
+						&& brew config | grep HOMEBREW_PREFIX | cut -d' ' -f2)
 						
 SRC_PATH		=	./srcs/
 SRC				=	$(addprefix $(SRC_PATH), $(FILES))
@@ -44,8 +44,8 @@ DEP				=	$(SRC:.c=.d)
 INCLUDE			=	./includes
 INCLUDE_SYS		=	$(HOMEBREW_PREFIX)/opt/readline/include
 LIB_SYS			=	$(HOMEBREW_PREFIX)/opt/readline/lib
+CFLAGS			=	-Wall -Werror -Wextra -MMD -g
 
-CFLAGS			=	-Wall -Werror -Wextra -MMD -g #-pedantic 
 all				:	$(NAME)
 
 bonus			:	all
@@ -53,7 +53,7 @@ bonus			:	all
 $(NAME)			:	$(OBJ)
 					cc $(CFLAGS) $(OBJ) -o $(NAME) -lreadline -L$(LIB_SYS)
 
-%.o				:	%.c
+%.o				:	%.c Makefile
 					cc $(CFLAGS) -c $< -o $@ -I$(LIB_SYS) -I$(INCLUDE_SYS)
 
 clean			:
@@ -65,13 +65,9 @@ re				:	fclean all
 
 -include $(DEP)
 
-.PHONY			:	all clean fclean re
+.PHONY			:	all clean fclean re bonus
 
 # cc -lreadline -I/Users/lcorinna/.brew/opt/readline/include -I/Users/lcorinna/.brew/opt/readline/lib -g -L/Users/lcorinna/.brew/opt/readline/lib ./srcs/test.c -o minishell
 
 # -I каталог	-	Вызывает просмотр указанного каталога в поисках включаемых файлов, имена которых не начинаются с /, 
 # перед просмотром стандартных каталогов. Если используется несколько опций -I, каталоги просматриваются в указанном порядке.
-
-# -pedantic отключает дополнительные расширения и генерирует больше предупреждений. 
-# Например, если у вас есть строковый литерал длиннее 509 символов, 
-# то -pedanticвыдается предупреждение об этом, поскольку он превышает минимальное ограничение, требуемое стандартом C89
