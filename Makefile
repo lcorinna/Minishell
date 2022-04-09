@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME			=	minishell
+ NAME			=	minishell
 
 FILES			=	test.c
 					# main.c 			free_env.c		split.c			utils.c			\
