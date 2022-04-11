@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: merlich <merlich@student.42.fr>            +#+  +:+       +#+         #
+#    By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/20 19:17:52 by lcorinna          #+#    #+#              #
-#    Updated: 2022/04/09 18:46:12 by merlich          ###   ########.fr        #
+#    Updated: 2022/04/11 16:57:28 by lcorinna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	minishell
 
-FILES			=	test.c
+FILES			=	test.c #minishell.c
 					# main.c 			free_env.c		split.c			utils.c			\
 					# main_utils.c	env.c			ft_itoa.c		utils_lst.c		\
 					# ft_atoi.c		env_2.c			free_cmd.c		utils_str.c		\
@@ -34,7 +34,10 @@ FILES			=	test.c
 					# exec_cmd_token_list.c	exec_cmd_utils.c	exec_utils.c		\
 					# exec_cmd_list_check.c	ft_link.c			exec_utils_2.c
 
-HOMEBREW_PREFIX := $(shell test -n "$$(which brew)" \
+PATH_LIBFT		=	./libft/
+LIBFT			=	libft.a
+
+HOMEBREW_PREFIX	:=	$(shell test -n "$$(which brew)" \
 						&& brew config | grep HOMEBREW_PREFIX | cut -d' ' -f2)
 						
 SRC_PATH		=	./srcs/
@@ -44,10 +47,14 @@ DEP				=	$(SRC:.c=.d)
 INCLUDE			=	./includes
 INCLUDE_SYS		=	$(HOMEBREW_PREFIX)/opt/readline/include
 LIB_SYS			=	$(HOMEBREW_PREFIX)/opt/readline/lib
-CFLAGS			=	-Wall -Werror -Wextra -MMD -g
+CFLAGS			=	-Wall -Werror -Wextra -MMD -g -fsanitize=address #удобно сразу смотреть где читаем память мимо
 
-all				:	$(NAME)
+all				:	libmake $(NAME)
 
+libmake			: 
+					make -C $(PATH_LIBFT)
+					cp $(PATH_LIBFT)$(LIBFT) $(LIBFT)
+	
 bonus			:	all
 
 $(NAME)			:	$(OBJ)
@@ -57,9 +64,13 @@ $(NAME)			:	$(OBJ)
 					cc $(CFLAGS) -c $< -o $@ -I$(LIB_SYS) -I$(INCLUDE_SYS)
 
 clean			:
-					rm -f $(OBJ) $(DEP)
+					rm -f $(OBJ) $(DEP) $(LIBFT)
+					make clean -C $(PATH_LIBFT)
+
 fclean			:	clean
 					rm -f $(NAME)
+					make fclean -C $(PATH_LIBFT)
+
 re				:	fclean all
 
 

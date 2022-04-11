@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:33:09 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/04/09 19:14:00 by merlich          ###   ########.fr       */
+/*   Updated: 2022/04/11 16:20:49 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "minishell.h"
+#include "../minishell.h"
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -53,15 +53,20 @@ void	ft_signal_processing(int sig)
 		sig = 3;
 	else if (sig == 15)
 		exit (0);
-	// exit (0);
+	exit (0);
 	// minishell$
 }
 
 int	main(int argc, char **argv, char **envp)
 {
+	t_data	data;
 	struct sigaction	sa;
 	char				*str;
-
+	
+	data = (t_data){};
+	(void)argc;
+	(void)argv;
+	data.envp = envp;
 	sa.sa_handler = &ft_signal_processing;
 	sa.sa_flags = SA_SIGINFO;
 	// signal(SIGINT, handler);
@@ -69,10 +74,11 @@ int	main(int argc, char **argv, char **envp)
 	sigaction(SIGINT, &sa, NULL); //  сигнал "control + c"
 	sigaction(SIGQUIT, &sa, NULL); // сигнал "control + \"
 	// sigaction(SIGTERM, &sa, NULL); // сигнал "control + d" не обрабатывать
-	ft_envp(envp);
+	// ft_envp(envp);
 	while (1)
 	{
 		str = readline("minishell$ ");
+		printf("str - %s\n", str); //del
 		if (!str)
 		{
 			ft_putstr_fd("exit\n", 1);
@@ -82,10 +88,7 @@ int	main(int argc, char **argv, char **envp)
 		// signal(SIGQUIT, SIG_IGN);
 		// signal(SIGTERM, SIG_IGN);
 	}
-	ft_clean_struct(lalala);
-	argc = 0;
-	argv = NULL;
-	envp = NULL;
+	// ft_clean_struct(lalala);
 	return (0);
 }
 
