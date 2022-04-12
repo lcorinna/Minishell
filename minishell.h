@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/04/12 22:40:39 by merlich          ###   ########.fr       */
+/*   Updated: 2022/04/12 23:02:24 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,15 @@ typedef struct s_info
 }	t_info;
 
 typedef int (*t_buildin_ptr)(t_llist *, t_info *);
+
+typedef	struct s_malloc
+{
+	/* Здесь хранятся указатели 
+	на всю выделенную с помощью malloc память */
+	
+	/* Если malloc, сразу заносим сюда */
+
+}	t_malloc;
+
 
 #endif
