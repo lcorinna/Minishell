@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+         #
+#    By: merlich <merlich@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/20 19:17:52 by lcorinna          #+#    #+#              #
-#    Updated: 2022/04/11 16:57:28 by lcorinna         ###   ########.fr        #
+#    Updated: 2022/04/11 19:44:01 by merlich          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,7 @@ libmake			:
 	
 bonus			:	all
 
-$(NAME)			:	$(OBJ)
+$(NAME)			:	$(OBJ) ${LIBFT}
 					cc $(CFLAGS) $(OBJ) -o $(NAME) -lreadline -L$(LIB_SYS)
 
 %.o				:	%.c Makefile
