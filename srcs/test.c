@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:33:09 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/04/11 16:20:49 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/04/12 23:07:08 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ void	ft_signal_processing(int sig)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_data	data;
+	t_info	data;
 	struct sigaction	sa;
 	char				*str;
 	
-	data = (t_data){};
+	data = (t_info){};
 	(void)argc;
 	(void)argv;
 	data.envp = envp;
