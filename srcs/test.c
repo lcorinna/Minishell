@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:33:09 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/04/13 19:39:05 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/04/13 22:19:36 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,16 +54,16 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	data.envp = envp;
 	// ft_signal();
-	while (1)
+	while (!data.exit_f)
 	{
-		str = readline("minishell$ ");
+		str = ft_readline("minishell$ " , &data);  // А: Немного прокачал readline
 		printf("str - %s\n", str); //del в эту строку приходит то что мы подаем в наш Минишел
 		if (!str) //обработка сигнала "control + d"
 		{
 			ft_putstr_fd("exit\n", 1);
 			break ;
 		}
-		add_history(str);
+		// add_history(str);  // del A: Немного прокачал readline
 	}
 	// ft_clean_struct(lalala);
 	return (0);
@@ -75,7 +75,7 @@ int	main(int argc, char **argv, char **envp)
 // 	2.2 лексер
 // 	2.3 парсер
 // 	2.4 экзекве
-// 3. диструктор
+// 3. деструктор
 
 // struct env
 // char * key

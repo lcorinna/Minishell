@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/04/13 19:15:56 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/04/13 22:04:42 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,19 @@
 # include <sys/ioctl.h>
 # include <termios.h> 
 # include <string.h>
+# include <curses.h>
+# include <term.h>
+
+typedef	struct s_malloc
+{
+	/* Здесь хранятся указатели 
+	на всю выделенную с помощью malloc память */
+	
+	/* Если malloc, сразу заносим сюда */
+
+	char			*str;
+
+}	t_malloc;
 
 typedef struct s_llist
 {
@@ -40,25 +53,24 @@ typedef struct s_llist
 typedef struct s_info
 {
 	// t_buildin_ptr	builtins[7]; //upd 13.04.: закоментил, а то компилятор ругался 
+									// A: хранятся все билтины в этом массиве указателей на функции.
 	char			*res_words[7];
 	char			**envp;
 	t_llist			envp_list;
-	char			envp_t;
-	char			exit_t;
+	int				envp_f;
+	int				exit_f;
 	int				status;
+	
+	t_malloc		free_me;
 
 }	t_info;
 
-// typedef int	(*t_buildin_ptr)(t_llist *, t_info *); //Д:не понимаю что это такое. upd 13.04.: закоментил, а то компилятор ругался 
+typedef int	(*t_buildin_ptr)(t_llist *, t_info *); //Д:не понимаю что это такое. upd 13.04.: закоментил, а то компилятор ругался
+													// А:это указатель на функцию, которая принимает в себя два параметра типа t_llist* и t_info*,
+													// а возвращает значение типа int.
+													// Эта штука нужна для builin, которые ты пишешь.
+													// см. комментарий выше... 
 
-typedef	struct s_malloc
-{
-	/* Здесь хранятся указатели 
-	на всю выделенную с помощью malloc память */
-	
-	/* Если malloc, сразу заносим сюда */
-
-}	t_malloc;
-
+char	*ft_readline(const char *prompt, t_info *data);
 
 #endif
