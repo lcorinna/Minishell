@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/04/12 23:02:24 by merlich          ###   ########.fr       */
+/*   Updated: 2022/04/13 19:15:56 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@
 # include <sys/stat.h>
 # include <dirent.h>
 # include <sys/ioctl.h>
-
+# include <termios.h> 
+# include <string.h>
 
 typedef struct s_llist
 {
@@ -38,7 +39,7 @@ typedef struct s_llist
 
 typedef struct s_info
 {
-	t_buildin_ptr	builtins[7];
+	// t_buildin_ptr	builtins[7]; //upd 13.04.: закоментил, а то компилятор ругался 
 	char			*res_words[7];
 	char			**envp;
 	t_llist			envp_list;
@@ -48,7 +49,7 @@ typedef struct s_info
 
 }	t_info;
 
-typedef int (*t_buildin_ptr)(t_llist *, t_info *);
+// typedef int	(*t_buildin_ptr)(t_llist *, t_info *); //Д:не понимаю что это такое. upd 13.04.: закоментил, а то компилятор ругался 
 
 typedef	struct s_malloc
 {

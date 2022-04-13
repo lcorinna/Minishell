@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: merlich <merlich@student.42.fr>            +#+  +:+       +#+         #
+#    By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/20 19:17:52 by lcorinna          #+#    #+#              #
-#    Updated: 2022/04/11 19:44:01 by merlich          ###   ########.fr        #
+#    Updated: 2022/04/13 15:06:25 by lcorinna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME			=	minishell
+NAME_M			=	minishell
 
 FILES			=	test.c #minishell.c
 					# main.c 			free_env.c		split.c			utils.c			\
@@ -49,16 +49,16 @@ INCLUDE_SYS		=	$(HOMEBREW_PREFIX)/opt/readline/include
 LIB_SYS			=	$(HOMEBREW_PREFIX)/opt/readline/lib
 CFLAGS			=	-Wall -Werror -Wextra -MMD -g -fsanitize=address #удобно сразу смотреть где читаем память мимо
 
-all				:	libmake $(NAME)
+all				:	libmake $(NAME_M)
 
-libmake			: 
+libmake			:
 					make -C $(PATH_LIBFT)
 					cp $(PATH_LIBFT)$(LIBFT) $(LIBFT)
 	
 bonus			:	all
 
-$(NAME)			:	$(OBJ) ${LIBFT}
-					cc $(CFLAGS) $(OBJ) -o $(NAME) -lreadline -L$(LIB_SYS)
+$(NAME_M)			:	$(OBJ) ${LIBFT} #Д: это норм что в таких скобках?
+					cc $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME_M) -lreadline -L$(LIB_SYS)
 
 %.o				:	%.c Makefile
 					cc $(CFLAGS) -c $< -o $@ -I$(LIB_SYS) -I$(INCLUDE_SYS)
@@ -68,7 +68,7 @@ clean			:
 					make clean -C $(PATH_LIBFT)
 
 fclean			:	clean
-					rm -f $(NAME)
+					rm -f $(NAME_M)
 					make fclean -C $(PATH_LIBFT)
 
 re				:	fclean all

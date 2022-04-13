@@ -3,90 +3,67 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:33:09 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/04/12 23:07:08 by merlich          ###   ########.fr       */
+/*   Updated: 2022/04/13 19:39:05 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <signal.h>
-#include <unistd.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-
-
-// static void	handler(int signal)
+// void	ft_signal_processing(int sig)
 // {
-// 	// rl_on_new_line();
-// 	// // rl_replace_line();
-// 	// rl_redisplay();
-// 	printf("signal %d\n", signal); //del
-// 	if (signal == SIGINT)
+// 	// rl_catch_signals = 0; //чтобы при вызове сигналов не выводилось "^C"
+// 	if (sig == 2) // сигнал "control + c"
 // 	{
 // 		write(1, "\n", 1);
+// 		rl_redisplay();
 // 		rl_on_new_line();
 // 		rl_replace_line("", 0);
-// 		rl_redisplay();
 // 	}
-// 	else
-// 		exit(11);
-// 	// else
-// 		// write(1, "  \b\b", 4);
+// 	else if (sig == 3) // сигнал "control + \"
+// 		(void)sig;
 // }
 
-void	ft_signal_processing(int sig)
-{
-	printf("%d\n", sig);
-	if (sig == 2)
-	{
-		write(1, "\n", 1);
-		rl_redisplay();
-		rl_on_new_line();
-		rl_replace_line("", 0);
-	}
-	else if (sig == 3)
-		sig = 3;
-	else if (sig == 15)
-		exit (0);
-	exit (0);
-	// minishell$
-}
+// void	ft_signal(void)
+// {
+// 	struct sigaction	sa;
+// 	struct termios		term;
+// 	int					i;
+
+// 	i = tcsetattr(STDIN_FILENO, TCSANOW, &term);
+// 	printf("i - %d\n", i);
+// 	i = tcgetattr(1, &term);
+// 	printf("i - %d\n", i);
+// 	sa.sa_handler = &ft_signal_processing;
+// 	sa.sa_flags = SA_SIGINFO;
+// 	sigaction(SIGQUIT, &sa, NULL); //сигнал "control + \"
+// 	sigaction(SIGINT, &sa, NULL); //сигнал "control + c"
+// 	// signal(SIGINT, ft_signal_processing);
+// 	// signal(SIGQUIT, ft_signal_processing);
+// }
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_info	data;
-	struct sigaction	sa;
+	t_info				data;
 	char				*str;
-	
+
 	data = (t_info){};
 	(void)argc;
 	(void)argv;
 	data.envp = envp;
-	sa.sa_handler = &ft_signal_processing;
-	sa.sa_flags = SA_SIGINFO;
-	// signal(SIGINT, handler);
-	// signal(SIGTERM, handler);
-	sigaction(SIGINT, &sa, NULL); //  сигнал "control + c"
-	sigaction(SIGQUIT, &sa, NULL); // сигнал "control + \"
-	// sigaction(SIGTERM, &sa, NULL); // сигнал "control + d" не обрабатывать
-	// ft_envp(envp);
+	// ft_signal();
 	while (1)
 	{
 		str = readline("minishell$ ");
-		printf("str - %s\n", str); //del
-		if (!str)
+		printf("str - %s\n", str); //del в эту строку приходит то что мы подаем в наш Минишел
+		if (!str) //обработка сигнала "control + d"
 		{
 			ft_putstr_fd("exit\n", 1);
-			break;
+			break ;
 		}
-		signal(SIGINT, &ft_signal_processing);
-		// signal(SIGQUIT, SIG_IGN);
-		// signal(SIGTERM, SIG_IGN);
+		add_history(str);
 	}
 	// ft_clean_struct(lalala);
 	return (0);
