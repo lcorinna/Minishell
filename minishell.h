@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/04/13 22:04:42 by merlich          ###   ########.fr       */
+/*   Updated: 2022/04/15 22:23:21 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,20 @@
 # include <string.h>
 # include <curses.h>
 # include <term.h>
+
+# define SPACE			0
+# define WORD			1
+# define FIELD			2
+# define EXP_FIELD		3
+# define REDIR_OUT		4
+# define REDIR_IN		5
+# define REDIR_APPEND	6
+# define REDIR_INSOURCE	7
+# define PIPE			8
+# define IF_AND			9
+# define IF_OR			10
+# define PARN_L			11
+# define PARN_R			12
 
 typedef	struct s_malloc
 {
@@ -70,6 +84,15 @@ typedef int	(*t_buildin_ptr)(t_llist *, t_info *); //Д:не понимаю чт
 													// а возвращает значение типа int.
 													// Эта штука нужна для builin, которые ты пишешь.
 													// см. комментарий выше... 
+
+typedef struct	s_token
+{
+	char			*str_val;
+	int				type;
+	struct s_token	*next;
+	struct s_token	*prev;
+
+}	t_token;
 
 char	*ft_readline(const char *prompt, t_info *data);
 
