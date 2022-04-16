@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 13:00:17 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/04/16 13:00:53 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/04/16 16:12:38 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ t_llist	*ft_lstnew(void *key, void *value)
 	new = malloc(sizeof(t_llist));
 	if (new == NULL)
 	{
-		exit(1); //переделать
 		return (NULL);
 	}
 	new->key = key;

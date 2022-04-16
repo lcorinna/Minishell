@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:33:09 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/04/16 14:32:18 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/04/16 19:52:05 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,15 @@ int	main(int argc, char **argv, char **envp)
 	// ft_signal();
 	while (!data.exit_f)
 	{
-		ft_readline("minishell$ " , &data);
-		// printf("data.free_me.str - %s\n", str); //del в эту строку приходит то что мы подаем в наш Минишел
+		ft_readline(&data);
 		if (!data.free_me.str) //обработка сигнала "control + d"
 		{
 			ft_putstr_fd("exit\n", 1);
 			break ;
 		}
+		// lexer
+		// parser
+		
 	}
 	// ft_clean_struct(lalala);
 	return (0);

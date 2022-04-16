@@ -6,17 +6,14 @@
 #    By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/20 19:17:52 by lcorinna          #+#    #+#              #
-#    Updated: 2022/04/16 14:25:08 by lcorinna         ###   ########.fr        #
+#    Updated: 2022/04/16 21:11:08 by lcorinna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME_M			=	minishell
 
-FILES			=	test.c envp.c llist.c ft_readline.c #minishell.c
-					# main.c 			free_env.c		split.c			utils.c			\
-					# main_utils.c	env.c			ft_itoa.c		utils_lst.c		\
-					# ft_atoi.c		env_2.c			free_cmd.c		utils_str.c		\
-					# fd_mem.c														\
+FILES			=	test.c	envp.c	llist.c	ft_readline.c	exit.c	#minishell.c
+					#
 					# 	builtins/builtins.c 		builtins/cd.c					\
 					# 	builtins/unset.c			builtins/echo.c					\
 					# 	builtins/pwd.c				builtins/export.c				\

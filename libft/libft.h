@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 16:04:27 by merlich           #+#    #+#             */
-/*   Updated: 2022/04/16 12:51:46 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/04/16 21:16:12 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ size_t	ft_strlen(const char *s);
 void	ft_putstr_fd(char *s, int fd);
 char	**ft_split(char const *s, char c);
 char	*ft_strtrim(char const	*s1, char const	*set);
+char	*ft_strjoin(char const	*s1, char const	*s2);
 
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
@@ -51,7 +52,6 @@ int		ft_atoi(const char *str);
 void	*ft_calloc(size_t count, size_t size);
 char	*ft_strdup(const char *s1);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
-char	*ft_strjoin(char const	*s1, char const	*s2);
 char	*ft_itoa(int n);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));

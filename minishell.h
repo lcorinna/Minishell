@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/04/16 14:30:13 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/04/16 21:21:32 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,6 @@
 # define PARN_L			11
 # define PARN_R			12
 
-typedef	struct s_malloc
-{
-	/* Здесь хранятся указатели 
-	на всю выделенную с помощью malloc память */
-	
-	/* Если malloc, сразу заносим сюда */
-
-	char			*str;
-
-}	t_malloc;
-
 typedef struct s_llist
 {
 	void			*key;
@@ -64,13 +53,28 @@ typedef struct s_llist
 
 }	t_llist;
 
+typedef	struct s_malloc
+{
+	/* Здесь хранятся указатели 
+	на всю выделенную с помощью malloc память */
+	
+	/* Если malloc, сразу заносим сюда */
+
+	char			*str;
+	t_llist			*envp_list;
+	char			**envp;
+
+}	t_malloc;
+
 typedef struct s_info
 {
 	// t_buildin_ptr	builtins[7]; //upd 13.04.: закоментил, а то компилятор ругался 
 									// A: хранятся все билтины в этом массиве указателей на функции.
 	char			*res_words[7];
 	char			**envp;
-	t_llist			*envp_list;
+	t_llist			*envp_list; //функция для чистки ft_clean_envp_list
+	char			**path;
+	pid_t			pid;
 	int				envp_f;
 	int				exit_f;
 	int				status;
@@ -96,13 +100,20 @@ typedef struct s_token
 
 char	*ft_malloc(int size);
 void	ft_envp(char **envp, t_info *data);
-void	ft_envp2(char *envp, char *key, char *value);
+int		ft_envp2(char *envp, char *key, char *value, int j);
+void	ft_clean_envp_list(t_info *data);
+
 
 t_llist	*ft_lstnew(void *key, void *value);
 void	ft_lstadd_front(t_llist **lst, t_llist *new);
 t_llist	*ft_lstlast(t_llist *lst);
 void	ft_lstadd_back(t_llist **lst, t_llist *new);
 
-void	ft_readline(const char *prompt, t_info *data);
+void	ft_readline(t_info *data);
+
+void	ft_error_exit(t_info *data, int i);
+void	ft_clean_struct(t_info *data);
+void	ft_clean_envp_list(t_info *data);
+int		ft_cleaning_array(char **arr);
 
 #endif
