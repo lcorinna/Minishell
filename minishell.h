@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/04/15 22:23:21 by merlich          ###   ########.fr       */
+/*   Updated: 2022/04/16 14:30:13 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # include <curses.h>
 # include <term.h>
 
-# define SPACE			0
+// # define SPACE			0
 # define WORD			1
 # define FIELD			2
 # define EXP_FIELD		3
@@ -70,22 +70,22 @@ typedef struct s_info
 									// A: хранятся все билтины в этом массиве указателей на функции.
 	char			*res_words[7];
 	char			**envp;
-	t_llist			envp_list;
+	t_llist			*envp_list;
 	int				envp_f;
 	int				exit_f;
 	int				status;
-	
+
 	t_malloc		free_me;
 
 }	t_info;
 
-typedef int	(*t_buildin_ptr)(t_llist *, t_info *); //Д:не понимаю что это такое. upd 13.04.: закоментил, а то компилятор ругался
+typedef int	(*t_buildin_ptr)(t_llist *, t_info *); //Д:не понимаю что это такое.
 													// А:это указатель на функцию, которая принимает в себя два параметра типа t_llist* и t_info*,
 													// а возвращает значение типа int.
 													// Эта штука нужна для builin, которые ты пишешь.
 													// см. комментарий выше... 
 
-typedef struct	s_token
+typedef struct s_token
 {
 	char			*str_val;
 	int				type;
@@ -94,6 +94,15 @@ typedef struct	s_token
 
 }	t_token;
 
-char	*ft_readline(const char *prompt, t_info *data);
+char	*ft_malloc(int size);
+void	ft_envp(char **envp, t_info *data);
+void	ft_envp2(char *envp, char *key, char *value);
+
+t_llist	*ft_lstnew(void *key, void *value);
+void	ft_lstadd_front(t_llist **lst, t_llist *new);
+t_llist	*ft_lstlast(t_llist *lst);
+void	ft_lstadd_back(t_llist **lst, t_llist *new);
+
+void	ft_readline(const char *prompt, t_info *data);
 
 #endif

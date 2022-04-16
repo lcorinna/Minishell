@@ -6,13 +6,13 @@
 #    By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/09 18:20:29 by merlich           #+#    #+#              #
-#    Updated: 2022/04/11 16:11:08 by lcorinna         ###   ########.fr        #
+#    Updated: 2022/04/16 12:50:09 by lcorinna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 		= 	libft.a
 
-SRCS		=	ft_strlen.c ft_putstr_fd.c ft_split.c ft_strtrim.c
+SRCS		=	ft_strlen.c ft_putstr_fd.c ft_split.c ft_strtrim.c \
 
 # SRCS		=	ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c \
 # 				ft_isprint.c ft_strlen.c ft_memset.c ft_bzero.c \
