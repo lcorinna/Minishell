@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/04/16 21:21:32 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/04/17 20:05:39 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,10 @@ typedef	struct s_malloc
 {
 	/* Здесь хранятся указатели 
 	на всю выделенную с помощью malloc память */
-	
+
 	/* Если malloc, сразу заносим сюда */
 
 	char			*str;
-	t_llist			*envp_list;
-	char			**envp;
 
 }	t_malloc;
 
@@ -98,11 +96,10 @@ typedef struct s_token
 
 }	t_token;
 
-char	*ft_malloc(int size);
-void	ft_envp(char **envp, t_info *data);
-int		ft_envp2(char *envp, char *key, char *value, int j);
-void	ft_clean_envp_list(t_info *data);
-
+void	ft_array_envp(t_info *data);
+int		ft_envp2(char *envp, char **key, char **value, int j);
+void	ft_envp(t_info *data);
+void	ft_transfer(int argc, char **argv, char **envp, t_info *data);
 
 t_llist	*ft_lstnew(void *key, void *value);
 void	ft_lstadd_front(t_llist **lst, t_llist *new);
@@ -111,9 +108,10 @@ void	ft_lstadd_back(t_llist **lst, t_llist *new);
 
 void	ft_readline(t_info *data);
 
-void	ft_error_exit(t_info *data, int i);
-void	ft_clean_struct(t_info *data);
-void	ft_clean_envp_list(t_info *data);
+int		ft_cleaning_str(char *str);
 int		ft_cleaning_array(char **arr);
+void	ft_clean_envp_list(t_info *data);
+void	ft_clean_struct(t_info *data);
+void	ft_error_exit(t_info *data, int i);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 21:37:24 by merlich           #+#    #+#             */
-/*   Updated: 2022/04/16 19:22:04 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/04/17 20:13:51 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,12 @@
 void	ft_readline(t_info *data)
 {
 	if (data->free_me.str)
-		free(data->free_me.str);
+		ft_cleaning_str(data->free_me.str);
 	data->free_me.str = readline("minishell$ ");
 	if (data->free_me.str)
 		add_history(data->free_me.str);
+	else if (!data->free_me.str)
+		ft_putstr_fd("exit\n", 1);
 }
 
 // LEAKS

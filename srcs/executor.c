@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 16:38:53 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/04/16 21:20:48 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/04/17 20:14:37 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	parse_path(t_info *data, int i)
 		data->path = ft_split(data->envp[i] + 5, ':');
 		if (data->path == NULL)
 		{
-			
 			
 		}
 	}

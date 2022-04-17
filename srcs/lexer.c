@@ -6,15 +6,15 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 21:05:32 by merlich           #+#    #+#             */
-/*   Updated: 2022/04/16 19:16:41 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/04/17 20:16:04 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int ft_lexer(char *str, t_info *data)
+int	ft_lexer(char *str, t_info *data)
 {
-    t_token 
+	t_token 
 
-    return (0);
+	return (0);
 }
