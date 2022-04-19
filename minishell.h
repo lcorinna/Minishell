@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/04/17 20:05:39 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/04/19 22:54:44 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,9 @@
 # include <curses.h>
 # include <term.h>
 
-// # define SPACE			0
+# define SPACES			" \f\n\r\t\v"
+# define UNDEFINED		-1
+# define IS_SPACE		0
 # define WORD			1
 # define FIELD			2
 # define EXP_FIELD		3
@@ -64,6 +66,15 @@ typedef	struct s_malloc
 
 }	t_malloc;
 
+typedef struct s_token
+{
+	char			*str_val;
+	int				type;
+	struct s_token	*next;
+	struct s_token	*prev;
+
+}	t_token;
+
 typedef struct s_info
 {
 	// t_buildin_ptr	builtins[7]; //upd 13.04.: закоментил, а то компилятор ругался 
@@ -76,6 +87,7 @@ typedef struct s_info
 	int				envp_f;
 	int				exit_f;
 	int				status;
+	t_token			*tokens;
 
 	t_malloc		free_me;
 
@@ -87,31 +99,41 @@ typedef int	(*t_buildin_ptr)(t_llist *, t_info *); //Д:не понимаю чт
 													// Эта штука нужна для builin, которые ты пишешь.
 													// см. комментарий выше... 
 
-typedef struct s_token
-{
-	char			*str_val;
-	int				type;
-	struct s_token	*next;
-	struct s_token	*prev;
 
-}	t_token;
 
-void	ft_array_envp(t_info *data);
-int		ft_envp2(char *envp, char **key, char **value, int j);
-void	ft_envp(t_info *data);
-void	ft_transfer(int argc, char **argv, char **envp, t_info *data);
+void		ft_array_envp(t_info *data);
+int			ft_envp2(char *envp, char **key, char **value, int j);
+void		ft_envp(t_info *data);
+void		ft_transfer(int argc, char **argv, char **envp, t_info *data);
 
-t_llist	*ft_lstnew(void *key, void *value);
-void	ft_lstadd_front(t_llist **lst, t_llist *new);
-t_llist	*ft_lstlast(t_llist *lst);
-void	ft_lstadd_back(t_llist **lst, t_llist *new);
+t_llist		*ft_lstnew(void *key, void *value);
+void		ft_lstadd_front(t_llist **lst, t_llist *new);
+t_llist		*ft_lstlast(t_llist *lst);
+void		ft_lstadd_back(t_llist **lst, t_llist *new);
 
-void	ft_readline(t_info *data);
+void		ft_readline(t_info *data);
 
-int		ft_cleaning_str(char *str);
-int		ft_cleaning_array(char **arr);
-void	ft_clean_envp_list(t_info *data);
-void	ft_clean_struct(t_info *data);
-void	ft_error_exit(t_info *data, int i);
+int			ft_cleaning_str(char *str);
+int			ft_cleaning_array(char **arr);
+void		ft_clean_envp_list(t_info *data);
+void		ft_clean_struct(t_info *data);
+void		ft_error_exit(t_info *data, int i);
+
+/* lexer.c */
+int			ft_get_tokens(char *str, t_info *data);
+void		ft_set_tokens_type(t_info *data);
+
+
+/* lexer_utils.c */
+t_token		*ft_token_lstnew(char *value);
+int			ft_token_lstsize(t_token *head);
+t_token		*ft_token_lstlast(t_token *head);
+void		ft_token_lstadd_front(t_token **head, t_token *new);
+void		ft_token_lstadd_back(t_token **head, t_token *new);
+
+/* lexer_utils_2.c */
+t_token		*ft_token_last_but_one(t_token *head);
+void		ft_token_dellast(t_token **head);
+void		ft_token_lstclear(t_token **head);
 
 #endif
