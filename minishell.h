@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/04/19 22:54:44 by merlich          ###   ########.fr       */
+/*   Updated: 2022/04/25 23:29:53 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 # include <term.h>
 
 # define SPACES			" \f\n\r\t\v"
+# define QUOTES			"\'\""
+# define LEXER_ERROR	101
 # define UNDEFINED		-1
 # define IS_SPACE		0
 # define WORD			1

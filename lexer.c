@@ -6,11 +6,53 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 21:05:32 by merlich           #+#    #+#             */
-/*   Updated: 2022/04/19 23:24:40 by merlich          ###   ########.fr       */
+/*   Updated: 2022/04/26 00:11:36 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	ft_check_quotes(t_info *data, char *str, int i) /// I have to remove i from parameters
+{
+	int		single_flag;
+	int		double_flag;
+
+	single_flag = 0;
+	double_flag = 0;
+	if (str[i] == '\'')
+	{
+		single_flag += 1;
+		i++;
+	}
+	else if (str[i] == '\"')
+	{
+		double_flag += 1;
+		i++;
+	}
+	else
+		i++;
+	while (str[i] && (single_flag > 0 || double_flag > 0))
+	{
+		while (str[i] && !ft_strchr(QUOTES, str[i]))
+			i++;
+		if (str[i] == '\'')
+		{
+			single_flag -= 1;
+			i++;
+		}	
+		else if (str[i] == '\"')
+		{
+			double_flag -= 1;
+			i++;
+		}
+	}
+	if (single_flag > 0 || double_flag > 0)
+	{
+		// ft_token_lstclear(&data->tokens);
+		write(1, "QUOTES ERROR\n", 13);
+		exit(LEXER_ERROR);
+	}
+}
 
 int	ft_get_tokens(char *str, t_info *data)
 {
@@ -22,7 +64,9 @@ int	ft_get_tokens(char *str, t_info *data)
 	{
 		i = 0;
 		while (str[i] && !ft_strchr(SPACES, str[i]))
-			i++;
+		{
+			ft_check_quotes(data, str, i);
+		}
 		if (i)
 		{
 			sub_str = ft_substr(str, 0, i);
@@ -31,8 +75,6 @@ int	ft_get_tokens(char *str, t_info *data)
 		}
 		else if (str[i] && i == 0)
 			i++;
-		else
-			break ;
 		str = str + i;
 	}
 	ft_token_dellast(&data->tokens);
@@ -86,15 +128,15 @@ int main(void)
 	t_info	data;
 	t_token *head;
 
-	char *str = "cat          >			   'file' | cat< file";
+	char *str = "cat          >			   '\"file	  \"ffff 'user  | cat< file";
 	data = (t_info){};	
 	ft_get_tokens(str, &data);
-	ft_set_tokens_type(&data);
+	// ft_set_tokens_type(&data);
 	head = data.tokens;
 	while (head)
 	{
-		printf("%s == ", head->str_val);
-		printf("%d\n", head->type);
+		printf("string == %s\n", head->str_val);
+		// printf("type == %d\n\n", head->type);
 		head = head->next;
 	}
 }
