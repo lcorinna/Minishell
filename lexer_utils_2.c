@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 22:51:34 by merlich           #+#    #+#             */
-/*   Updated: 2022/04/19 22:51:57 by merlich          ###   ########.fr       */
+/*   Updated: 2022/04/26 20:23:47 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ void	ft_token_lstclear(t_token **head)
 	{
 		tmp = *head;
 		*head = tmp->next;
-		free(tmp->str_val);
+		if (ft_strncmp(tmp->str_val, " ", ft_strlen(tmp->str_val)))
+			free(tmp->str_val);
 		free(tmp);
 	}
 }

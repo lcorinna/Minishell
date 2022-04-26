@@ -6,49 +6,52 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 21:05:32 by merlich           #+#    #+#             */
-/*   Updated: 2022/04/26 00:11:36 by merlich          ###   ########.fr       */
+/*   Updated: 2022/04/26 21:24:00 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	ft_check_quotes(t_info *data, char *str, int i) /// I have to remove i from parameters
+static void	ft_increment_value(int *flag_1, int *flag_2, char *str, int *i)
 {
-	int		single_flag;
-	int		double_flag;
+	if (str[*i] == '\'')
+		*flag_1 += 1;
+	else if (str[*i] == '\"')
+		*flag_2 += 1;
+	(*i)++;
+}
 
-	single_flag = 0;
-	double_flag = 0;
-	if (str[i] == '\'')
+static void	ft_decrement_value(int *flag_1, int *flag_2, char *str, int *i)
+{
+	if (str[*i] == '\'')
 	{
-		single_flag += 1;
-		i++;
+		*flag_1 -= 1;
+		(*i)++;
 	}
-	else if (str[i] == '\"')
+	else if (str[*i] == '\"')
 	{
-		double_flag += 1;
-		i++;
+		*flag_2 -= 1;
+		(*i)++;
 	}
-	else
-		i++;
-	while (str[i] && (single_flag > 0 || double_flag > 0))
+}
+
+static void	ft_check_quotes(t_info *data, char *str, int *i)
+{
+	int		flag_1;
+	int		flag_2;
+
+	flag_1 = 0;
+	flag_2 = 0;
+	ft_increment_value(&flag_1, &flag_2, str, i);
+	while (str[*i] && (flag_1 > 0 || flag_2 > 0))
 	{
-		while (str[i] && !ft_strchr(QUOTES, str[i]))
-			i++;
-		if (str[i] == '\'')
-		{
-			single_flag -= 1;
-			i++;
-		}	
-		else if (str[i] == '\"')
-		{
-			double_flag -= 1;
-			i++;
-		}
+		while (str[*i] && !ft_strchr(QUOTES, str[*i]))
+			(*i)++;
+		ft_decrement_value(&flag_1, &flag_2, str, i);
 	}
-	if (single_flag > 0 || double_flag > 0)
+	if (flag_1 > 0 || flag_2 > 0)
 	{
-		// ft_token_lstclear(&data->tokens);
+		ft_token_lstclear(&data->tokens);
 		write(1, "QUOTES ERROR\n", 13);
 		exit(LEXER_ERROR);
 	}
@@ -64,9 +67,7 @@ int	ft_get_tokens(char *str, t_info *data)
 	{
 		i = 0;
 		while (str[i] && !ft_strchr(SPACES, str[i]))
-		{
-			ft_check_quotes(data, str, i);
-		}
+			ft_check_quotes(data, str, &i);
 		if (i)
 		{
 			sub_str = ft_substr(str, 0, i);
@@ -128,9 +129,10 @@ int main(void)
 	t_info	data;
 	t_token *head;
 
-	char *str = "cat          >			   '\"file	  \"ffff 'user  | cat< file";
-	data = (t_info){};	
+	char *str = "cat          >		$USER	   '\"file	  \"'ffff user  | cat< file";
+	data = (t_info){};
 	ft_get_tokens(str, &data);
+	ft_expand(&data);
 	// ft_set_tokens_type(&data);
 	head = data.tokens;
 	while (head)
