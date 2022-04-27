@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/17 21:17:51 by merlich           #+#    #+#             */
-/*   Updated: 2022/04/19 22:51:31 by merlich          ###   ########.fr       */
+/*   Updated: 2022/04/27 21:29:12 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,13 @@ void	ft_token_lstadd_front(t_token **head, t_token *new)
 	}
 }
 
-void	ft_token_lstadd_back(t_token **head, t_token *new)
+void	ft_token_lstadd_back(t_token **head, t_token *new, int in_quotes)
 {
 	t_token	*lst_last;
 
 	if (NULL != new)
 	{
+		new->in_quotes = in_quotes;
 		lst_last = ft_token_lstlast(*head);
 		if (lst_last == NULL)
 		{

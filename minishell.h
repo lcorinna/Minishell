@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/04/25 23:29:53 by merlich          ###   ########.fr       */
+/*   Updated: 2022/04/27 21:27:27 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct s_token
 {
 	char			*str_val;
 	int				type;
+	int				in_quotes;
 	struct s_token	*next;
 	struct s_token	*prev;
 
@@ -131,7 +132,7 @@ t_token		*ft_token_lstnew(char *value);
 int			ft_token_lstsize(t_token *head);
 t_token		*ft_token_lstlast(t_token *head);
 void		ft_token_lstadd_front(t_token **head, t_token *new);
-void		ft_token_lstadd_back(t_token **head, t_token *new);
+void		ft_token_lstadd_back(t_token **head, t_token *new, int in_quotes);
 
 /* lexer_utils_2.c */
 t_token		*ft_token_last_but_one(t_token *head);
