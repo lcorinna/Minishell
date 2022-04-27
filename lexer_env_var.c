@@ -6,36 +6,72 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 21:11:40 by merlich           #+#    #+#             */
-/*   Updated: 2022/04/26 21:47:26 by merlich          ###   ########.fr       */
+/*   Updated: 2022/04/28 00:05:13 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_expand(t_info *data)
+static int	ft_find_index(char *str)
 {
-	char	*str;
-	t_token *head;
+	int	i;
 
-	str = NULL;
-	head = data->tokens;
-	while (head)
+	i = 0;
+	while (str[i] == '_' || ft_isalnum(str[i]))
+		i++;
+	return (i);
+}
+
+static void	ft_interpret(t_info *data, char *str)
+{
+	char	*sub_str;
+	t_llist	*envp_head;
+
+	sub_str = NULL;
+	while (*str)
 	{
-		str = ft_strchr(head->str_val, '$');
-		if (str)
+		str = ft_strchr(str, '$');
+		if (!str)
+			break ;
+		if (str && (str[1] == '_' || ft_isalpha_big(str[1])))
 		{
-			// printf("%s\n", str);
-			while (data->envp_list)
+			sub_str = ft_substr(str + 1, 0, ft_find_index(str + 1));
+			printf("ENV = %s\n", sub_str);
+			envp_head = data->envp_list;
+			while (envp_head)
 			{
-				if (!ft_strncmp(str, data->envp_list->key, ft_strlen(str)))
+				if (!ft_strncmp(sub_str, envp_head->key, ft_strlen(sub_str) + ft_strlen(envp_head->key)))
 				{
-					
+					// ft_replace(token_head, envp_head->value);
 					break ;
 				}
-				data->envp_list = data->envp_list->next;
+				envp_head = envp_head->next;
 			}
-			// ft_replace();
+			free(sub_str);
 		}
-		head = head->next;   
+		str = str + 1;
 	}
 }
+
+void	ft_expand(t_info *data)
+{
+	t_token *token_head;
+
+	token_head = data->tokens;
+	while (token_head)
+	{
+		ft_interpret(data, token_head->str_val);
+		token_head = token_head->next;   
+	}
+}
+
+// int	main(void)
+// {
+// 	char	*s = "$USER>*()";
+
+// 	s = ft_substr(s + 1, 0, ft_find_index(s + 1));
+	
+// 	printf("ENV = %s\n", s);
+// 	printf("index = %d\n", ft_find_index(s));
+// 	return (0);
+// }

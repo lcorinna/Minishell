@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 16:04:27 by merlich           #+#    #+#             */
-/*   Updated: 2022/04/17 21:13:36 by merlich          ###   ########.fr       */
+/*   Updated: 2022/04/27 22:30:35 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ char	*ft_strjoin(char const	*s1, char const	*s2);
 char	*ft_strdup(const char *s1);
 
 int		ft_isalpha(int c);
+int	    ft_isalpha_big(int c);
 int		ft_isdigit(int c);
 int		ft_isalnum(int c);
 int		ft_isascii(int c);

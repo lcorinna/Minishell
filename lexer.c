@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 21:05:32 by merlich           #+#    #+#             */
-/*   Updated: 2022/04/26 21:24:00 by merlich          ###   ########.fr       */
+/*   Updated: 2022/04/27 23:42:37 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,8 +129,9 @@ int main(void)
 	t_info	data;
 	t_token *head;
 
-	char *str = "cat          >		$USER	   '\"file	  \"'ffff user  | cat< file";
+	char *str = "cat          >	$9 $	$USER;	   '\"file	$ $USER1; $USER2  \"'ffff user  | $USER3 cat< file";
 	data = (t_info){};
+	
 	ft_get_tokens(str, &data);
 	ft_expand(&data);
 	// ft_set_tokens_type(&data);
