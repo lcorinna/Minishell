@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 12:52:50 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/04/17 20:10:39 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/04/28 22:53:29 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ int	ft_envp2(char *envp, char **key, char **value, int j)
 	int	m;
 
 	m = -1;
-	while (envp[j] != '=')
+	while (envp[j+1] != '=')  // A: 28.04.2022 убрал знак = из key
 		j++;
 	*key = malloc(sizeof(char) * (j + 2));
 	if (!*key)
 		return (1);
-	while (envp[(++m)] != '=')
+	while (envp[(++m)+1] != '=')  // A: 28.04.2022 убрал знак = из key
 		(*key)[m] = envp[m];
 	(*key)[m] = envp[m];
 	(*key)[++m] = '\0';

@@ -6,11 +6,11 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 21:05:32 by merlich           #+#    #+#             */
-/*   Updated: 2022/04/27 23:42:37 by merlich          ###   ########.fr       */
+/*   Updated: 2022/04/28 21:26:30 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 static void	ft_increment_value(int *flag_1, int *flag_2, char *str, int *i)
 {
@@ -35,7 +35,7 @@ static void	ft_decrement_value(int *flag_1, int *flag_2, char *str, int *i)
 	}
 }
 
-static void	ft_check_quotes(t_info *data, char *str, int *i)
+static int	ft_check_quotes(t_info *data, char *str, int *i)
 {
 	int		flag_1;
 	int		flag_2;
@@ -53,8 +53,9 @@ static void	ft_check_quotes(t_info *data, char *str, int *i)
 	{
 		ft_token_lstclear(&data->tokens);
 		write(1, "QUOTES ERROR\n", 13);
-		exit(LEXER_ERROR);
+		return (LEXER_ERROR);
 	}
+	return (0);
 }
 
 int	ft_get_tokens(char *str, t_info *data)
@@ -67,7 +68,10 @@ int	ft_get_tokens(char *str, t_info *data)
 	{
 		i = 0;
 		while (str[i] && !ft_strchr(SPACES, str[i]))
-			ft_check_quotes(data, str, &i);
+		{
+			if (ft_check_quotes(data, str, &i))
+				return (LEXER_ERROR);
+		}
 		if (i)
 		{
 			sub_str = ft_substr(str, 0, i);
@@ -82,64 +86,64 @@ int	ft_get_tokens(char *str, t_info *data)
 	return (0);
 }
 
-static int	ft_get_type(char *str)
-{
-	if (!ft_strncmp(str, "\'", ft_strlen(str)))
-		return (FIELD);
-	else if (!ft_strncmp(str, "\"", ft_strlen(str)))
-		return (EXP_FIELD);
-	else if (!ft_strncmp(str, ">", ft_strlen(str)))
-		return (REDIR_OUT);
-	else if (!ft_strncmp(str, "<", ft_strlen(str)))
-		return (REDIR_IN);
-	else if (!ft_strncmp(str, ">>", ft_strlen(str)))
-		return (REDIR_APPEND);
-	else if (!ft_strncmp(str, "<<", ft_strlen(str)))
-		return (REDIR_INSOURCE);
-	else if (!ft_strncmp(str, "|", ft_strlen(str)))
-		return (PIPE);
-	else if (!ft_strncmp(str, "&&", ft_strlen(str)))
-		return (IF_AND);
-	else if (!ft_strncmp(str, "||", ft_strlen(str)))
-		return (IF_OR);
-	else if (!ft_strncmp(str, "(", ft_strlen(str)))
-		return (PARN_L);
-	else if (!ft_strncmp(str, ")", ft_strlen(str)))
-		return (PARN_R);
-	else if (!ft_strncmp(str, " ", ft_strlen(str)))
-		return (IS_SPACE);
-	else
-		return (WORD);
-}
+// static int	ft_get_type(char *str)
+// {
+// 	if (!ft_strncmp(str, "\'", ft_strlen(str)))
+// 		return (FIELD);
+// 	else if (!ft_strncmp(str, "\"", ft_strlen(str)))
+// 		return (EXP_FIELD);
+// 	else if (!ft_strncmp(str, ">", ft_strlen(str)))
+// 		return (REDIR_OUT);
+// 	else if (!ft_strncmp(str, "<", ft_strlen(str)))
+// 		return (REDIR_IN);
+// 	else if (!ft_strncmp(str, ">>", ft_strlen(str)))
+// 		return (REDIR_APPEND);
+// 	else if (!ft_strncmp(str, "<<", ft_strlen(str)))
+// 		return (REDIR_INSOURCE);
+// 	else if (!ft_strncmp(str, "|", ft_strlen(str)))
+// 		return (PIPE);
+// 	else if (!ft_strncmp(str, "&&", ft_strlen(str)))
+// 		return (IF_AND);
+// 	else if (!ft_strncmp(str, "||", ft_strlen(str)))
+// 		return (IF_OR);
+// 	else if (!ft_strncmp(str, "(", ft_strlen(str)))
+// 		return (PARN_L);
+// 	else if (!ft_strncmp(str, ")", ft_strlen(str)))
+// 		return (PARN_R);
+// 	else if (!ft_strncmp(str, " ", ft_strlen(str)))
+// 		return (IS_SPACE);
+// 	else
+// 		return (WORD);
+// }
 
-void	ft_set_tokens_type(t_info *data)
-{
-	t_token *head;
+// void	ft_set_tokens_type(t_info *data)
+// {
+// 	t_token *head;
 
-	head = data->tokens;
-	while (head)
-	{
-		head->type = ft_get_type(head->str_val);
-		head = head->next;
-	}
-}
+// 	head = data->tokens;
+// 	while (head)
+// 	{
+// 		head->type = ft_get_type(head->str_val);
+// 		head = head->next;
+// 	}
+// }
 
-int main(void)
-{
-	t_info	data;
-	t_token *head;
+// int main(void)
+// {
+// 	t_info	data;
+// 	t_token *head;
 
-	char *str = "cat          >	$9 $	$USER;	   '\"file	$ $USER1; $USER2  \"'ffff user  | $USER3 cat< file";
-	data = (t_info){};
+// 	char *str = "cat          >	$9 $	$USER;	   '\"file	$ $USER1; $USER2  \"'ffff user  | $USER3 cat< file";
+// 	data = (t_info){};
 	
-	ft_get_tokens(str, &data);
-	ft_expand(&data);
-	// ft_set_tokens_type(&data);
-	head = data.tokens;
-	while (head)
-	{
-		printf("string == %s\n", head->str_val);
-		// printf("type == %d\n\n", head->type);
-		head = head->next;
-	}
-}
+// 	ft_get_tokens(str, &data);
+// 	ft_expand(&data);
+// 	// ft_set_tokens_type(&data);
+// 	head = data.tokens;
+// 	while (head)
+// 	{
+// 		printf("string == %s\n", head->str_val);
+// 		// printf("type == %d\n\n", head->type);
+// 		head = head->next;
+// 	}
+// }

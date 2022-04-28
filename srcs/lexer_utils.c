@@ -6,11 +6,11 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/17 21:17:51 by merlich           #+#    #+#             */
-/*   Updated: 2022/04/19 22:51:31 by merlich          ###   ########.fr       */
+/*   Updated: 2022/04/28 20:51:14 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 t_token	*ft_token_lstnew(char *value)
 {

@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/04/27 22:54:02 by merlich          ###   ########.fr       */
+/*   Updated: 2022/04/28 22:14:31 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,9 @@ typedef struct s_info
 	int				exit_f;
 	int				status;
 	t_token			*tokens;
-
+	t_token			*token_head;
+	t_llist			*envp_head;
+	
 	t_malloc		free_me;
 
 }	t_info;
@@ -140,5 +142,8 @@ void		ft_token_lstclear(t_token **head);
 
 /* lexer_env_var.c */
 void		ft_expand(t_info *data);
+
+/* lexer_replace.c */
+int			ft_search(const char *str, int c);
 
 #endif
