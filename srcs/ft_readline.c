@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_readline.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 21:37:24 by merlich           #+#    #+#             */
-/*   Updated: 2022/04/17 20:13:51 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/04/29 22:38:52 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_readline(t_info *data)
 {
 	if (data->free_me.str)
 		ft_cleaning_str(data->free_me.str);
-	data->free_me.str = readline("minishell$ ");
+	data->free_me.str = readline("\nminishell$ ");
 	if (data->free_me.str)
 		add_history(data->free_me.str);
 	else if (!data->free_me.str)

@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 21:05:32 by merlich           #+#    #+#             */
-/*   Updated: 2022/04/28 21:26:30 by merlich          ###   ########.fr       */
+/*   Updated: 2022/04/29 23:19:19 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,13 @@ int	ft_get_tokens(char *str, t_info *data)
 		{
 			sub_str = ft_substr(str, 0, i);
 			ft_token_lstadd_back(&data->tokens, ft_token_lstnew(sub_str));
-			ft_token_lstadd_back(&data->tokens, ft_token_lstnew(" "));
+			// ft_token_lstadd_back(&data->tokens, ft_token_lstnew(" "));
 		}
 		else if (str[i] && i == 0)
 			i++;
 		str = str + i;
 	}
-	ft_token_dellast(&data->tokens);
+	// ft_token_dellast(&data->tokens);
 	return (0);
 }
 
