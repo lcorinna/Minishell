@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:33:09 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/04/28 23:50:40 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/01 22:15:50 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,14 @@ int	main(int argc, char **argv, char **envp)
 		ft_expand(&data);
 		// ft_set_tokens_type(&data);
 		data.token_head = data.tokens;
+		printf("------------------\n");
 		while (data.token_head)
 		{
 			printf("string = %s\n", data.token_head->str_val);
 			// printf("type == %d\n\n", head->type);
 			data.token_head = data.token_head->next;
 		}
+		printf("------------------\n");
 		ft_token_lstclear(&data.tokens);
 		data.tokens = NULL;
 		// parser
