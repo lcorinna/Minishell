@@ -6,68 +6,49 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 21:05:32 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/03 22:10:10 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/03 22:35:28 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-// static void	ft_set_flags(int *single_q, int *double_q, char *str, int k)
-// {
-// 	if (k == 0)
-// 	{
-// 		if (str[k] == '\'')
-// 			*single_q += 1;
-// 		else if (str[k] == '\"')
-// 			*double_q += 1;
-// 	}
-// 	else if (k > 0)
-// 	{
-// 		if (str[k] == '\'' && str[k - 1] != '\\' && !(*double_q % 2))
-// 			*single_q += 1;
-// 		else if (str[k] == '\"' && str[k - 1] != '\\' && !(*single_q % 2))
-// 			*double_q += 1;
-// 	}
-// }
-
-static void	ft_set_flags(int *flag_1, int *flag_2, char *str, int *i)
+void	ft_set_flags(int *single_q, int *double_q, char *str, int *k)
 {
-	if (str[*i] == '\'')
-		*flag_1 += 1;
-	else if (str[*i] == '\"')
-		*flag_2 += 1;
-	(*i)++;
-}
-
-static void	ft_unset_flags(int *flag_1, int *flag_2, char *str, int *i)
-{
-	if (str[*i] == '\'')
+	if (*k == 0)
 	{
-		*flag_1 -= 1;
-		(*i)++;
+		if (str[*k] == '\'')
+			*single_q += 1;
+		else if (str[*k] == '\"')
+			*double_q += 1;
 	}
-	else if (str[*i] == '\"')
+	else if (k > 0)
 	{
-		*flag_2 -= 1;
-		(*i)++;
+		if (str[*k] == '\'' && str[*k - 1] != '\\' && !(*double_q % 2))
+			*single_q += 1;
+		else if (str[*k] == '\"' && str[*k - 1] != '\\' && !(*single_q % 2))
+			*double_q += 1;
 	}
 }
 
 static int	ft_check_quotes(t_info *data, char *str, int *i)
 {
-	int		flag_1;
-	int		flag_2;
+	int		single_q;
+	int		double_q;
 
-	flag_1 = 0;
-	flag_2 = 0;
-	ft_set_flags(&flag_1, &flag_2, str, i);
-	while (str[*i] && (flag_1 > 0 || flag_2 > 0))
+	single_q = 0;
+	double_q = 0;
+	ft_set_flags(&single_q, &double_q, str, i);
+	(*i)++;
+	while (str[*i] && (single_q % 2 || double_q % 2))
 	{
-		while (str[*i] && !ft_strchr(QUOTES, str[*i]))
+		while (str[*i])
+		{
+			if (ft_strchr(QUOTES, str[*i]))
+				ft_set_flags(&single_q, &double_q, str, i);	
 			(*i)++;
-		ft_unset_flags(&flag_1, &flag_2, str, i);
+		}
 	}
-	if (flag_1 > 0 || flag_2 > 0)
+	if (single_q % 2 || double_q % 2)
 	{
 		ft_token_lstclear(&data->tokens);
 		write(1, "QUOTES ERROR\n", 13);

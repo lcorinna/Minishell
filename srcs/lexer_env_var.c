@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 21:11:40 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/01 22:57:06 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/03 22:40:10 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	ft_find_index(char *str)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	while (str[i] == '_' || ft_isalnum(str[i]))
@@ -22,9 +22,9 @@ static int	ft_find_index(char *str)
 	return (i);
 }
 
-int	ft_search(const char *str, int c)
+static int	ft_search(const char *str, int c)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	while (str[i])

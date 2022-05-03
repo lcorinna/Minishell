@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 20:32:06 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/03 22:07:21 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/03 22:50:49 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	ft_find_index(char *str)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	while (!ft_strchr(SYMBOLS, str[i]))
@@ -22,24 +22,6 @@ static int	ft_find_index(char *str)
 	if (i == ft_strlen(str))
 		i = -1;
 	return (i);
-}
-
-static void	ft_set_flags(int *single_q, int *double_q, char *str, int k)
-{
-	if (k == 0)
-	{
-		if (str[k] == '\'')
-			*single_q += 1;
-		else if (str[k] == '\"')
-			*double_q += 1;
-	}
-	else if (k > 0)
-	{
-		if (str[k] == '\'' && str[k - 1] != '\\' && !(*double_q % 2))
-			*single_q += 1;
-		else if (str[k] == '\"' && str[k - 1] != '\\' && !(*single_q % 2))
-			*double_q += 1;
-	}
 }
 
 static int	ft_check_quotes(char *str, int index)
