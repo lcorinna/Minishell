@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/03 22:40:02 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/03 23:36:12 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void		ft_clean_struct(t_info *data);
 void		ft_error_exit(t_info *data, int i);
 
 /* lexer.c */
-void		ft_set_flags(int *single_q, int *double_q, char *str, int *k);
+void		ft_set_flags(int *single_q, int *double_q, char *str, int k);
 int			ft_get_tokens(char *str, t_info *data);
 void		ft_set_tokens_type(t_info *data);
 
@@ -140,6 +140,8 @@ void		ft_token_lstadd_back(t_token **head, t_token *new);
 t_token		*ft_token_last_but_one(t_token *head);
 void		ft_token_dellast(t_token **head);
 void		ft_token_lstclear(t_token **head);
+void		ft_token_lstadd_prev(t_token **head, t_token *new);
+void		ft_token_lstadd_next(t_token **head, t_token *new);
 
 /* lexer_env_var.c */
 // int			ft_search(const char *str, int c);

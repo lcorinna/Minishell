@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 20:32:06 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/03 22:50:49 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/04 00:03:02 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,26 @@ static void	ft_strparse(t_info *data)
 {
 	int		i;
 	char	*str;
+	t_token	*curr_elem;
 	
 	str = data->token_head->str_val;
 	i = ft_find_index(str);
+	curr_elem = data->token_head;
 	while (i != -1)
 	{
 		if (!ft_check_quotes(str, i))
 		{
-			
-			return ;
+			ft_token_lstadd_front(&data->token_head, ft_token_lstnew(ft_substr(str, 0, i)));
+			ft_token_lstadd_next(&curr_elem, ft_token_lstnew(ft_substr(str, i + 1, ft_strlen(str))));
+			free(curr_elem->str_val);
+			// data->token_head->next->str_val = NULL;
+			curr_elem->str_val = ft_substr(str, i, 1);	
+			return /* (data->token_head->next) */;
 		}
 		else
 			i = ft_find_index(str + i + 1);
 	}
-	
+	// return (data->token_head);
 }
 
 void	ft_symsplit(t_info *data)
@@ -70,7 +76,35 @@ void	ft_symsplit(t_info *data)
 	data->token_head = data->tokens;
 	while (data->token_head)
 	{
-		ft_strparse(data);
+		/* data->token_head = */ ft_strparse(data);
 		data->token_head = data->token_head->next;
+	}
+}
+
+
+int	main(void)
+{
+	t_token *head;
+	t_token	*my_head;
+
+	head = NULL;
+	ft_token_lstadd_front(&head, ft_token_lstnew("str1"));
+	ft_token_lstadd_back(&head, ft_token_lstnew("str2"));
+	ft_token_lstadd_back(&head, ft_token_lstnew("str4"));
+	ft_token_lstadd_back(&head, ft_token_lstnew("str5"));
+	my_head = head;
+	while (head)
+	{
+		printf("%s\n", head->str_val);
+		head = head->next;
+	}
+	head = my_head;
+	// ft_token_lstadd_front(&head->next->next, ft_token_lstnew("str3"));
+	ft_token_lstadd_next(&head->next, ft_token_lstnew("str3"));
+	printf("--------\n");
+	while (head)
+	{
+		printf("%s\n", head->str_val);
+		head = head->next;
 	}
 }
