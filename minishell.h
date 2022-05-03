@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/04/28 22:14:31 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/03 20:40:38 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 
 # define SPACES			" \f\n\r\t\v"
 # define QUOTES			"\'\""
+# define SYMBOLS		"<|>"
 # define LEXER_ERROR	101
 # define UNDEFINED		-1
 # define IS_SPACE		0
@@ -145,5 +146,8 @@ void		ft_expand(t_info *data);
 
 /* lexer_replace.c */
 int			ft_search(const char *str, int c);
+
+/* ft_symsplit.c */
+void		ft_symsplit(t_info *data);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:33:09 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/01 22:15:50 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/03 22:09:07 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	main(int argc, char **argv, char **envp)
 		if (ft_get_tokens(data.free_me.str, &data))
 			continue ;
 		ft_expand(&data);
+		// ft_symsplit(&data);  // In progress...
 		// ft_set_tokens_type(&data);
 		data.token_head = data.tokens;
 		printf("------------------\n");

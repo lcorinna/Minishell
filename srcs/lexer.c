@@ -6,13 +6,31 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 21:05:32 by merlich           #+#    #+#             */
-/*   Updated: 2022/04/29 23:19:19 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/03 22:10:10 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	ft_increment_value(int *flag_1, int *flag_2, char *str, int *i)
+// static void	ft_set_flags(int *single_q, int *double_q, char *str, int k)
+// {
+// 	if (k == 0)
+// 	{
+// 		if (str[k] == '\'')
+// 			*single_q += 1;
+// 		else if (str[k] == '\"')
+// 			*double_q += 1;
+// 	}
+// 	else if (k > 0)
+// 	{
+// 		if (str[k] == '\'' && str[k - 1] != '\\' && !(*double_q % 2))
+// 			*single_q += 1;
+// 		else if (str[k] == '\"' && str[k - 1] != '\\' && !(*single_q % 2))
+// 			*double_q += 1;
+// 	}
+// }
+
+static void	ft_set_flags(int *flag_1, int *flag_2, char *str, int *i)
 {
 	if (str[*i] == '\'')
 		*flag_1 += 1;
@@ -21,7 +39,7 @@ static void	ft_increment_value(int *flag_1, int *flag_2, char *str, int *i)
 	(*i)++;
 }
 
-static void	ft_decrement_value(int *flag_1, int *flag_2, char *str, int *i)
+static void	ft_unset_flags(int *flag_1, int *flag_2, char *str, int *i)
 {
 	if (str[*i] == '\'')
 	{
@@ -42,12 +60,12 @@ static int	ft_check_quotes(t_info *data, char *str, int *i)
 
 	flag_1 = 0;
 	flag_2 = 0;
-	ft_increment_value(&flag_1, &flag_2, str, i);
+	ft_set_flags(&flag_1, &flag_2, str, i);
 	while (str[*i] && (flag_1 > 0 || flag_2 > 0))
 	{
 		while (str[*i] && !ft_strchr(QUOTES, str[*i]))
 			(*i)++;
-		ft_decrement_value(&flag_1, &flag_2, str, i);
+		ft_unset_flags(&flag_1, &flag_2, str, i);
 	}
 	if (flag_1 > 0 || flag_2 > 0)
 	{
