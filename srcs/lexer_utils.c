@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/17 21:17:51 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/04 22:46:31 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/04 23:57:59 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_token	*ft_token_lstnew(char *value)
 		new->str_val = value;
 		new->type = UNDEFINED;
 		new->next = NULL;
-		// new->prev = NULL;
+		new->prev = NULL;
 	}
 	return (new);
 }
