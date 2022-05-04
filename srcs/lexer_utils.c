@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/17 21:17:51 by merlich           #+#    #+#             */
-/*   Updated: 2022/04/28 20:51:14 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/04 22:46:31 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,17 @@ t_token	*ft_token_lstnew(char *value)
 {
 	t_token	*new;
 
-	new = malloc(sizeof(t_token));
-	if (NULL == new)
+	new = NULL;
+	if (value)
 	{
-		return (NULL);
+		new = malloc(sizeof(t_token));
+		if (NULL == new)
+			return (NULL);
+		new->str_val = value;
+		new->type = UNDEFINED;
+		new->next = NULL;
+		// new->prev = NULL;
 	}
-	new->str_val = value;
-	new->type = UNDEFINED;
-	new->next = NULL;
-	// new->prev = NULL;
 	return (new);
 }
 

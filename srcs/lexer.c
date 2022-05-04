@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 21:05:32 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/03 23:16:44 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/04 23:27:39 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,14 @@
 
 void	ft_set_flags(int *single_q, int *double_q, char *str, int k)
 {
-	if (k == 0)
-	{
-		if (str[k] == '\'')
-			*single_q += 1;
-		else if (str[k] == '\"')
-			*double_q += 1;
-	}
-	else if (k > 0)
-	{
-		if (str[k] == '\'' && str[k - 1] != '\\' && !(*double_q % 2))
-			*single_q += 1;
-		else if (str[k] == '\"' && str[k - 1] != '\\' && !(*single_q % 2))
-			*double_q += 1;
-	}
+	if (str[k] == '\'' && !(*double_q) && !(*single_q))
+		*single_q += 1;
+	else if (str[k] == '\"' && !(*single_q) && !(*double_q))
+		*double_q += 1;
+	else if (str[k] == '\'' && !(*double_q) && *single_q)
+		*single_q -= 1;
+	else if (str[k] == '\"' && !(*single_q) && *double_q)
+		*double_q -= 1;
 }
 
 static int	ft_check_quotes(t_info *data, char *str, int *i)
@@ -39,16 +33,12 @@ static int	ft_check_quotes(t_info *data, char *str, int *i)
 	double_q = 0;
 	ft_set_flags(&single_q, &double_q, str, *i);
 	(*i)++;
-	while (str[*i] && (single_q % 2 || double_q % 2))
+	while (str[*i] && (single_q || double_q))
 	{
-		while (str[*i])
-		{
-			if (ft_strchr(QUOTES, str[*i]))
-				ft_set_flags(&single_q, &double_q, str, *i);	
-			(*i)++;
-		}
+		ft_set_flags(&single_q, &double_q, str, *i);
+		(*i)++;
 	}
-	if (single_q % 2 || double_q % 2)
+	if (single_q || double_q)
 	{
 		ft_token_lstclear(&data->tokens);
 		write(1, "QUOTES ERROR\n", 13);
