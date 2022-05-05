@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 21:11:40 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/04 21:16:40 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/05 23:55:34 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,12 @@ static void	ft_interpret(t_info *data)
 	sub_str = NULL;
 	while (str)
 	{
-		if (str[1] == '_' || ft_isalpha_big(str[1]))
+		if (str[1] == '?')
+		{
+			// ft_replace_2(data) data->token_head->str_val
+			// str = ft_strchr(data->token_head->str_val, '$');
+		}
+		else if (str[1] == '_' || ft_isalpha_big(str[1]))
 		{
 			sub_str = ft_substr(str + 1, 0, ft_find_index(str + 1));
 			data->envp_head = data->envp_list;
