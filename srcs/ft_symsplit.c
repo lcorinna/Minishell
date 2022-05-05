@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 20:32:06 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/04 23:48:56 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/05 22:27:50 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,6 @@ static int	ft_find_index(char *str)
 		i++;
 	return (i);
 }
-
-// static void	ft_set_flags(int *single_q, int *double_q, char *str, int k)
-// {
-// 	if (str[k] == '\'' && !(*double_q) && !(*single_q))
-// 		*single_q += 1;
-// 	else if (str[k] == '\"' && !(*single_q) && !(*double_q))
-// 		*double_q += 1;
-// 	else if (str[k] == '\'' && !(*double_q) && *single_q)
-// 		*single_q -= 1;
-// 	else if (str[k] == '\"' && !(*single_q) && *double_q)
-// 		*double_q -= 1;
-// }
 
 static int	ft_check_quotes(char *str, int index)
 {
@@ -68,24 +56,25 @@ static void	ft_strparse(t_info *data)
 	{
 		if (!ft_check_quotes(str, i))
 		{
-			ft_token_lstadd_next(&curr_elem, ft_token_lstnew(ft_substr(str, i + 1, ft_strlen(str))));
+			ft_token_lstadd_next(curr_elem, ft_token_lstnew(ft_substr(str, i + 1, ft_strlen(str))));
 			curr_elem->str_val = ft_substr(str, i, 1);
-			ft_token_lstadd_front(&curr_elem, ft_token_lstnew(ft_substr(str, 0, i)));
-			printf("%s\n", curr_elem->str_val);
-			printf("%p\n", &curr_elem);
-			printf("%s\n", curr_elem->next->str_val);
-			printf("%p\n", &curr_elem->next);
-			printf("%s\n", data->token_head->str_val);
-			printf("%p\n", &data->token_head);
+			ft_token_lstadd_prev(curr_elem, ft_token_lstnew(ft_substr(str, 0, i)));
 			free(str);
-			return /* (data->token_head->next) */;
+			// printf("%s\n", curr_elem->str_val);
+			// printf("%p\n", curr_elem);
+			// printf("%s\n", data->token_head->str_val);
+			// printf("%p\n", data->token_head);
+			// printf("%s\n", curr_elem->next->str_val);
+			// printf("%p\n", &curr_elem->next);
+			// printf("%s\n", curr_elem->prev->str_val);
+			// printf("%p\n", &curr_elem->prev);
+			return ;
 		}
 		else
 		{
 			i += ft_find_index(str + i + 1) + 1;
 		}
 	}
-	// return (data->token_head);
 }
 
 void	ft_symsplit(t_info *data)
@@ -93,9 +82,11 @@ void	ft_symsplit(t_info *data)
 	data->token_head = data->tokens;
 	while (data->token_head)
 	{
-		/* data->token_head = */ ft_strparse(data);
+		ft_strparse(data);
 		data->token_head = data->token_head->next;
 	}
+	while (data->tokens->prev)
+		data->tokens = data->tokens->prev;
 }
 
 

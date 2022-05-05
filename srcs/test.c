@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:33:09 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/04 21:28:38 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/05 23:12:40 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	main(int argc, char **argv, char **envp)
 	// ft_signal(); //буду делать в конце
 	while (!data.exit_f)
 	{
+		ft_token_lstclear(&data.tokens);  // А: Чистим выделенную память,
+		data.tokens = NULL;				 // выделенную на предыдущей итерации (НЕ ПЕРЕДВИГАТЬ!)
 		if (data.envp_f)
 			ft_array_envp(&data); //переписываю наш envp, если это нужно
 		ft_readline(&data);
@@ -36,7 +38,7 @@ int	main(int argc, char **argv, char **envp)
 		if (ft_get_tokens(data.free_me.str, &data))
 			continue ;
 		ft_expand(&data);
-		ft_symsplit(&data);  // In progress...
+		ft_symsplit(&data);
 		// ft_set_tokens_type(&data);
 		data.token_head = data.tokens;
 		printf("------------------\n");
@@ -47,8 +49,6 @@ int	main(int argc, char **argv, char **envp)
 			data.token_head = data.token_head->next;
 		}
 		printf("------------------\n");
-		ft_token_lstclear(&data.tokens);
-		data.tokens = NULL;
 		// parser
 		// executor
 	}
