@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:33:09 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/05 23:12:40 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/06 23:54:00 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int	main(int argc, char **argv, char **envp)
 	
 
 		// char *str = "cat          >	$9 $	$USER;	   '\"file	$ $USER1; $USER2  \"'ffff user  | $USER3 cat< file"; просто тестовая строка
-		
+		// if (!ft_strncmp(data.free_me.str, "\n", 1))
+		// 	continue ;
 		// lexer
 		if (ft_get_tokens(data.free_me.str, &data))
 			continue ;
@@ -42,7 +43,7 @@ int	main(int argc, char **argv, char **envp)
 		// ft_set_tokens_type(&data);
 		data.token_head = data.tokens;
 		printf("------------------\n");
-		while (data.token_head)
+		while (data.token_head)  // УТЕЧКИ на $PWD... тут - это не страшно, этот принт нужен просто для наглядности в процессе разработки
 		{
 			printf("string = %s\n", data.token_head->str_val);
 			// printf("type == %d\n\n", head->type);

@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 21:05:32 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/04 23:27:39 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/06 22:25:47 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_set_flags(int *single_q, int *double_q, char *str, int k)
 		*double_q -= 1;
 }
 
-static int	ft_check_quotes(t_info *data, char *str, int *i)
+static int	ft_check_unclosed_quotes(t_info *data, char *str, int *i)
 {
 	int		single_q;
 	int		double_q;
@@ -58,7 +58,7 @@ int	ft_get_tokens(char *str, t_info *data)
 		i = 0;
 		while (str[i] && !ft_strchr(SPACES, str[i]))
 		{
-			if (ft_check_quotes(data, str, &i))
+			if (ft_check_unclosed_quotes(data, str, &i))
 				return (LEXER_ERROR);
 		}
 		if (i)

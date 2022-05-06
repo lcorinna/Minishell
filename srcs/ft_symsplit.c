@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 20:32:06 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/05 22:27:50 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/06 23:01:19 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	ft_find_index(char *str)
 	return (i);
 }
 
-static int	ft_check_quotes(char *str, int index)
+int	ft_check_quotes(char *str, int index)
 {
 	int		k;
 	int		res;
@@ -38,8 +38,10 @@ static int	ft_check_quotes(char *str, int index)
 		ft_set_flags(&single_q, &double_q, str, k);
 		k++;
 	}
-	if (single_q || double_q)
+	if (single_q)
 		res = 1;
+	else if (double_q)
+		res = 2;
 	return (res);
 }
 
@@ -82,11 +84,14 @@ void	ft_symsplit(t_info *data)
 	data->token_head = data->tokens;
 	while (data->token_head)
 	{
-		ft_strparse(data);
+		// ft_strparse(data);
 		data->token_head = data->token_head->next;
 	}
-	while (data->tokens->prev)
+	if (data->tokens)
+	{
+		while (data->tokens->prev)
 		data->tokens = data->tokens->prev;
+	}
 }
 
 

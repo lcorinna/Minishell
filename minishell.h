@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/05 21:26:04 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/06 21:54:40 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,7 @@ void		ft_token_lstadd_next(t_token *head, t_token *new);
 void		ft_expand(t_info *data);
 
 /* ft_symsplit.c */
+int			ft_check_quotes(char *str, int index);
 void		ft_symsplit(t_info *data);
 
 #endif
