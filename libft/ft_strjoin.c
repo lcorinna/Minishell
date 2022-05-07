@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 15:22:42 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/05 22:47:57 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/07 23:46:35 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_strjoin(char const	*s1, char const	*s2)
 	i = 0;
 	if (s1 == NULL || s2 == NULL)
 		return (NULL);
-	new_str = malloc(ft_strlen(s1) + ft_strlen(s2));
+	new_str = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (NULL == new_str)
 		return (NULL);
 	else
