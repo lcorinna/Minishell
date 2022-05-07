@@ -6,7 +6,7 @@
 #    By: merlich <merlich@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/20 19:17:52 by lcorinna          #+#    #+#              #
-#    Updated: 2022/05/07 00:00:20 by merlich          ###   ########.fr        #
+#    Updated: 2022/05/07 21:53:33 by merlich          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ DEP				=	$(SRC:.c=.d)
 INCLUDE			=	./includes
 INCLUDE_SYS		=	$(HOMEBREW_PREFIX)/opt/readline/include
 LIB_SYS			=	$(HOMEBREW_PREFIX)/opt/readline/lib
-CFLAGS			=	-Wall  -Wextra -MMD -g #-fsanitize=address #удобно сразу смотреть где читаем память мимо\
+CFLAGS			=	-Wall  -Wextra -MMD -g -fsanitize=address #удобно сразу смотреть где читаем память мимо\
 													# make && Leaks --atExit -- ./minishell
 all				:	libmake $(NAME_M)
 

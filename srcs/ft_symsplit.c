@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 20:32:06 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/06 23:01:19 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/07 21:03:36 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	ft_symsplit(t_info *data)
 	data->token_head = data->tokens;
 	while (data->token_head)
 	{
-		// ft_strparse(data);
+		ft_strparse(data);
 		data->token_head = data->token_head->next;
 	}
 	if (data->tokens)
