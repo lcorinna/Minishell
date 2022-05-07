@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/04/27 21:27:27 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/07 23:45:07 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 
 # define SPACES			" \f\n\r\t\v"
 # define QUOTES			"\'\""
+# define SYMBOLS		"<|>"
 # define LEXER_ERROR	101
 # define UNDEFINED		-1
 # define IS_SPACE		0
@@ -72,7 +73,6 @@ typedef struct s_token
 {
 	char			*str_val;
 	int				type;
-	int				in_quotes;
 	struct s_token	*next;
 	struct s_token	*prev;
 
@@ -91,7 +91,9 @@ typedef struct s_info
 	int				exit_f;
 	int				status;
 	t_token			*tokens;
-
+	t_token			*token_head;
+	t_llist			*envp_head;
+	
 	t_malloc		free_me;
 
 }	t_info;
@@ -123,20 +125,30 @@ void		ft_clean_struct(t_info *data);
 void		ft_error_exit(t_info *data, int i);
 
 /* lexer.c */
+void		ft_set_flags(int *single_q, int *double_q, char *str, int k);
 int			ft_get_tokens(char *str, t_info *data);
 void		ft_set_tokens_type(t_info *data);
-
 
 /* lexer_utils.c */
 t_token		*ft_token_lstnew(char *value);
 int			ft_token_lstsize(t_token *head);
 t_token		*ft_token_lstlast(t_token *head);
 void		ft_token_lstadd_front(t_token **head, t_token *new);
-void		ft_token_lstadd_back(t_token **head, t_token *new, int in_quotes);
+void		ft_token_lstadd_back(t_token **head, t_token *new);
 
 /* lexer_utils_2.c */
 t_token		*ft_token_last_but_one(t_token *head);
 void		ft_token_dellast(t_token **head);
 void		ft_token_lstclear(t_token **head);
+void		ft_token_lstadd_prev(t_token *head, t_token *new);
+void		ft_token_lstadd_next(t_token *head, t_token *new);
+
+/* lexer_env_var.c */
+// int			ft_search(const char *str, int c);
+void		ft_expand(t_info *data);
+
+/* ft_symsplit.c */
+int			ft_check_quotes(char *str, int index);
+void		ft_symsplit(t_info *data);
 
 #endif

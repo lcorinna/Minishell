@@ -6,25 +6,30 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/17 21:17:51 by merlich           #+#    #+#             */
-/*   Updated: 2022/04/27 21:29:12 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/07 23:44:04 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 t_token	*ft_token_lstnew(char *value)
 {
 	t_token	*new;
 
-	new = malloc(sizeof(t_token));
-	if (NULL == new)
+	new = NULL;
+	if (value && value[0] != '\0')
 	{
-		return (NULL);
+		new = malloc(sizeof(t_token));
+		if (NULL == new)
+		{
+			free(value);
+			return (NULL);  // Отправить сигнал, в основной цикл while о переходе
+		}					// на следующую итерацию (continue) с очисткой памяти
+		new->str_val = value; // выделенной на текущей итерации
+		new->type = UNDEFINED;
+		new->next = NULL;
+		new->prev = NULL;
 	}
-	new->str_val = value;
-	new->type = UNDEFINED;
-	new->next = NULL;
-	// new->prev = NULL;
 	return (new);
 }
 
@@ -57,18 +62,20 @@ void	ft_token_lstadd_front(t_token **head, t_token *new)
 {
 	if (NULL != new)
 	{
+		new->prev = NULL;
 		new->next = *head;
+		if (*head)
+			(*head)->prev = new;
 		*head = new;
 	}
 }
 
-void	ft_token_lstadd_back(t_token **head, t_token *new, int in_quotes)
+void	ft_token_lstadd_back(t_token **head, t_token *new)
 {
 	t_token	*lst_last;
 
 	if (NULL != new)
 	{
-		new->in_quotes = in_quotes;
 		lst_last = ft_token_lstlast(*head);
 		if (lst_last == NULL)
 		{
@@ -77,6 +84,8 @@ void	ft_token_lstadd_back(t_token **head, t_token *new, int in_quotes)
 		else
 		{
 			lst_last->next = new;
+			new->prev = lst_last;
+			new->next = NULL;
 		}
 	}
 }

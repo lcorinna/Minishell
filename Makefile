@@ -6,14 +6,16 @@
 #    By: merlich <merlich@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/20 19:17:52 by lcorinna          #+#    #+#              #
-#    Updated: 2022/04/19 22:53:08 by merlich          ###   ########.fr        #
+#    Updated: 2022/05/07 21:53:33 by merlich          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME_M			=	minishell
-#test.c
-FILES			=	envp.c	llist.c	ft_readline.c	exit.c	\
-					lexer.c lexer_utils.c lexer_utils_2.c
+
+FILES			=	minishell.c	envp.c	llist.c	ft_readline.c	exit.c	\
+					lexer.c	lexer_utils.c	lexer_utils_2.c	lexer_env_var.c \
+					ft_symsplit.c
+					
 					#
 					# 	builtins/builtins.c 		builtins/cd.c					\
 					# 	builtins/unset.c			builtins/echo.c					\
@@ -45,7 +47,7 @@ DEP				=	$(SRC:.c=.d)
 INCLUDE			=	./includes
 INCLUDE_SYS		=	$(HOMEBREW_PREFIX)/opt/readline/include
 LIB_SYS			=	$(HOMEBREW_PREFIX)/opt/readline/lib
-CFLAGS			=	-Wall  -Wextra -MMD -g #-fsanitize=address #удобно сразу смотреть где читаем память мимо\
+CFLAGS			=	-Wall  -Wextra -MMD -g -fsanitize=address #удобно сразу смотреть где читаем память мимо\
 													# make && Leaks --atExit -- ./minishell
 all				:	libmake $(NAME_M)
 
