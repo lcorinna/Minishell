@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 21:05:32 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/06 22:25:47 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/08 22:25:05 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,64 +75,38 @@ int	ft_get_tokens(char *str, t_info *data)
 	return (0);
 }
 
-// static int	ft_get_type(char *str)
-// {
-// 	if (!ft_strncmp(str, "\'", ft_strlen(str)))
-// 		return (FIELD);
-// 	else if (!ft_strncmp(str, "\"", ft_strlen(str)))
-// 		return (EXP_FIELD);
-// 	else if (!ft_strncmp(str, ">", ft_strlen(str)))
-// 		return (REDIR_OUT);
-// 	else if (!ft_strncmp(str, "<", ft_strlen(str)))
-// 		return (REDIR_IN);
-// 	else if (!ft_strncmp(str, ">>", ft_strlen(str)))
-// 		return (REDIR_APPEND);
-// 	else if (!ft_strncmp(str, "<<", ft_strlen(str)))
-// 		return (REDIR_INSOURCE);
-// 	else if (!ft_strncmp(str, "|", ft_strlen(str)))
-// 		return (PIPE);
-// 	else if (!ft_strncmp(str, "&&", ft_strlen(str)))
-// 		return (IF_AND);
-// 	else if (!ft_strncmp(str, "||", ft_strlen(str)))
-// 		return (IF_OR);
-// 	else if (!ft_strncmp(str, "(", ft_strlen(str)))
-// 		return (PARN_L);
-// 	else if (!ft_strncmp(str, ")", ft_strlen(str)))
-// 		return (PARN_R);
-// 	else if (!ft_strncmp(str, " ", ft_strlen(str)))
-// 		return (IS_SPACE);
-// 	else
-// 		return (WORD);
-// }
+static int	ft_get_type(char *str)
+{
+	if (!ft_strncmp(str, ">", ft_strlen(str)))
+		return (REDIR_OUT);
+	else if (!ft_strncmp(str, "<", ft_strlen(str)))
+		return (REDIR_IN);
+	else if (!ft_strncmp(str, "|", ft_strlen(str)))
+		return (PIPE);
+	else if (!ft_strncmp(str, "(", ft_strlen(str)))
+		return (PARN_L);
+	else if (!ft_strncmp(str, ")", ft_strlen(str)))
+		return (PARN_R);
+	else if (!ft_strncmp(str, ">>", ft_strlen(str)))
+		return (REDIR_APPEND);
+	else if (!ft_strncmp(str, "<<", ft_strlen(str)))
+		return (REDIR_INSOURCE);
+	else if (!ft_strncmp(str, "&&", ft_strlen(str)))
+		return (IF_AND);
+	else if (!ft_strncmp(str, "||", ft_strlen(str)))
+		return (IF_OR);
+	else
+		return (WORD);
+}
 
-// void	ft_set_tokens_type(t_info *data)
-// {
-// 	t_token *head;
+void	ft_set_tokens_type(t_info *data)
+{
+	t_token *head;
 
-// 	head = data->tokens;
-// 	while (head)
-// 	{
-// 		head->type = ft_get_type(head->str_val);
-// 		head = head->next;
-// 	}
-// }
-
-// int main(void)
-// {
-// 	t_info	data;
-// 	t_token *head;
-
-// 	char *str = "cat          >	$9 $	$USER;	   '\"file	$ $USER1; $USER2  \"'ffff user  | $USER3 cat< file";
-// 	data = (t_info){};
-	
-// 	ft_get_tokens(str, &data);
-// 	ft_expand(&data);
-// 	// ft_set_tokens_type(&data);
-// 	head = data.tokens;
-// 	while (head)
-// 	{
-// 		printf("string == %s\n", head->str_val);
-// 		// printf("type == %d\n\n", head->type);
-// 		head = head->next;
-// 	}
-// }
+	head = data->tokens;
+	while (head)
+	{
+		head->type = ft_get_type(head->str_val);
+		head = head->next;
+	}
+}

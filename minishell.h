@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/07 22:19:19 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/08 23:24:31 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@
 
 # define SPACES			" \f\n\r\t\v"
 # define QUOTES			"\'\""
-# define SYMBOLS		"<|>"
+# define SYMBOLS		"<|>()&"
 # define LEXER_ERROR	101
 # define UNDEFINED		-1
-# define IS_SPACE		0
+// # define IS_SPACE		0
 # define WORD			1
-# define FIELD			2
-# define EXP_FIELD		3
+// # define FIELD			2
+// # define EXP_FIELD		3
 # define REDIR_OUT		4
 # define REDIR_IN		5
 # define REDIR_APPEND	6
@@ -49,6 +49,23 @@
 # define IF_OR			10
 # define PARN_L			11
 # define PARN_R			12
+
+typedef struct s_cmds
+{
+	int				infile;
+	int				outfile;
+	char			*cmd_path;
+	char			*cmd_argv;
+	struct s_cmds	*next;
+
+}	t_cmds;
+
+typedef struct s_group
+{
+	t_cmds			*cmds_head;
+	struct s_group	*next;
+
+}	t_group;
 
 typedef struct s_llist
 {
@@ -94,6 +111,8 @@ typedef struct s_info
 	t_token			*token_head;
 	t_llist			*envp_head;
 	
+	t_group			*group_head;
+
 	t_malloc		free_me;
 
 }	t_info;
@@ -137,11 +156,13 @@ void		ft_token_lstadd_front(t_token **head, t_token *new);
 void		ft_token_lstadd_back(t_token **head, t_token *new);
 
 /* lexer_utils_2.c */
-t_token		*ft_token_last_but_one(t_token *head);
-void		ft_token_dellast(t_token **head);
+// t_token		*ft_token_last_but_one(t_token *head);
+// void		ft_token_dellast(t_token **head);
+void		ft_token_lstdelone(t_token *lst);
 void		ft_token_lstclear(t_token **head);
 void		ft_token_lstadd_prev(t_token *head, t_token *new);
 void		ft_token_lstadd_next(t_token *head, t_token *new);
+void		ft_token_lstmerge_next(t_token *node);
 
 /* lexer_env_var.c */
 // int			ft_search(const char *str, int c);

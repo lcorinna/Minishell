@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 21:11:40 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/07 22:19:06 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/08 22:12:17 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void	ft_replace(t_info *data)
 	char	*s3;
 
 	s0 = data->token_head->str_val;
-	printf("---------\ns0 = %s\n---------\n", s0);	
+	// printf("---------\ns0 = %s\n---------\n", s0);	
 	ind = ft_excluding_search(s0);
 	s1 = ft_substr(s0, 0, ind);
 	s2 = NULL;
@@ -100,7 +100,6 @@ static void	ft_interpret(t_info *data)
 	char 	*str;
 	char	*sub_str;
 
-	// str = ft_strchr(data->token_head->str_val, '$');
 	str = data->token_head->str_val + ft_excluding_search(data->token_head->str_val);
 	sub_str = NULL;
 	while (str[0] != '\0')
@@ -108,7 +107,6 @@ static void	ft_interpret(t_info *data)
 		if (str[1] == '?')
 		{
 			ft_replace_2(data);
-			// str = ft_strchr(data->token_head->str_val, '$');
 			str = data->token_head->str_val + ft_excluding_search(data->token_head->str_val);
 		}
 		else if (str[1] == '_' || ft_isalnum(str[1]))
@@ -118,13 +116,9 @@ static void	ft_interpret(t_info *data)
 			while (data->envp_head && ft_strncmp(sub_str, data->envp_head->key, ft_strlen(sub_str) + ft_strlen(data->envp_head->key)))
 				data->envp_head = data->envp_head->next;
 			ft_replace(data);
-			// str = ft_strchr(data->token_head->str_val, '$');
 			str = data->token_head->str_val + ft_excluding_search(data->token_head->str_val);
 			free(sub_str);
 		}
-		// else
-		// 	str = ft_strchr(str + 1, '$');
-			// str = ft_excluding_strchr(str + 1);
 	}
 }
 
@@ -139,19 +133,4 @@ void	ft_expand(t_info *data)
 		ft_interpret(data);
 		data->token_head = data->token_head->next;   
 	}
-	// data->token_head = data->tokens;
 }
-
-// int	main(void)
-// {
-// 	char	*s = "$USER>*()";
-
-// 	s = ft_substr(s + 1, 0, ft_find_index(s + 1));
-	
-// 	printf("ENV = %s\n", s);
-// 	printf("index = %d\n", ft_find_index(s));
-
-	
-	
-// 	return (0);
-// }

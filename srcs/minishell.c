@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:33:09 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/06 23:59:54 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/08 23:59:06 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,34 +23,30 @@ int	main(int argc, char **argv, char **envp)
 	while (!data.exit_f)
 	{
 		ft_token_lstclear(&data.tokens);  // А: Чистим выделенную память,
-		data.tokens = NULL;				 // выделенную на предыдущей итерации (НЕ ПЕРЕДВИГАТЬ!)
+		// data.tokens = NULL;			 // выделенную на предыдущей итерации (НЕ ПЕРЕДВИГАТЬ!)
+		// Очистка t_group
 		if (data.envp_f)
 			ft_array_envp(&data); //переписываю наш envp, если это нужно
 		ft_readline(&data);
 		if (!data.free_me.str) //обработка сигнала "control + d"
 			break ;
-
-	
-
-		// char *str = "cat          >	$9 $	$USER;	   '\"file	$ $USER1; $USER2  \"'ffff user  | $USER3 cat< file"; просто тестовая строка
-		// if (!ft_strncmp(data.free_me.str, "\n", 1))
-		// 	continue ;
 		// lexer
 		if (ft_get_tokens(data.free_me.str, &data))
 			continue ;
 		ft_expand(&data);
 		ft_symsplit(&data);
-		// ft_set_tokens_type(&data);
+		ft_set_tokens_type(&data);
 		data.token_head = data.tokens;
 		printf("------------------\n");
-		while (data.token_head)  // УТЕЧКИ на $PWD... тут - это не страшно, этот принт нужен просто для наглядности в процессе разработки
+		while (data.token_head)
 		{
 			printf("string = %s\n", data.token_head->str_val);
-			// printf("type == %d\n\n", head->type);
+			printf("type == %d\n\n", data.token_head->type);
 			data.token_head = data.token_head->next;
 		}
 		printf("------------------\n");
 		// parser
+		
 		// executor
 	}
 	ft_token_lstclear(&data.tokens);
