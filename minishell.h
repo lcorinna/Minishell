@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/08 23:24:31 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/10 22:27:59 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,5 +171,23 @@ void		ft_expand(t_info *data);
 /* ft_symsplit.c */
 int			ft_check_quotes(char *str, int index);
 void		ft_symsplit(t_info *data);
+
+/* parser.c */
+void		ft_get_cmds(t_info *data);
+
+
+/* parser_cmd_utils.c */
+t_cmds		*ft_cmd_lstnew(void);
+t_cmds		*ft_cmd_lstlast(t_cmds *head);
+void		ft_cmd_lstadd_front(t_cmds **head, t_cmds *new);
+void		ft_cmd_lstadd_back(t_cmds **head, t_cmds *new);
+void		ft_cmd_lstclear(t_cmds **head);
+
+/* parser_group_utils.c */
+t_group		*ft_group_lstnew(void);
+t_group		*ft_group_lstlast(t_group *head);
+void		ft_group_lstadd_front(t_group **head, t_group *new);
+void		ft_group_lstadd_back(t_group **head, t_group *new);
+void		ft_group_lstclear(t_group **head);
 
 #endif

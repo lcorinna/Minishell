@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:33:09 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/08 23:59:06 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/10 23:18:11 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@ int	main(int argc, char **argv, char **envp)
 	// ft_signal(); //буду делать в конце
 	while (!data.exit_f)
 	{
-		ft_token_lstclear(&data.tokens);  // А: Чистим выделенную память,
-		// data.tokens = NULL;			 // выделенную на предыдущей итерации (НЕ ПЕРЕДВИГАТЬ!)
+		ft_token_lstclear(&data.tokens);  	// А: Чистим выделенную память,
+		data.tokens = NULL;					 // выделенную на предыдущей итерации (НЕ ПЕРЕДВИГАТЬ!)
+		ft_group_lstclear(&data.group_head);
+		data.group_head = NULL;
 		// Очистка t_group
 		if (data.envp_f)
 			ft_array_envp(&data); //переписываю наш envp, если это нужно
