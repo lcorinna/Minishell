@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 21:05:32 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/08 22:25:05 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/11 22:03:06 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,11 @@ int	ft_get_tokens(char *str, t_info *data)
 		{
 			sub_str = ft_substr(str, 0, i);
 			ft_token_lstadd_back(&data->tokens, ft_token_lstnew(sub_str));
-			// ft_token_lstadd_back(&data->tokens, ft_token_lstnew(" "));
 		}
 		else if (str[i] && i == 0)
 			i++;
 		str = str + i;
 	}
-	// ft_token_dellast(&data->tokens);
 	return (0);
 }
 
@@ -83,6 +81,8 @@ static int	ft_get_type(char *str)
 		return (REDIR_IN);
 	else if (!ft_strncmp(str, "|", ft_strlen(str)))
 		return (PIPE);
+	else if (!ft_strncmp(str, "&", ft_strlen(str)))
+		return (AND);
 	else if (!ft_strncmp(str, "(", ft_strlen(str)))
 		return (PARN_L);
 	else if (!ft_strncmp(str, ")", ft_strlen(str)))

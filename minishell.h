@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/10 22:27:59 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/11 23:58:41 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@
 # define REDIR_APPEND	6
 # define REDIR_INSOURCE	7
 # define PIPE			8
+# define AND			13
 # define IF_AND			9
 # define IF_OR			10
 # define PARN_L			11
@@ -135,13 +136,16 @@ void		ft_lstadd_front(t_llist **lst, t_llist *new);
 t_llist		*ft_lstlast(t_llist *lst);
 void		ft_lstadd_back(t_llist **lst, t_llist *new);
 
-void		ft_readline(t_info *data);
+void		ft_readline(t_info *data, char *prompt, int print_exit);
 
 int			ft_cleaning_str(char *str);
 int			ft_cleaning_array(char **arr);
 void		ft_clean_envp_list(t_info *data);
 void		ft_clean_struct(t_info *data);
 void		ft_error_exit(t_info *data, int i);
+
+/* minishell.c */
+int			ft_lexer(t_info *data);
 
 /* lexer.c */
 void		ft_set_flags(int *single_q, int *double_q, char *str, int k);

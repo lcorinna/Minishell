@@ -6,7 +6,7 @@
 #    By: merlich <merlich@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/20 19:17:52 by lcorinna          #+#    #+#              #
-#    Updated: 2022/05/08 23:21:21 by merlich          ###   ########.fr        #
+#    Updated: 2022/05/11 21:34:07 by merlich          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@ NAME_M			=	minishell
 
 FILES			=	minishell.c	envp.c	llist.c	ft_readline.c	exit.c	\
 					lexer.c	lexer_utils.c	lexer_utils_2.c	lexer_env_var.c \
-					ft_symsplit.c
+					ft_symsplit.c parser_cmd_utils.c parser_group_utils.c \
+					parser.c
 					
 					#
 					# 	builtins/builtins.c 		builtins/cd.c					\

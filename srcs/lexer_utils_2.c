@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 22:51:34 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/08 23:06:04 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/11 21:49:32 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	ft_token_lstclear(t_token **head)
 		tmp = *head;
 		*head = tmp->next;
 		ft_token_lstdelone(tmp);
-		// if (ft_strncmp(tmp->str_val, " ", ft_strlen(tmp->str_val)))
+		// // if (ft_strncmp(tmp->str_val, " ", ft_strlen(tmp->str_val)))
 		// free(tmp->str_val);
 		// free(tmp);
 	}
@@ -114,7 +114,8 @@ void	ft_token_lstmerge_next(t_token *node)
 		free(old_str_val);
 		ft_token_lstdelone(node->next);
 		node->next = tmp;
-		tmp->prev = node;
+		if (tmp != NULL)
+			tmp->prev = node;
 	}
 }
 

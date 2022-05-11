@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 20:32:06 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/08 23:30:55 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/11 21:49:14 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static void	ft_strparse(t_info *data)
 static void	ft_merge(t_info *data)
 {
 	data->token_head = data->tokens;
-	while (data->token_head->next)
+	while (data->token_head && data->token_head->next)
 	{
 		if (data->token_head->type != WORD \
 			&& data->token_head->type != PARN_L \
