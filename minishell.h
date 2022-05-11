@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/07 23:45:07 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/11 21:16:16 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,23 @@
 # define PARN_L			11
 # define PARN_R			12
 
+typedef struct s_cmds
+{
+	int				infile;
+	int				outfile;
+	char			*cmd_path;
+	char			*cmd_argv;
+	struct s_cmds	*next;
+
+}	t_cmds;
+
+typedef struct s_group
+{
+	t_cmds			*cmds_head;
+	struct s_group	*next;
+
+}	t_group;
+
 typedef struct s_llist
 {
 	void			*key;
@@ -85,7 +102,7 @@ typedef struct s_info
 	char			*res_words[7];
 	char			**envp;
 	t_llist			*envp_list; //функция для чистки ft_clean_envp_list
-	char			**path;
+	char			**path; //использую в executor
 	pid_t			pid;
 	int				envp_f;
 	int				exit_f;
@@ -93,7 +110,9 @@ typedef struct s_info
 	t_token			*tokens;
 	t_token			*token_head;
 	t_llist			*envp_head;
-	
+
+	t_group			*group_head;
+
 	t_malloc		free_me;
 
 }	t_info;
@@ -105,7 +124,7 @@ typedef int	(*t_buildin_ptr)(t_llist *, t_info *); //Д:не понимаю чт
 													// см. комментарий выше... 
 
 
-
+char		*ft_strjoin_three(char *s1, char *s2, char *s3);
 void		ft_array_envp(t_info *data);
 int			ft_envp2(char *envp, char **key, char **value, int j);
 void		ft_envp(t_info *data);
@@ -150,5 +169,8 @@ void		ft_expand(t_info *data);
 /* ft_symsplit.c */
 int			ft_check_quotes(char *str, int index);
 void		ft_symsplit(t_info *data);
+
+/*executor*/
+int			ft_executor(t_info *data);
 
 #endif
