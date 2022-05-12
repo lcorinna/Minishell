@@ -6,22 +6,26 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/11 23:58:41 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/12 23:50:58 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "libft/libft.h"
+#ifndef BUFFER_SIZE
+# define BUFFER_SIZE 1024
+#endif
 
+# include "libft/libft.h"
 # include <stdlib.h>
 # include <stdio.h>
-
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/wait.h>
 # include <signal.h>
+# include <sys/types.h>
+# include <sys/uio.h>
 # include <unistd.h>
 # include <sys/stat.h>
 # include <dirent.h>
@@ -30,7 +34,9 @@
 # include <string.h>
 # include <curses.h>
 # include <term.h>
+# include <fcntl.h>
 
+# define SHELL			"minishell$ "
 # define SPACES			" \f\n\r\t\v"
 # define QUOTES			"\'\""
 # define SYMBOLS		"<|>()&"
@@ -180,6 +186,13 @@ void		ft_symsplit(t_info *data);
 void		ft_get_cmds(t_info *data);
 
 
+/* ft_check_redir_insource.c */
+void		ft_check_redir_insource(t_info *data);
+// void		ft_print_error(t_info *data, char *msg);
+
+/* ft_check_redir_in.c */
+void		ft_check_redir_in(t_info *data);
+
 /* parser_cmd_utils.c */
 t_cmds		*ft_cmd_lstnew(void);
 t_cmds		*ft_cmd_lstlast(t_cmds *head);
@@ -193,5 +206,13 @@ t_group		*ft_group_lstlast(t_group *head);
 void		ft_group_lstadd_front(t_group **head, t_group *new);
 void		ft_group_lstadd_back(t_group **head, t_group *new);
 void		ft_group_lstclear(t_group **head);
+
+/* get_next_line.c */
+char		*get_next_line(int fd);
+size_t		ft_search(char *s, char c);
+
+/* get_next_line_utils.c */
+char		*ft_str_chr(const char *s, int c);
+void		ft_str_dup(const char *str, char *ptr);
 
 #endif

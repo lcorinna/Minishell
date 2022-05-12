@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:33:09 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/12 00:01:56 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/12 22:47:45 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	ft_lexer(t_info *data)
 		ft_readline(data, "> ", 0);
 		if (!data->free_me.str) //обработка сигнала "control + d"
 		{
-			printf("minishell: syntax error: unexpected end of file\n");
+			printf("\x1b[F> %s\b\b: syntax error: unexpected end of file\n", SHELL);
 			return (LEXER_ERROR);
 		}
 		if (ft_lexer(data))
@@ -59,7 +59,7 @@ int	main(int argc, char **argv, char **envp)
 		ft_group_lstclear(&data.group_head);  // Очистка t_group
 		if (data.envp_f)
 			ft_array_envp(&data); //переписываю наш envp, если это нужно
-		ft_readline(&data, "minishell$ ", 1);
+		ft_readline(&data, SHELL, 1);
 		if (!data.free_me.str) //обработка сигнала "control + d"
 			break ;
 		// lexer
@@ -75,7 +75,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		printf("------------------\n");
 		// parser
-		// ft_get_cmds(&data);
+		ft_get_cmds(&data);
 		// executor
 	}
 	ft_token_lstclear(&data.tokens);

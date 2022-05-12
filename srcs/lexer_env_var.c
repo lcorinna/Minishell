@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 21:11:40 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/08 22:12:17 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/12 22:39:33 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,18 @@ static int	ft_find_index(char *str)
 	return (i);
 }
 
-static int	ft_search(const char *str, int c)
-{
-	size_t	i;
+// static int	ft_search(const char *str, int c)
+// {
+// 	size_t	i;
 
-	i = 0;
-	if (str)
-	{
-		while (str[i] != '\0' && (unsigned char) str[i] != (unsigned char) c)
-			i++;
-	}
-	return (i);
-}
+// 	i = 0;
+// 	if (str)
+// 	{
+// 		while (str[i] != '\0' && (unsigned char) str[i] != (unsigned char) c)
+// 			i++;
+// 	}
+// 	return (i);
+// }
 
 static int	ft_excluding_search(char *s)
 {

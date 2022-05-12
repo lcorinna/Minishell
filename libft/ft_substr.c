@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 14:26:46 by merlich           #+#    #+#             */
-/*   Updated: 2022/04/29 23:32:26 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/12 22:34:30 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	s_len = ft_strlen(s);
 	if (len > s_len)
 		size = s_len;
-	sub_str = malloc(size + 1);
+	sub_str = malloc(sizeof(char) * (size + 1));
 	if (NULL == sub_str)
 		return (NULL);
 	else if (!((*s == '\0') || (start >= s_len)))

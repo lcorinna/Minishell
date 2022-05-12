@@ -1,42 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/07 15:22:42 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/12 22:32:03 by merlich          ###   ########.fr       */
+/*   Created: 2021/11/23 15:17:38 by merlich           #+#    #+#             */
+/*   Updated: 2022/05/12 22:34:46 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-char	*ft_strjoin(char const	*s1, char const	*s2)
+char	*ft_str_chr(const char *s, int c)
 {
 	size_t	i;
-	char	*new_str;
+	char	*res;
 
 	i = 0;
-	if (s1 == NULL || s2 == NULL)
-		return (NULL);
-	new_str = malloc((sizeof(char)) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-	if (NULL == new_str)
-		return (NULL);
-	else
+	res = "";
+	while (i < ft_strlen(s))
 	{
-		while (s1[i] != '\0')
+		if ((unsigned char) s[i] == (unsigned char) c)
 		{
-			new_str[i] = s1[i];
-			i++;
+			res = (char *)s + i + 1;
+			return (res);
 		}
-		while (*s2 != '\0')
-		{
-			new_str[i] = *s2;
-			i++;
-			s2++;
-		}
-		new_str[i] = '\0';
-		return (new_str);
+		i++;
 	}
+	return (res);
+}
+
+void	ft_str_dup(const char *str, char *ptr)
+{
+	int		i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		ptr[i] = str[i];
+		i++;
+	}
+	ptr[i] = '\0';
 }
