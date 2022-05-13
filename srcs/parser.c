@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 22:09:17 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/12 23:57:12 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/13 20:39:24 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	ft_fill_cmd(t_info *data)
 	{
 		ft_check_redir_insource(data);
 		ft_check_redir_in(data);
-		ft_check_redir_out(data);
+		// ft_check_redir_out(data);
 		
 		// else if (data->token_head->type == REDIR_APPEND)
 		// {

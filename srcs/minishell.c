@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:33:09 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/12 22:47:45 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/13 20:38:52 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	main(int argc, char **argv, char **envp)
 	t_info				data;
 
 	data = (t_info){};
-	
+	printf("fd = %d\n", open("srcs/envp.c", O_RDONLY));
 	ft_transfer(argc, argv, envp, &data);
 	// ft_signal(); //буду делать в конце
 	while (!data.exit_f)
@@ -75,7 +75,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		printf("------------------\n");
 		// parser
-		ft_get_cmds(&data);
+		// ft_get_cmds(&data);
 		// executor
 	}
 	ft_token_lstclear(&data.tokens);

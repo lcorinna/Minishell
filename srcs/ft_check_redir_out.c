@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 23:34:08 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/13 00:06:05 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/13 20:39:18 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	ft_print_error(t_info *data, char *outfile)
 	exit(1); // Отправляем сигнал в main о переходе на новый виток цикла while
 }
 
-void	ft_check_redir_in(t_info *data)
+void	ft_check_redir_out(t_info *data)
 {
 	char	*outfile;
 
