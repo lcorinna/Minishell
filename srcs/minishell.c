@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:33:09 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/12 22:47:45 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/13 19:49:37 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,13 @@ int	main(int argc, char **argv, char **envp)
 	t_info				data;
 
 	data = (t_info){};
-	
 	ft_transfer(argc, argv, envp, &data);
 	// ft_signal(); //буду делать в конце
 	while (!data.exit_f)
 	{
 		ft_token_lstclear(&data.tokens);  	// А: Чистим выделенную память
 		ft_group_lstclear(&data.group_head);  // Очистка t_group
+		// data.envp_f = 1; //проверяю как перезаписывается наш envp из односвязного списка t_llist //del
 		if (data.envp_f)
 			ft_array_envp(&data); //переписываю наш envp, если это нужно
 		ft_readline(&data, SHELL, 1);
@@ -70,13 +70,15 @@ int	main(int argc, char **argv, char **envp)
 		while (data.token_head)
 		{
 			printf("string = %s\n", data.token_head->str_val);
-			printf("type == %d\n\n", data.token_head->type);
+			// printf("type == %d\n\n", data.token_head->type);
 			data.token_head = data.token_head->next;
 		}
 		printf("------------------\n");
 		// parser
-		ft_get_cmds(&data);
+		// ft_get_cmds(&data);
 		// executor
+		// if (ft_executor(&data))
+		// 	printf("im found mistake in executor\n"); //del
 	}
 	ft_token_lstclear(&data.tokens);
 	ft_group_lstclear(&data.group_head);

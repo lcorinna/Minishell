@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_env_var.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 21:11:40 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/12 22:39:33 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/13 12:05:05 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ static void	ft_replace_2(t_info *data)
 
 static void	ft_interpret(t_info *data)
 {
-	char 	*str;
+	char	*str;
 	char	*sub_str;
 
 	str = data->token_head->str_val + ft_excluding_search(data->token_head->str_val);
@@ -124,13 +124,13 @@ static void	ft_interpret(t_info *data)
 
 void	ft_expand(t_info *data)
 {
-	t_token *tmp;
+	t_token	*tmp;
 
 	tmp = NULL;
 	data->token_head = data->tokens;
 	while (data->token_head)
 	{
 		ft_interpret(data);
-		data->token_head = data->token_head->next;   
+		data->token_head = data->token_head->next;
 	}
 }

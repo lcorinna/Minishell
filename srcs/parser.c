@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 22:09:17 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/12 23:57:12 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/13 12:06:55 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+/*
 static void	ft_fill_cmd(t_info *data)
 {
 	// t_cmds	*cmd_head;
@@ -50,7 +51,8 @@ void	ft_get_cmds(t_info *data)
 		if (data->token_head && data->token_head->type == PIPE)
 			data->token_head = data->token_head->next;
 	}
-}
+} 
+*/
 
 // int	main(void)
 // {
@@ -70,7 +72,7 @@ void	ft_get_cmds(t_info *data)
 // 		printf("%d\n", data.group_head->cmds_head->infile);
 // 		// head = head->next;
 // 	}
-	
+
 // 	ft_group_lstclear(&data.group_head);
 // 	return (0);
 // }

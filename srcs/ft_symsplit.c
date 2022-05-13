@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_symsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 20:32:06 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/11 21:49:14 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/13 18:00:54 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ static void	ft_strparse(t_info *data)
 			curr_elem->str_val = ft_substr(str, i, 1);
 			ft_token_lstadd_prev(curr_elem, ft_token_lstnew(ft_substr(str, 0, i)));
 			free(str);
+			str = NULL;
 			return ;
 		}
 		else
@@ -78,7 +79,7 @@ static void	ft_merge(t_info *data)
 	{
 		if (data->token_head->type != WORD \
 			&& data->token_head->type != PARN_L \
-			&& data->token_head->type !=PARN_R \
+			&& data->token_head->type != PARN_R \
 			&& data->token_head->type == data->token_head->next->type)
 			ft_token_lstmerge_next(data->token_head);
 		data->token_head = data->token_head->next;

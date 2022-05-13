@@ -3,23 +3,23 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: merlich <merlich@student.42.fr>            +#+  +:+       +#+         #
+#    By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/20 19:17:52 by lcorinna          #+#    #+#              #
-#    Updated: 2022/05/12 23:46:22 by merlich          ###   ########.fr        #
+#    Updated: 2022/05/13 11:57:29 by lcorinna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME_M			=	minishell
 
-FILES			=	minishell.c envp.c llist.c ft_readline.c exit.c	\
-					lexer.c	lexer_utils.c lexer_utils_2.c lexer_env_var.c \
+FILES			=	minishell.c envp.c llist.c ft_readline.c exit.c \
+					lexer.c lexer_utils.c lexer_utils_2.c lexer_env_var.c \
 					ft_symsplit.c parser_cmd_utils.c parser_group_utils.c \
 					parser.c get_next_line.c get_next_line_utils.c \
 					ft_check_redir_insource.c ft_check_redir_in.c \
+					executor.c 
 					
-					
-					#
+
 					# 	builtins/builtins.c 		builtins/cd.c					\
 					# 	builtins/unset.c			builtins/echo.c					\
 					# 	builtins/pwd.c				builtins/export.c				\
@@ -50,7 +50,7 @@ DEP				=	$(SRC:.c=.d)
 INCLUDE			=	./includes
 INCLUDE_SYS		=	$(HOMEBREW_PREFIX)/opt/readline/include
 LIB_SYS			=	$(HOMEBREW_PREFIX)/opt/readline/lib
-CFLAGS			=	-Wall  -Wextra -MMD -g -fsanitize=address #удобно сразу смотреть где читаем память мимо\
+CFLAGS			=	-Wall -Wextra -MMD -g -fsanitize=address #удобно сразу смотреть где читаем память мимо\
 													# make && Leaks --atExit -- ./minishell
 all				:	libmake $(NAME_M)
 
@@ -60,7 +60,7 @@ libmake			:
 
 bonus			:	all
 
-$(NAME_M)			:	$(OBJ) ${LIBFT} #Д: это норм что в таких скобках?
+$(NAME_M)		:	$(OBJ) $(LIBFT)
 					cc $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME_M) -lreadline -L$(LIB_SYS)
 
 %.o				:	%.c Makefile

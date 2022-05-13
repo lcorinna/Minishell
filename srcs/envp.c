@@ -3,14 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   envp.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 12:52:50 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/04/28 22:53:29 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/13 11:23:00 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+char	*ft_strjoin_three(char *s1, char *s2, char *s3)
+{
+	size_t	i;
+	char	*new_str;
+
+	i = -1;
+	if (s1 == NULL || s2 == NULL || s3 == NULL)
+		return (NULL);
+	new_str = malloc(ft_strlen(s1) + ft_strlen(s2) + ft_strlen(s3) + 1);
+	if (NULL == new_str)
+		return (NULL);
+	while (s1[++i] != '\0')
+		new_str[i] = s1[i];
+	while (*s2 != '\0')
+	{
+		new_str[i++] = *s2;
+		s2++;
+	}
+	while (*s3 != '\0')
+	{
+		new_str[i++] = *s3;
+		s3++;
+	}
+	new_str[i] = '\0';
+	return (new_str);
+}
 
 void	ft_array_envp(t_info *data)
 {
@@ -20,7 +47,7 @@ void	ft_array_envp(t_info *data)
 	i = 0;
 	tmp = data->envp_list;
 	ft_cleaning_array(data->envp); //перед заходом чистим, чтобы избежать утечек
-	while (!tmp)
+	while (tmp)
 	{
 		tmp = tmp->next;
 		i++;
@@ -30,9 +57,10 @@ void	ft_array_envp(t_info *data)
 		ft_error_exit(data, 2);
 	tmp = data->envp_list;
 	i = 0;
-	while (!tmp)
+	while (tmp)
 	{
-		data->envp[i] = ft_strjoin(tmp->key, tmp->value);
+		data->envp[i] = ft_strjoin_three(tmp->key, "=", tmp->value);
+		// printf("data->envp[%d] - %s\n", i, data->envp[i]); //del
 		if (!data->envp[i])
 			ft_error_exit(data, 2);
 		tmp = tmp->next;
@@ -47,7 +75,7 @@ int	ft_envp2(char *envp, char **key, char **value, int j)
 	int	m;
 
 	m = -1;
-	while (envp[j+1] != '=')  // A: 28.04.2022 убрал знак = из key
+	while (envp[j+1] != '=') // A: 28.04.2022 убрал знак = из key
 		j++;
 	*key = malloc(sizeof(char) * (j + 2));
 	if (!*key)
@@ -57,6 +85,7 @@ int	ft_envp2(char *envp, char **key, char **value, int j)
 	(*key)[m] = envp[m];
 	(*key)[++m] = '\0';
 	// printf("\nkey - %s \n", *key); //del ДЕБАГЕР
+	j++;
 	m = j;
 	while (envp[j])
 		j++;

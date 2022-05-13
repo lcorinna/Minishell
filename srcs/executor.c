@@ -6,51 +6,77 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 16:38:53 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/04/17 20:14:37 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/13 19:10:49 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+//посчитать кол-во команд (чтобы понимать кол-во труб, нужны ли)
+//если трубы нужны, то ухожу в ветвление с их созданием
 
-int	ft_creating_a_path(char **envp, int *num)
+void	test_zapolnenie(t_info *data)
 {
-	int	check;
+	t_group	tmp;
+	t_cmds	tmp1;
+	t_cmds	tmp2;
 
-	check = 0;
-	while (envp[*num] != NULL && check != 5)
-		check = ft_memcmp("PATH=", envp[(*num)++], 5);
-	if (check != 5)
-		return (0);
-	(*num)++;
-	return (1);
+	tmp2.infile = 0;
+	tmp2.outfile = 0;
+	tmp2.cmd_path = "bin/cp";
+	tmp2.cmd_argv = "cp";
+	tmp2.next = NULL;
+
+	tmp1.infile = 0;
+	tmp1.outfile = 0;
+	tmp1.cmd_path = "bin/cat";
+	tmp1.cmd_argv = "cat";
+	printf("1 - %p\n", tmp1.next); //del
+	tmp1.next = &tmp2;
+	printf("2 - %p\n", tmp1.next); //del
+	printf("tmp1.cmd_argv - %s\n", tmp1.cmd_argv); //del
+	printf("tmp2.cmd_argv - %s\n\n", tmp1.next->cmd_argv); //del
+	data->group_head = &tmp;
+	// printf("data->group_head - %p\n", data->group_head); //del
+	data->group_head->cmds_head = &tmp1;
+	// printf("tmp1.cmd_argv - %s\n", data->group_head->cmds_head->cmd_argv); //del
+	// printf("tmp2.cmd_argv - %s\n", data->group_head->cmds_head->next->cmd_argv); //del
 }
 
-void	parse_path(t_info *data, int i)
+int	ft_preparation(t_info *data)
 {
-	if (data->envp != NULL && ft_creating_a_path(data->envp, &i))
+	t_cmds		*tmp;
+	t_f_exec	new; //структура для pipex
+	int			i;
+
+	new = (t_f_exec){};
+	i = 0;
+	data->exec = &new;
+	tmp = data->group_head->cmds_head;
+	while (tmp)
 	{
-		data->path = ft_split(data->envp[i] + 5, ':');
-		if (data->path == NULL)
-		{
-			
-		}
+		printf("i - %d\n", i); //del
+		printf("tmp - %p\n", tmp); //del
+		printf("tmp1.cmd_argv - %s\n", tmp->cmd_argv); //del
+		printf("cmd %p\n\n", tmp->cmd_argv); //del
+		tmp = tmp->next;
+		i++;
 	}
+	printf("\ni last - %d\n", i); //del
+	return (0);
 }
 
-void	executor(t_info *data)
+int	ft_executor(t_info *data)
 {
 	int	i;
-	int	check;
 
+	printf("\nstart executor\n"); //del
+	test_zapolnenie(data);
+	printf("tmp1.cmd_argv - %s\n", data->group_head->cmds_head->cmd_argv); //del
+	printf("tmp2.cmd_argv - %s\n", data->group_head->cmds_head->next->cmd_argv); //del
+	// data->group_head->cmds_head = data->group_head->cmds_head->next;
+	// printf("tmp1.cmd_argv - %s\n", data->group_head->cmds_head->cmd_argv); //del
+	printf("\nHERE\n"); //del
+	ft_preparation(data);
 	i = 0;
-	check = 1;
-	parse_path(data, i);
-	while (check != 0 && data->path[i] != NULL)
-		check = access(data->path[i++], F_OK);
-	if (check == -1)
-		ft_exit_with_cleaning(data, NULL, 1); //переделать
-	data->pid = fork();
-	if (data->pid == 0)
-		if (execve(data->path[i], data->free_me.str, data->envp) == -1)
-			ft_exit_with_cleaning(data, NULL, 4); //переделать
+	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 22:51:34 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/11 21:49:32 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/13 12:05:19 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ void	ft_token_lstadd_next(t_token *head, t_token *new)
 				tmp->prev = new;
 		}
 	}
-	
 }
 
 void	ft_token_lstmerge_next(t_token *node)
