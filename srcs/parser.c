@@ -6,11 +6,13 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 22:09:17 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/13 20:39:24 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/13 22:30:56 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "../minishell.h"
+
 
 static void	ft_fill_cmd(t_info *data)
 {
@@ -21,7 +23,7 @@ static void	ft_fill_cmd(t_info *data)
 	{
 		ft_check_redir_insource(data);
 		ft_check_redir_in(data);
-		// ft_check_redir_out(data);
+		ft_check_redir_out(data);
 		
 		// else if (data->token_head->type == REDIR_APPEND)
 		// {
@@ -38,10 +40,7 @@ static void	ft_fill_cmd(t_info *data)
 
 void	ft_get_cmds(t_info *data)
 {
-	// t_cmds	**cmds_head;
-
 	ft_group_lstadd_back(&data->group_head, ft_group_lstnew());  // Если уже разбили на логические группы, закомментировать/удалить
-	// cmds_head = &data->group_head->cmds_head;
 	data->token_head = data->tokens;
 	while (data->token_head)
 	{
@@ -50,7 +49,8 @@ void	ft_get_cmds(t_info *data)
 		if (data->token_head && data->token_head->type == PIPE)
 			data->token_head = data->token_head->next;
 	}
-}
+} 
+
 
 // int	main(void)
 // {
@@ -70,7 +70,7 @@ void	ft_get_cmds(t_info *data)
 // 		printf("%d\n", data.group_head->cmds_head->infile);
 // 		// head = head->next;
 // 	}
-	
+
 // 	ft_group_lstclear(&data.group_head);
 // 	return (0);
 // }

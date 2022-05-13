@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 15:16:50 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/12 22:39:18 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/13 18:02:23 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static char	*ft_get_new_tmp(char *tmp, char *buff)
 	tmp_old = tmp;
 	tmp = ft_strjoin(tmp, buff);
 	free(tmp_old);
+	tmp_old = NULL;
 	return (tmp);
 }
 
@@ -49,9 +50,12 @@ static char	*ft_build_line(char *s, char *tmp, char *buff)
 	str = ft_substr(tmp, 0, index + 1);
 	line = ft_strjoin(s, str);
 	free(str);
+	str = NULL;
 	ft_str_dup(ft_str_chr(buff, '\n'), s);
 	free(buff);
+	buff = NULL;
 	free(tmp);
+	tmp = NULL;
 	return (line);
 }
 

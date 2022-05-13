@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/12 23:50:58 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/13 12:34:54 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-#ifndef BUFFER_SIZE
-# define BUFFER_SIZE 1024
-#endif
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1024
+# endif
 
 # include "libft/libft.h"
 # include <stdlib.h>
@@ -64,7 +64,6 @@ typedef struct s_cmds
 	char			*cmd_path;
 	char			*cmd_argv;
 	struct s_cmds	*next;
-
 }	t_cmds;
 
 typedef struct s_group
@@ -84,13 +83,10 @@ typedef struct s_llist
 
 typedef	struct s_malloc
 {
-	/* Здесь хранятся указатели 
-	на всю выделенную с помощью malloc память */
+	/* Здесь хранятся указатели на всю выделенную с помощью malloc память */
 
 	/* Если malloc, сразу заносим сюда */
-
 	char			*str;
-
 }	t_malloc;
 
 typedef struct s_token
@@ -101,6 +97,12 @@ typedef struct s_token
 	struct s_token	*prev;
 
 }	t_token;
+
+typedef struct s_f_exec
+{
+	int		qtt_cmd;
+	int		**pipe;
+}	t_f_exec;
 
 typedef struct s_info
 {
@@ -117,7 +119,9 @@ typedef struct s_info
 	t_token			*tokens;
 	t_token			*token_head;
 	t_llist			*envp_head;
-	
+
+	t_f_exec		*exec;
+
 	t_group			*group_head;
 
 	t_malloc		free_me;
@@ -130,8 +134,7 @@ typedef int	(*t_buildin_ptr)(t_llist *, t_info *); //Д:не понимаю чт
 													// Эта штука нужна для builin, которые ты пишешь.
 													// см. комментарий выше... 
 
-
-
+char		*ft_strjoin_three(char *s1, char *s2, char *s3);
 void		ft_array_envp(t_info *data);
 int			ft_envp2(char *envp, char **key, char **value, int j);
 void		ft_envp(t_info *data);
@@ -185,7 +188,6 @@ void		ft_symsplit(t_info *data);
 /* parser.c */
 void		ft_get_cmds(t_info *data);
 
-
 /* ft_check_redir_insource.c */
 void		ft_check_redir_insource(t_info *data);
 // void		ft_print_error(t_info *data, char *msg);
@@ -214,5 +216,8 @@ size_t		ft_search(char *s, char c);
 /* get_next_line_utils.c */
 char		*ft_str_chr(const char *s, int c);
 void		ft_str_dup(const char *str, char *ptr);
+
+/* executor */
+int			ft_executor(t_info *data);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 23:34:08 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/13 00:06:44 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/13 22:31:16 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	ft_check_redir_in(t_info *data)
 		else
 		{
 			infile = data->token_head->str_val;
-			data->group_head->cmds_head->infile = open(infile, O_RDONLY);  // Нужно получать абсолютный адрес файла (или относительный)
+			data->group_head->cmds_head->infile = open(infile, O_RDONLY);
 			printf("%d\n", data->group_head->cmds_head->infile);
 			if (data->group_head->cmds_head->infile < 0)
 				ft_print_error(data, infile);
