@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 20:25:41 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/04/17 20:22:53 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/13 23:02:23 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,12 @@ void	ft_clean_envp_list(t_info *data)
 
 void	ft_clean_struct(t_info *data)
 {
-	// if (data->free_me.str) //строка readline кажется, что не нужна??
-	// {
-	// 	printf("1\n"); //del
-	// 	free(data->free_me.str);
-	// 	data->free_me.str = NULL;
-	// }
+	if (data->free_me.str) //строка readline кажется, что не нужна?? Нужна (спроси зачем у Александра)
+	{
+		printf("1\n"); //del
+		free(data->free_me.str);
+		data->free_me.str = NULL;
+	}
 	if (data->envp) //наш envp
 	{
 		// printf("2\n"); //del

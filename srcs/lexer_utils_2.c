@@ -3,39 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 22:51:34 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/13 12:05:19 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/13 22:37:19 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-// t_token	*ft_token_last_but_one(t_token *head)
-// {
-// 	if (head != NULL)
-// 	{
-// 		while (head->next->next != NULL)
-// 		{
-// 			head = head->next;
-// 		}
-// 	}
-// 	return (head);
-// }
-
-// void	ft_token_dellast(t_token **head)
-// {
-// 	t_token	*last;
-// 	t_token *last_but_one;
-
-// 	last_but_one = ft_token_last_but_one(*head);
-// 	last = ft_token_lstlast(*head);
-// 	last_but_one->next = NULL;
-// 	// if (ft_strncmp(last->str_val, " ", ft_strlen(last->str_val)))
-// 	free(last->str_val);
-// 	free(last);
-// }
 
 void	ft_token_lstdelone(t_token *lst)
 {
@@ -55,9 +30,6 @@ void	ft_token_lstclear(t_token **head)
 		tmp = *head;
 		*head = tmp->next;
 		ft_token_lstdelone(tmp);
-		// // if (ft_strncmp(tmp->str_val, " ", ft_strlen(tmp->str_val)))
-		// free(tmp->str_val);
-		// free(tmp);
 	}
 }
 

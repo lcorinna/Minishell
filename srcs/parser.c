@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 22:09:17 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/13 22:30:56 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/14 00:05:42 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,19 @@
 #include "../minishell.h"
 
 
-static void	ft_fill_cmd(t_info *data)
+static int	ft_fill_cmd(t_info *data)
 {
 	// t_cmds	*cmd_head;
 
 	// cmd_head = data->group_head->cmds_head;
 	while (data->token_head && data->token_head->type != PIPE)
 	{
-		ft_check_redir_insource(data);
-		ft_check_redir_in(data);
-		ft_check_redir_out(data);
+		if (ft_check_redir_insource(data))
+			return (data->status);
+		if (ft_check_redir_in(data))
+			return (data->status);
+		if (ft_check_redir_out(data))
+			return (data->status);
 		
 		// else if (data->token_head->type == REDIR_APPEND)
 		// {
@@ -36,19 +39,22 @@ static void	ft_fill_cmd(t_info *data)
 		// 	// (error msg and return () + signal to continue main while loop)
 		data->token_head = data->token_head->next;
 	}
+	return (0);
 }
 
-void	ft_get_cmds(t_info *data)
+int	ft_get_cmds(t_info *data)
 {
 	ft_group_lstadd_back(&data->group_head, ft_group_lstnew());  // Если уже разбили на логические группы, закомментировать/удалить
 	data->token_head = data->tokens;
 	while (data->token_head)
 	{
 		ft_cmd_lstadd_back(&data->group_head->cmds_head, ft_cmd_lstnew());
-		ft_fill_cmd(data);
+		if (ft_fill_cmd(data))
+			return (data->status);
 		if (data->token_head && data->token_head->type == PIPE)
 			data->token_head = data->token_head->next;
 	}
+	return (0);
 } 
 
 

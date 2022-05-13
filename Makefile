@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+         #
+#    By: merlich <merlich@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/20 19:17:52 by lcorinna          #+#    #+#              #
-#    Updated: 2022/05/13 11:57:29 by lcorinna         ###   ########.fr        #
+#    Updated: 2022/05/14 00:08:40 by merlich          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ FILES			=	minishell.c envp.c llist.c ft_readline.c exit.c \
 					ft_symsplit.c parser_cmd_utils.c parser_group_utils.c \
 					parser.c get_next_line.c get_next_line_utils.c \
 					ft_check_redir_insource.c ft_check_redir_in.c \
+					ft_check_redir_out.c ft_check_redir_append.c \
 					executor.c 
 					
 

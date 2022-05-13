@@ -6,17 +6,23 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 23:40:27 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/13 00:04:31 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/14 00:02:49 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	ft_print_error(t_info *data, char *msg)
+void	ft_print_error(t_info *data, char *infile)
 {
-	perror(msg);
+	char	*s1;
+	char	*s2;
+
+	s1 = ft_strjoin(SHELL, "\b\b: ");
+	s2 = ft_strjoin(s1, infile);
+	perror(s2);
+	free(s1);
+	free(s2);
 	data->status = errno;
-	exit(1); // Отправляем сигнал в main о переходе на новый виток цикла while
 }
 
 static void	ft_fill_here_doc(t_info *data, char *limiter)
@@ -24,12 +30,15 @@ static void	ft_fill_here_doc(t_info *data, char *limiter)
 	int		fd;
 	char	*buff;
 
-	fd = open(".here_doc", O_CREAT | O_WRONLY | O_TRUNC, 000777);
+	fd = open(HEREDOC, O_CREAT | O_WRONLY | O_TRUNC, 000777);
 	if (fd < 0)
-		ft_print_error(data, "Error infile");
+	{
+		ft_print_error(data, HEREDOC);
+		return ;
+	}
 	write(1, "> ", 2);
 	buff = get_next_line(0);
-	while (buff && ft_strncmp(buff, limiter, ft_strlen(limiter)))
+	while (buff && ft_strncmp(buff, limiter, ft_strlen(limiter))) // Не работает так, как положено
 	{
 		write(1, "> ", 2);
 		write(fd, buff, ft_strlen(buff));
@@ -40,20 +49,7 @@ static void	ft_fill_here_doc(t_info *data, char *limiter)
 	close(fd);
 }
 
-// 	ft_readline(data, "> ", 0);
-// 	if (!data->free_me.str) //обработка сигнала "control + d"
-// 	{
-// 		printf("\x1b[F> %s\b\b: syntax error: unexpected end of file\n", SHELL);
-// 		return (LEXER_ERROR);
-// 	}
-
-// ft_readline(&data, "minishell$ ", 1);
-// 		if (!data.free_me.str) //обработка сигнала "control + d"
-// 		{
-// 			break ;
-// 		}
-
-void	ft_check_redir_insource(t_info *data)
+int	ft_check_redir_insource(t_info *data)
 {
 	char	*limiter;
 
@@ -65,17 +61,22 @@ void	ft_check_redir_insource(t_info *data)
 		{
 			printf("%s\b\b: syntax error near unexpected token `newline'\n", SHELL);
 			data->status = 258;
-			exit(258);  // Отправляем сигнал в main о переходе на новый виток цикла while
+			return (data->status);  // Отправляем сигнал в main о переходе на новый виток цикла while
 		}
 		else
 		{
 			limiter = data->token_head->str_val;
+			printf("res = %d\n", ft_strncmp("1", "123", 2));
 			ft_fill_here_doc(data, limiter);
-			data->group_head->cmds_head->infile = open(".here_doc", O_RDONLY);
+			data->group_head->cmds_head->infile = open(HEREDOC, O_RDONLY);
 			// printf("%d\n", data->group_head->cmds_head->infile);
 			if (data->group_head->cmds_head->infile < 0)
-				ft_print_error(data, "Error infile");
+			{
+				ft_print_error(data, HEREDOC);
+				return (data->status);
+			}
 		}
 	}
+	return (0);
 }
 

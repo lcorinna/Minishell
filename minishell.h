@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/13 12:34:54 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/14 00:09:19 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 # include <fcntl.h>
 
 # define SHELL			"minishell$ "
+# define HEREDOC		".here_doc"
 # define SPACES			" \f\n\r\t\v"
 # define QUOTES			"\'\""
 # define SYMBOLS		"<|>()&"
@@ -186,14 +187,20 @@ int			ft_check_quotes(char *str, int index);
 void		ft_symsplit(t_info *data);
 
 /* parser.c */
-void		ft_get_cmds(t_info *data);
+int			ft_get_cmds(t_info *data);
 
 /* ft_check_redir_insource.c */
-void		ft_check_redir_insource(t_info *data);
-// void		ft_print_error(t_info *data, char *msg);
+int			ft_check_redir_insource(t_info *data);
+void		ft_print_error(t_info *data, char *infile);
 
 /* ft_check_redir_in.c */
-void		ft_check_redir_in(t_info *data);
+int			ft_check_redir_in(t_info *data);
+
+/* ft_check_redir_out.c */
+int			ft_check_redir_out(t_info *data);
+
+/* ft_check_redir_append.c */
+int			ft_check_redir_append(t_info *data);
 
 /* parser_cmd_utils.c */
 t_cmds		*ft_cmd_lstnew(void);
