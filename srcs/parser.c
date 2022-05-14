@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 22:09:17 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/14 00:05:42 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/14 23:55:53 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@
 
 static int	ft_fill_cmd(t_info *data)
 {
-	// t_cmds	*cmd_head;
+	static int	count = 0;
 
-	// cmd_head = data->group_head->cmds_head;
 	while (data->token_head && data->token_head->type != PIPE)
 	{
 		if (ft_check_redir_insource(data))
@@ -27,16 +26,8 @@ static int	ft_fill_cmd(t_info *data)
 			return (data->status);
 		if (ft_check_redir_out(data))
 			return (data->status);
-		
-		// else if (data->token_head->type == REDIR_APPEND)
-		// {
-		// 	data->token_head->next->str_val  // outfile (We have to check access/create if doesn t exist)
-		// 	data->token_head = data->token_head->next;
-		// }
-		// else if (data->token_head->type == WORD we don t have cmd)
-		// 	// set cmd (Check access(cmd, X))
-		// else if (data->token_head->type == WORD we already have cmd) // It can be flags '-' or args of cmd
-		// 	// (error msg and return () + signal to continue main while loop)
+		if (ft_check_words(data, count))
+			return (data->status);
 		data->token_head = data->token_head->next;
 	}
 	return (0);

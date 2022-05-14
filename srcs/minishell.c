@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:33:09 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/14 00:11:13 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/14 23:22:00 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ int	main(int argc, char **argv, char **envp)
 	// ft_signal(); //буду делать в конце
 	while (!data.exit_f)
 	{
+		free(data.path);
+		data.path = NULL;
 		ft_token_lstclear(&data.tokens);  	// А: Чистим выделенную память
 		ft_group_lstclear(&data.group_head);  // Очистка t_group
 		unlink(HEREDOC);

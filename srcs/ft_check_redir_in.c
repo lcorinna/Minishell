@@ -6,31 +6,11 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 23:34:08 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/14 00:03:52 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/14 21:41:44 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-// static void	ft_print_error(t_info *data, char *infile)
-// {
-// 	printf("%s\b\b: %s: No such file or directory\n", SHELL, infile);
-// 	// Permission denied // Лучше вернуть perror();
-// 	data->status = errno;
-// }
-
-// static void	ft_print_error(t_info *data, char *infile)
-// {
-// 	char	*s1;
-// 	char	*s2;
-
-// 	s1 = ft_strjoin(SHELL, "\b\b: ");
-// 	s2 = ft_strjoin(s1, infile);
-// 	perror(s2);
-// 	free(s1);
-// 	free(s2);
-// 	data->status = errno;
-// }
 
 int	ft_check_redir_in(t_info *data)
 {

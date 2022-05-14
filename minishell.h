@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/14 00:09:19 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/14 23:55:08 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ typedef struct s_info
 	char			*res_words[7];
 	char			**envp;
 	t_llist			*envp_list; //функция для чистки ft_clean_envp_list
+	char			**cmd_paths;
 	char			**path;
 	pid_t			pid;
 	int				envp_f;
@@ -201,6 +202,9 @@ int			ft_check_redir_out(t_info *data);
 
 /* ft_check_redir_append.c */
 int			ft_check_redir_append(t_info *data);
+
+/* ft_check_words.c */
+int			ft_check_words(t_info *data, int count)
 
 /* parser_cmd_utils.c */
 t_cmds		*ft_cmd_lstnew(void);
