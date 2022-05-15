@@ -6,17 +6,17 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 21:58:31 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/15 23:07:07 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/15 23:59:14 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	ft_perror(t_info *data, char *cmd)
-{
-	printf("%s\b\b: %s: command not found\n", SHELL, cmd);
-	data->status = errno;
-}
+// static void	ft_perror(t_info *data, char *cmd)
+// {
+// 	printf("%s\b\b: %s: command not found\n", SHELL, cmd);
+// 	data->status = errno;
+// }
 
 static void	ft_get_cmd_paths(t_info *data)
 {
@@ -52,6 +52,22 @@ static char	*ft_get_bin(char **path, char *bin)
 	return (NULL);
 }
 
+static int	ft_check_builtins(t_info *data)
+{
+	int	i;
+	int	len;
+
+	i = 0;
+	len = ft_strlen(data->token_head->str_val);
+	while (data->res_words[i])
+	{
+		if (!ft_strncmp(data->res_words[i], data->token_head->str_val, len))
+			return (i);
+		i++;
+	}
+	return (0);
+}
+
 int	ft_check_cmd_path(t_info *data)
 {
 	char	*cmd;
@@ -59,14 +75,20 @@ int	ft_check_cmd_path(t_info *data)
 	cmd = data->token_head->str_val;
 	if (data->token_head->type == WORD)
 	{
-		ft_get_cmd_paths(data);
-		data->cmds_head->cmd_path = ft_get_bin(data->path, cmd);
-		// printf("%s\n",data->group_head->cmds_head->cmd_path);
-		if (!data->cmds_head->cmd_path)
+		if (!ft_check_builtins(data))
 		{
-			ft_perror(data, cmd);
-			return (data->status);
+			ft_get_cmd_paths(data);
+			data->cmds_head->cmd_path = ft_get_bin(data->path, cmd);
+			// printf("%s\n", data->cmds_head->cmd_path);
+			if (!data->cmds_head->cmd_path)
+			{
+				printf("%s\b\b: %s: command not found\n", SHELL, cmd);
+				data->status = errno;
+				return (data->status);
+			}
 		}
+		else
+			data->cmds_head->cmd_path = ft_strdup(cmd);
 		data->cmds_head->cmd_argv = ft_strdup(data->cmds_head->cmd_path);
 		data->token_head = data->token_head->next;
 	}
