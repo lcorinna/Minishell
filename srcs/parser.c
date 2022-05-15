@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 22:09:17 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/14 23:55:53 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/15 21:22:38 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@
 
 static int	ft_fill_cmd(t_info *data)
 {
-	static int	count = 0;
+	int	count;
 
+	count = 0;
 	while (data->token_head && data->token_head->type != PIPE)
 	{
 		if (ft_check_redir_insource(data))
@@ -26,8 +27,18 @@ static int	ft_fill_cmd(t_info *data)
 			return (data->status);
 		if (ft_check_redir_out(data))
 			return (data->status);
-		if (ft_check_words(data, count))
-			return (data->status);
+		if (count == 0)
+		{
+			if (ft_check_cmd_path(data))
+				return (data->status);
+			count++;
+		}
+		else
+		{
+			if (ft_check_cmd_argv(data))
+				return (data->status);
+			count++;
+		}
 		data->token_head = data->token_head->next;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 22:09:17 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/13 22:36:05 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/15 21:40:22 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,16 @@ void	ft_cmd_lstclear(t_cmds **head)
 	{
 		tmp = *head;
 		*head = tmp->next;
+		if (tmp->infile != 0)
+		{
+			close(tmp->infile);
+			tmp->infile = 0;
+		}
+		if (tmp->outfile != 1)
+		{
+			close(tmp->outfile);
+			tmp->outfile = 1;
+		}
 		free(tmp->cmd_path);
 		free(tmp->cmd_argv);
 		free(tmp);

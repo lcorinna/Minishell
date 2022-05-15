@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 21:58:31 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/14 23:59:21 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/15 21:36:55 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,8 @@ static void	ft_perror(t_info *data, char *cmd)
 static void	ft_get_cmd_paths(t_info *data)
 {
 	data->envp_head = data->envp_list;
-	while (data->envp_head)
+	while (data->envp_head && ft_strncmp(data->envp_head->key, "PATH", 4))
 	{
-		if (!ft_strncmp(data->envp_head->key, "PATH", 4))
-			break ;
 		data->envp_head = data->envp_head->next;
 	}
 	if (NULL == data->envp_head)
@@ -54,30 +52,38 @@ static char	*ft_get_bin(char **path, char *bin)
 	return (NULL);
 }
 
-int	ft_check_words(t_info *data, int count)
+int	ft_check_cmd_path(t_info *data)
 {
 	char	*cmd;
 
 	cmd = data->token_head->str_val;
-	if (!count)
+	if (data->token_head->type == WORD)
 	{
-		if (data->token_head->type == WORD)
+		ft_get_cmd_paths(data);
+		data->group_head->cmds_head->cmd_path = ft_get_bin(data->path, cmd);
+		// printf("%s\n",data->group_head->cmds_head->cmd_path);
+		if (!data->group_head->cmds_head->cmd_path)
 		{
-			ft_get_cmd_paths(data);
-			data->group_head->cmds_head->cmd_path = ft_get_bin(data->path, cmd);
-			printf("%s\n",data->group_head->cmds_head->cmd_path);
-			if (access(data->group_head->cmds_head->cmd_path, X_OK))
-			{
-				ft_perror(data, cmd);
-				return (data->status);
-			}
-			count++;
+			ft_perror(data, cmd);
+			return (data->status);
 		}
+		data->group_head->cmds_head->cmd_argv = ft_strdup(data->group_head->cmds_head->cmd_path);
 	}
-	else
-		data->group_head->cmds_head->cmd_argv = cmd; // join c cmd до (< > << >> |)
 	return (0);
 }
 
-		// else if (data->token_head->type == WORD we already have cmd) // It can be flags '-' or args of cmd
-		// 	// (error msg and return () + signal to continue main while loop)
+int	ft_check_cmd_argv(t_info *data)
+{
+	char	*argv;
+	char	*tmp;
+
+	argv = data->token_head->str_val;
+	tmp = data->group_head->cmds_head->cmd_argv;
+	if (data->token_head->type == WORD)
+	{
+		data->group_head->cmds_head->cmd_argv = ft_strjoin_three(tmp, " ", argv);
+		free(tmp);
+		printf("%s\n",data->group_head->cmds_head->cmd_argv);
+	}
+	return (0);
+}

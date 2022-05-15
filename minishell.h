@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/14 23:55:08 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/15 21:22:31 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,7 +204,8 @@ int			ft_check_redir_out(t_info *data);
 int			ft_check_redir_append(t_info *data);
 
 /* ft_check_words.c */
-int			ft_check_words(t_info *data, int count)
+int			ft_check_cmd_path(t_info *data);
+int			ft_check_cmd_argv(t_info *data);
 
 /* parser_cmd_utils.c */
 t_cmds		*ft_cmd_lstnew(void);
