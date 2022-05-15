@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 23:40:27 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/15 22:41:36 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/15 23:06:46 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	ft_check_redir_insource(t_info *data)
 			if (data->cmds_head->infile != 0)
 				close(data->cmds_head->infile);
 			data->cmds_head->infile = open(HEREDOC, O_RDONLY);
-			// printf("%d\n", data->group_head->cmds_head->infile);
+			// printf("%d\n", data->cmds_head->infile);
 			if (data->cmds_head->infile < 0)
 			{
 				ft_print_error(data, HEREDOC);

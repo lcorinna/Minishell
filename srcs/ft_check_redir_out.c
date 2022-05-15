@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 23:34:08 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/15 22:42:33 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/15 23:06:34 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	ft_check_redir_out(t_info *data)
 			if (data->cmds_head->outfile != 1)
 				close(data->cmds_head->outfile);
 			data->cmds_head->outfile = open(outfile, O_WRONLY | O_TRUNC | O_CREAT, 000777);
-			// printf("%d\n", data->group_head->cmds_head->outfile);
+			// printf("%d\n", data->cmds_head->outfile);
 			if (data->cmds_head->outfile < 0)
 			{
 				ft_print_error(data, outfile);
