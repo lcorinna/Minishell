@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 21:58:31 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/15 21:36:55 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/15 22:32:42 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,15 @@ int	ft_check_cmd_path(t_info *data)
 	if (data->token_head->type == WORD)
 	{
 		ft_get_cmd_paths(data);
-		data->group_head->cmds_head->cmd_path = ft_get_bin(data->path, cmd);
+		data->cmds_head->cmd_path = ft_get_bin(data->path, cmd);
 		// printf("%s\n",data->group_head->cmds_head->cmd_path);
-		if (!data->group_head->cmds_head->cmd_path)
+		if (!data->cmds_head->cmd_path)
 		{
 			ft_perror(data, cmd);
 			return (data->status);
 		}
-		data->group_head->cmds_head->cmd_argv = ft_strdup(data->group_head->cmds_head->cmd_path);
+		data->cmds_head->cmd_argv = ft_strdup(data->cmds_head->cmd_path);
+		data->token_head = data->token_head->next;
 	}
 	return (0);
 }
@@ -78,12 +79,13 @@ int	ft_check_cmd_argv(t_info *data)
 	char	*tmp;
 
 	argv = data->token_head->str_val;
-	tmp = data->group_head->cmds_head->cmd_argv;
+	tmp = data->cmds_head->cmd_argv;
 	if (data->token_head->type == WORD)
 	{
-		data->group_head->cmds_head->cmd_argv = ft_strjoin_three(tmp, " ", argv);
+		data->cmds_head->cmd_argv = ft_strjoin_three(tmp, " ", argv);
 		free(tmp);
-		printf("%s\n",data->group_head->cmds_head->cmd_argv);
+		printf("%s\n", data->cmds_head->cmd_argv);
+		data->token_head = data->token_head->next;
 	}
 	return (0);
 }

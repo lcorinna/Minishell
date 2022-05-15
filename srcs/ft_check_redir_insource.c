@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 23:40:27 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/14 22:36:06 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/15 22:41:36 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,17 @@ int	ft_check_redir_insource(t_info *data)
 			limiter = data->token_head->str_val;
 			// printf("res = %d\n", ft_strncmp("1", "123", 2));
 			ft_fill_here_doc(data, limiter);
-			data->group_head->cmds_head->infile = open(HEREDOC, O_RDONLY);
+			if (data->cmds_head->infile != 0)
+				close(data->cmds_head->infile);
+			data->cmds_head->infile = open(HEREDOC, O_RDONLY);
 			// printf("%d\n", data->group_head->cmds_head->infile);
-			if (data->group_head->cmds_head->infile < 0)
+			if (data->cmds_head->infile < 0)
 			{
 				ft_print_error(data, HEREDOC);
 				return (data->status);
 			}
 		}
+		data->token_head = data->token_head->next;
 	}
 	return (0);
 }

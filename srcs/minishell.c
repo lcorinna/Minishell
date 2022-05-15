@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:33:09 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/14 23:22:00 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/15 22:08:31 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,24 @@ int	main(int argc, char **argv, char **envp)
 		// parser
 		if (ft_get_cmds(&data))
 			continue ;
+
+		t_cmds *tmp;
+
+		tmp = data.group_head->cmds_head;
+		printf("------------------\n");
+		printf("------------------\n");	
+		while (tmp)
+		{
+			printf("------------------\n");	
+			printf("infile = %d\n", tmp->infile);
+			printf("outfile = %d\n", tmp->outfile);
+			printf("cmd_path = %s\n", tmp->cmd_path);
+			printf("cmd_argv = %s\n", tmp->cmd_argv);
+			tmp = tmp->next;
+			printf("------------------\n");	
+		}
+		printf("------------------\n");	
+		printf("------------------\n");	
 		// executor
 		// if (ft_executor(&data))
 		// 	printf("im found mistake in executor\n"); //del

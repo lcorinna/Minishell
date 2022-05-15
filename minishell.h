@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/15 21:22:31 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/15 21:53:49 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ typedef struct s_info
 	t_f_exec		*exec;
 
 	t_group			*group_head;
-
+	t_cmds			*cmds_head;
 	t_malloc		free_me;
 
 }	t_info;
