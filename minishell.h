@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/15 21:53:49 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/16 19:49:55 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@
 # define IF_OR			10
 # define PARN_L			11
 # define PARN_R			12
+# define MALLOC			80
+# define DUP			81
 
 typedef struct s_cmds
 {
@@ -102,7 +104,9 @@ typedef struct s_token
 typedef struct s_f_exec
 {
 	int		qtt_cmd;
+	pid_t	pid;
 	int		**pipe;
+	int		n_child;
 }	t_f_exec;
 
 typedef struct s_info
@@ -114,7 +118,6 @@ typedef struct s_info
 	t_llist			*envp_list; //функция для чистки ft_clean_envp_list
 	char			**cmd_paths;
 	char			**path;
-	pid_t			pid;
 	int				envp_f;
 	int				exit_f;
 	int				status;
