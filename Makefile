@@ -6,7 +6,7 @@
 #    By: merlich <merlich@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/20 19:17:52 by lcorinna          #+#    #+#              #
-#    Updated: 2022/05/14 22:01:10 by merlich          ###   ########.fr        #
+#    Updated: 2022/05/17 00:07:10 by merlich          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,10 +15,10 @@ NAME_M			=	minishell
 FILES			=	minishell.c envp.c llist.c ft_readline.c exit.c \
 					lexer.c lexer_utils.c lexer_utils_2.c lexer_env_var.c \
 					ft_symsplit.c parser_cmd_utils.c parser_group_utils.c \
-					parser.c get_next_line.c get_next_line_utils.c \
+					parser.c \
 					ft_check_redir_insource.c ft_check_redir_in.c \
 					ft_check_redir_out.c ft_check_redir_append.c \
-					ft_check_words.c executor.c 
+					ft_check_words.c checkers.c #executor.c 
 					
 
 					# 	builtins/builtins.c 		builtins/cd.c					\

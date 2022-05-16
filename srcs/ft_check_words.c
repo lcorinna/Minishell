@@ -6,17 +6,11 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 21:58:31 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/15 23:59:14 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/16 22:16:59 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-// static void	ft_perror(t_info *data, char *cmd)
-// {
-// 	printf("%s\b\b: %s: command not found\n", SHELL, cmd);
-// 	data->status = errno;
-// }
 
 static void	ft_get_cmd_paths(t_info *data)
 {
@@ -62,7 +56,7 @@ static int	ft_check_builtins(t_info *data)
 	while (data->res_words[i])
 	{
 		if (!ft_strncmp(data->res_words[i], data->token_head->str_val, len))
-			return (i);
+			return (++i);
 		i++;
 	}
 	return (0);

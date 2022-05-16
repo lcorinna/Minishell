@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/16 19:49:55 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/17 00:05:46 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@
 # define SPACES			" \f\n\r\t\v"
 # define QUOTES			"\'\""
 # define SYMBOLS		"<|>()&"
+# define LOGIC_OPER		"&|"
 # define LEXER_ERROR	101
 # define UNDEFINED		-1
 // # define IS_SPACE		0
@@ -57,7 +58,7 @@
 # define IF_OR			10
 # define PARN_L			11
 # define PARN_R			12
-# define MALLOC			80
+// # define MALLOC			ENOMEM  // Уже есть такая штука в stdlib.h. Используй её.
 # define DUP			81
 
 typedef struct s_cmds
@@ -72,7 +73,10 @@ typedef struct s_cmds
 typedef struct s_group
 {
 	t_cmds			*cmds_head;
-	struct s_group	*next;
+	int				logical_operation;
+	int				priority;
+	struct s_group	*right;
+	struct s_group	*left;
 
 }	t_group;
 
@@ -83,14 +87,6 @@ typedef struct s_llist
 	struct s_llist	*next;
 
 }	t_llist;
-
-typedef	struct s_malloc
-{
-	/* Здесь хранятся указатели на всю выделенную с помощью malloc память */
-
-	/* Если malloc, сразу заносим сюда */
-	char			*str;
-}	t_malloc;
 
 typedef struct s_token
 {
@@ -118,6 +114,7 @@ typedef struct s_info
 	t_llist			*envp_list; //функция для чистки ft_clean_envp_list
 	char			**cmd_paths;
 	char			**path;
+	char			*str;
 	int				envp_f;
 	int				exit_f;
 	int				status;
@@ -128,8 +125,8 @@ typedef struct s_info
 	t_f_exec		*exec;
 
 	t_group			*group_head;
+	t_group			*group_ptr;
 	t_cmds			*cmds_head;
-	t_malloc		free_me;
 
 }	t_info;
 
@@ -139,19 +136,23 @@ typedef int	(*t_buildin_ptr)(t_llist *, t_info *); //Д:не понимаю чт
 													// Эта штука нужна для builin, которые ты пишешь.
 													// см. комментарий выше... 
 
+/* envp.c */
 char		*ft_strjoin_three(char *s1, char *s2, char *s3);
 void		ft_array_envp(t_info *data);
 int			ft_envp2(char *envp, char **key, char **value, int j);
 void		ft_envp(t_info *data);
 void		ft_transfer(int argc, char **argv, char **envp, t_info *data);
 
+/* llist.c */
 t_llist		*ft_lstnew(void *key, void *value);
 void		ft_lstadd_front(t_llist **lst, t_llist *new);
 t_llist		*ft_lstlast(t_llist *lst);
 void		ft_lstadd_back(t_llist **lst, t_llist *new);
 
+/* ft_readline.c */
 void		ft_readline(t_info *data, char *prompt, int print_exit);
 
+/* exit.c */
 int			ft_cleaning_str(char *str);
 int			ft_cleaning_array(char **arr);
 void		ft_clean_envp_list(t_info *data);
@@ -159,7 +160,8 @@ void		ft_clean_struct(t_info *data);
 void		ft_error_exit(t_info *data, int i);
 
 /* minishell.c */
-int			ft_lexer(t_info *data);
+// int			ft_lexer(t_info *data);
+void		ft_cleanup(t_info *data);
 
 /* lexer.c */
 void		ft_set_flags(int *single_q, int *double_q, char *str, int k);
@@ -174,8 +176,6 @@ void		ft_token_lstadd_front(t_token **head, t_token *new);
 void		ft_token_lstadd_back(t_token **head, t_token *new);
 
 /* lexer_utils_2.c */
-// t_token		*ft_token_last_but_one(t_token *head);
-// void		ft_token_dellast(t_token **head);
 void		ft_token_lstdelone(t_token *lst);
 void		ft_token_lstclear(t_token **head);
 void		ft_token_lstadd_prev(t_token *head, t_token *new);
@@ -187,6 +187,7 @@ void		ft_token_lstmerge_next(t_token *node);
 void		ft_expand(t_info *data);
 
 /* ft_symsplit.c */
+size_t		ft_search(char *s, char c);
 int			ft_check_quotes(char *str, int index);
 void		ft_symsplit(t_info *data);
 
@@ -224,15 +225,11 @@ void		ft_group_lstadd_front(t_group **head, t_group *new);
 void		ft_group_lstadd_back(t_group **head, t_group *new);
 void		ft_group_lstclear(t_group **head);
 
-/* get_next_line.c */
-char		*get_next_line(int fd);
-size_t		ft_search(char *s, char c);
-
-/* get_next_line_utils.c */
-char		*ft_str_chr(const char *s, int c);
-void		ft_str_dup(const char *str, char *ptr);
-
 /* executor */
 int			ft_executor(t_info *data);
+
+/* checkers.c */
+void		ft_check_lexer(t_info *data);
+void		ft_checker(t_info *data);
 
 #endif

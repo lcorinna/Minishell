@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 16:38:53 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/16 20:10:49 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/16 21:39:39 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	test_zapolnenie(t_info *data)
 	tmp2 = ft_t_cmdsnew(0, 0, "bin/cat", "cat");
 	tmp = malloc(sizeof(t_group));
 	tmp->cmds_head = tmp1;
-	tmp->next = NULL;
+	tmp->next = NULL;  //  use "right" instead of "next"
 	tmp1->next = tmp2;
 	printf("1 - %p\n", tmp1); //del
 	printf("2 - %p\n", tmp1->next); //del

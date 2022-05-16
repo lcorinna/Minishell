@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/17 21:17:51 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/13 22:36:46 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/16 20:48:53 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,8 @@ t_token	*ft_token_lstnew(char *value)
 		{
 			free(value);
 			exit (-1);
-			// return (NULL);  // Отправить сигнал, в основной цикл while о переходе
-		}					// на следующую итерацию (continue) с очисткой памяти
-		new->str_val = value; // выделенной на текущей итерации
+		}
+		new->str_val = value;
 		new->type = UNDEFINED;
 		new->next = NULL;
 		new->prev = NULL;

@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 22:09:17 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/13 22:35:36 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/17 00:07:44 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@ t_group	*ft_group_lstnew(void)
 	new = malloc(sizeof(t_group));
 	if (NULL == new)
 	{
-		exit(-1);  			// Отправить сигнал, в основной цикл while о переходе
-	}						// на следующую итерацию (continue) с очисткой памяти
-	new->cmds_head = NULL;  // выделенной на текущей итерации
-	new->next = NULL;
+		exit(-1);
+	}
+	new->logical_operation = UNDEFINED;
+	new->cmds_head = NULL;
+	new->left = NULL;
+	new->right = NULL;
 	return (new);
 }
 
@@ -30,9 +32,9 @@ t_group	*ft_group_lstlast(t_group *head)
 {
 	if (head != NULL)
 	{
-		while (head->next != NULL)
+		while (head->right != NULL)
 		{
-			head = head->next;
+			head = head->right;
 		}
 	}
 	return (head);
@@ -42,7 +44,8 @@ void	ft_group_lstadd_front(t_group **head, t_group *new)
 {
 	if (NULL != new)
 	{
-		new->next = *head;
+		new->left = NULL;
+		new->right = *head;
 		*head = new;
 	}
 }
@@ -60,8 +63,9 @@ void	ft_group_lstadd_back(t_group **head, t_group *new)
 		}
 		else
 		{
-			lst_last->next = new;
-			new->next = NULL;
+			lst_last->right = new;
+			new->left = lst_last;
+			new->right = NULL;
 		}
 	}
 }
@@ -73,7 +77,7 @@ void	ft_group_lstclear(t_group **head)
 	while (*head)
 	{
 		tmp = *head;
-		*head = tmp->next;
+		*head = tmp->right;
 		ft_cmd_lstclear(&tmp->cmds_head);
 		free(tmp);
 	}

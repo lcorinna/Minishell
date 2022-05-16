@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 20:25:41 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/14 23:23:02 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/17 00:06:36 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,11 @@ void	ft_clean_envp_list(t_info *data)
 
 void	ft_clean_struct(t_info *data)
 {
-	if (data->path)
-		free(data->path);
-	if (data->free_me.str) //строка readline кажется, что не нужна?? Нужна (спроси зачем у Александра)
+	ft_cleanup(data);
+	if (data->str)
 	{
-		free(data->free_me.str);
-		data->free_me.str = NULL;
+		free(data->str);
+		data->str = NULL;
 	}
 	if (data->envp) //наш envp
 	{

@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 23:40:27 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/15 23:06:46 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/16 21:47:36 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,19 @@ static void	ft_fill_here_doc(t_info *data, char *limiter)
 	int		fd;
 	char	*buff;
 
+	buff = NULL;
 	fd = open(HEREDOC, O_CREAT | O_WRONLY | O_TRUNC, 000777);
 	if (fd < 0)
 	{
 		ft_print_error(data, HEREDOC);
 		return ;
 	}
-	write(1, "> ", 2);
-	buff = get_next_line(0);
-	while (buff && ft_strncmp(buff, limiter, ft_strlen(limiter))) // Не работает так, как положено
+	buff = readline("> ");
+	while (buff && ft_strncmp(buff, limiter, ft_strlen(limiter) +  1))
 	{
-		write(1, "> ", 2);
 		write(fd, buff, ft_strlen(buff));
 		free(buff);
-		buff = get_next_line(0);
+		buff = readline("> ");
 	}
 	free(buff);
 	close(fd);

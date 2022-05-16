@@ -3,14 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   ft_symsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 20:32:06 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/13 18:00:54 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/16 21:52:35 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+size_t	ft_search(char *s, char c)
+{
+	size_t	ind;
+	size_t	len;
+
+	ind = 0;
+	len = ft_strlen(s);
+	while ((ind < len) && ((unsigned char) s[ind] != (unsigned char) c))
+	{
+		ind++;
+	}
+	return (ind);
+}
 
 static int	ft_find_index(char *str)
 {
