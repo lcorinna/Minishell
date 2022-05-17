@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checkers.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 00:00:05 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/17 00:00:46 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/17 17:22:17 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ft_check_lexer(t_info *data)
 void	ft_checker(t_info *data)
 {
 	t_group	*grp;
-	t_cmds 	*tmp;
+	t_cmds	*tmp;
 	int		k;
 	int		m;
 
@@ -37,7 +37,7 @@ void	ft_checker(t_info *data)
 	grp = data->group_head;
 	while (grp)
 	{
-		tmp =  grp->cmds_head;
+		tmp = grp->cmds_head;
 		printf("\nGroup %d:\n", k);
 		printf("------------------\n");
 		m = 0;
@@ -55,7 +55,7 @@ void	ft_checker(t_info *data)
 		}
 		printf("log_oper = %d\n", grp->logical_operation);
 		printf("------------------\n");
-		grp =  grp->right;
+		grp = grp->right;
 		k++;
 	}
 }

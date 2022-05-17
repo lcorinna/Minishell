@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_env_var.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 21:11:40 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/17 15:18:53 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/17 17:35:23 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	ft_excluding_search(char *s)
 
 	i = ft_search(s, '$');
 	while (s[i] != '\0' && (ft_check_quotes(s, i) == 1 || \
-			(s[i + 1] !=  '_' && s[i + 1] !=  '?' && !ft_isalnum(s[i + 1]))))
+			(s[i + 1] != '_' && s[i + 1] != '?' && !ft_isalnum(s[i + 1]))))
 		i += ft_search(s + i + 1, '$') + 1;
 	return (i);
 }
