@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:33:09 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/17 17:40:45 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/17 19:09:17 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	ft_lexer(t_info *data)
 		|| last_type == IF_AND || last_type == IF_OR))
 	{
 		ft_readline(data, "> ", 0);
-		if (!data->str) //обработка сигнала "control + d"
+		if (!data->str)
 		{
 			ft_perror_eof();
 			return (LEXER_ERROR);

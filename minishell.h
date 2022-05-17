@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/17 19:05:15 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/17 19:08:16 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,7 @@
 # define LEXER_ERROR	101
 # define SYMBOLS_ERROR	102
 # define UNDEFINED		-1
-// # define IS_SPACE		0
 # define WORD			1
-// # define FIELD			2
-// # define EXP_FIELD		3
 # define REDIR_OUT		4
 # define REDIR_IN		5
 # define REDIR_APPEND	6
@@ -67,6 +64,7 @@ typedef struct s_cmds
 	int				infile;
 	int				outfile;
 	char			*cmd_path;
+	char			*cmd_str;
 	char			**cmd_argv;
 	struct s_cmds	*next;
 }	t_cmds;
@@ -108,8 +106,7 @@ typedef struct s_f_exec
 
 typedef struct s_info
 {
-	// t_buildin_ptr	builtins[7]; //upd 13.04.: закоментил, а то компилятор ругался 
-									// A: хранятся все билтины в этом массиве указателей на функции.
+	// t_buildin_ptr	builtins[7];
 	char			*res_words[7];
 	char			**envp;
 	t_llist			*envp_list; //функция для чистки ft_clean_envp_list
@@ -131,11 +128,7 @@ typedef struct s_info
 
 }	t_info;
 
-typedef int	(*t_buildin_ptr)(t_llist *, t_info *); //Д:не понимаю что это такое.
-													// А:это указатель на функцию, которая принимает в себя два параметра типа t_llist* и t_info*,
-													// а возвращает значение типа int.
-													// Эта штука нужна для builin, которые ты пишешь.
-													// см. комментарий выше... 
+// typedef int	(*t_buildin_ptr)(t_llist *, t_info *);
 
 /* envp.c */
 char		*ft_strjoin_three(char *s1, char *s2, char *s3);
@@ -209,7 +202,7 @@ int			ft_check_redir_append(t_info *data);
 
 /* ft_check_words.c */
 int			ft_check_cmd_path(t_info *data);
-int			ft_check_cmd_argv(t_info *data);
+int			ft_check_cmd_str(t_info *data);
 
 /* parser_cmd_utils.c */
 t_cmds		*ft_cmd_lstnew(void);
