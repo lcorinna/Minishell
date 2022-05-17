@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: merlich <merlich@student.42.fr>            +#+  +:+       +#+         #
+#    By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/20 19:17:52 by lcorinna          #+#    #+#              #
-#    Updated: 2022/05/17 14:59:10 by merlich          ###   ########.fr        #
+#    Updated: 2022/05/17 17:42:12 by lcorinna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ FILES			=	minishell.c envp.c llist.c ft_readline.c exit.c \
 					parser.c \
 					ft_check_redir_insource.c ft_check_redir_in.c \
 					ft_check_redir_out.c ft_check_redir_append.c \
-					ft_check_words.c ft_perror.c checkers.c #executor.c 
+					ft_check_words.c ft_perror.c checkers.c executor.c 
 					
 
 					# 	builtins/builtins.c 		builtins/cd.c					\

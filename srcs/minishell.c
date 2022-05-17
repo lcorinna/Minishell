@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:33:09 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/17 17:04:51 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/17 17:40:45 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,8 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		ft_checker(&data);
 		// executor
-		// if (ft_executor(&data))
-		// 	printf("im found mistake in executor\n"); //del
+		if (ft_executor(&data))
+			printf("im found mistake in executor\n"); //del
 	}
 	ft_cleanup(&data);
 	ft_clean_struct(&data);

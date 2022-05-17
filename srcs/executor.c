@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 16:38:53 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/16 21:39:39 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/17 19:04:50 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,25 +31,6 @@ t_cmds	*ft_t_cmdsnew(int infile, int outfile, void *path, void *argv)
 	return (new);
 }
 
-void	test_zapolnenie(t_info *data)
-{
-	t_group	*tmp;
-	t_cmds	*tmp1;
-	t_cmds	*tmp2;
-
-	tmp1 = ft_t_cmdsnew(0, 0, "bin/cp", "cp");
-	tmp2 = ft_t_cmdsnew(0, 0, "bin/cat", "cat");
-	tmp = malloc(sizeof(t_group));
-	tmp->cmds_head = tmp1;
-	tmp->next = NULL;  //  use "right" instead of "next"
-	tmp1->next = tmp2;
-	printf("1 - %p\n", tmp1); //del
-	printf("2 - %p\n", tmp1->next); //del
-	printf("tmp1.cmd_argv - %s\n", tmp1->cmd_argv); //del
-	printf("tmp2.cmd_argv - %s\n\n", tmp1->next->cmd_argv); //del
-	data->group_head = tmp;
-}
-
 void	ft_perror_exit_child(char *str, int error)
 {
 	perror(str);
@@ -60,13 +41,13 @@ void	ft_pipe_one_cmd(t_info *data)
 {
 	data->exec->pipe = malloc((sizeof(int *) * 1));
 	if (data->exec->pipe == NULL) //пишем об ошибке и exit
-		ft_perror_exit_child("Inside child malloc error", MALLOC);
+		ft_perror_exit_child("Inside child malloc error", ENOMEM);
 	data->exec->pipe[0] = malloc((sizeof(int *) * 2));
 	if (data->exec->pipe[0] == NULL) //пишем об ошибке и exit
-		ft_perror_exit_child("Inside child malloc error", MALLOC);
+		ft_perror_exit_child("Inside c	hild malloc error", ENOMEM);
 	if (data->group_head->cmds_head->infile != 0) //тогда читаем из infile
 	{
-		printf("HERE one cmd\n"); //del	
+		printf("HERE one cmd\n"); //del
 		if (dup2(data->group_head->cmds_head->infile, 0) == -1) //меняем infile
 			ft_perror_exit_child("Inside child dup error", DUP);
 		close(data->group_head->cmds_head->infile);
@@ -113,7 +94,7 @@ int	ft_pipe_many_cmd(t_info	*data)
 	i = 0;
 	data->exec->pipe = malloc(sizeof(int *) * (data->exec->qtt_cmd - 1));
 	if (data->exec->pipe == NULL)
-		return(1);
+		return (1);
 	while (tmp != 1)
 	{
 		data->exec->pipe[i] = malloc(sizeof(int) * 2);
@@ -124,31 +105,79 @@ int	ft_pipe_many_cmd(t_info	*data)
 	return (0);
 }
 
+void	ft_pipe_closure(t_info *data)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i != data->exec->qtt_cmd)
+	{
+		j = 0;
+		while (j != 2)
+		{
+			if (data->exec->n_child != i && data->exec->n_child - 1 != i)
+				close(data->exec->pipe[i][j]);
+			j++;
+		}
+		i++;
+	}
+}
+
+void	ft_first_entry(t_info *data, t_cmds	*tmp) //tmp->cmd_path, tmp->cmd_argv
+{
+	close(data->exec->pipe[data->exec->n_child][0]);
+	ft_pipe_closure(data);
+	if (tmp->infile != 0)
+	{
+		if (dup2(tmp->infile, 0) == -1)
+			ft_close_exit(data, 1); //обработать
+		close(tmp->infile);
+	}
+	if (tmp->outfile != 1)
+	{
+		if (dup2(tmp->outfile, 1) == -1)
+			ft_close_exit(data, 1); //обработать
+		close(tmp->outfile);
+		close(data->exec->pipe[data->exec->n_child][1]);
+	}
+	else if (tmp->outfile == 1)
+	{
+		if (dup2(data->exec->pipe[data->exec->n_child][1], 1) == -1)
+			ft_close_exit(data, 1); //обработать
+		close(data->exec->pipe[data->exec->n_child][1][1]);
+	}
+	execve(tmp->cmd_path, data->command, envp) == -1)
+	ft_close_exit(data, 2); //обработать
+}
+
 int	ft_exec_many_cmd(t_info *data)
 {
-	int	status;
+	t_cmds	*tmp;
+	int		status;
 
 	ft_pipe_many_cmd(data);
-	while (data->exec->n_child <= data->exec->qtt_cmd)
+	tmp = data->group_head->cmds_head;
+	while (tmp || data->exec->n_child <= data->exec->qtt_cmd)
 	{	
-		data->pid = fork();
-		if (data->pid == -1)
+		data->exec->pid = fork();
+		if (data->exec->pid == -1)
 			ft_exit(data, 4);
-		else if (data->pid == 0 && data->n_child == 0)
-			ft_first_entry(data, envp, argv);
-		else if (data->pid == 0 && data->n_child == data->qtt_cmd)
-			ft_last_entry(data, envp, argv);
-		else if (data->pid == 0)
-			ft_routine(data, envp, argv);
-		data->n_child++;
-		data->n_cmd++;
+		else if (data->exec->pid == 0 && data->exec->n_child == 0)
+			ft_first_entry(data, tmp);
+		else if (data->exec->pid == 0 && data->exec->n_child == data->exec->qtt_cmd)
+			ft_last_entry(data, tmp->cmd_path, tmp->cmd_argv);
+		else if (data->exec->pid == 0)
+			ft_routine(data, tmp->cmd_path, tmp->cmd_argv);
+		data->exec->n_child++;
+		tmp = tmp->next;
 	}
 	ft_close_all_pipes(data);
-	while (data->n_child > 0)
+	while (data->exec->n_child > 0)
 	{
 		if (wait(&status) == -1)
 			ft_exit(data, 8);
-		data->n_child--;
+		data->exec->n_child--;
 	}
 	return (0);
 }
@@ -173,9 +202,9 @@ int	ft_preparation(t_info *data)
 	if (data->exec->qtt_cmd == 1) //одна команда, проверяем cmd_argv и исполняем
 		if (ft_exec_one_cmd(data))
 			return (1);
-	// else if (data->exec->qtt_cmd > 1) //много команд, нужны трубы, идем их делать
-	// 	if (ft_exec_many_cmd(data))
-	// 		return (1);
+	else if (data->exec->qtt_cmd > 1) //много команд, нужны трубы, идем их делать
+		if (ft_exec_many_cmd(data))
+			return (1);
 	return (0);
 }
 
@@ -186,11 +215,38 @@ int	ft_struct_exec(t_info *data)
 	new = malloc(sizeof(t_f_exec));
 	if (new == NULL)
 		return (1);
-	new->qtt_cmd = 0; //зануляем, ну так на всякий
+	// new->qtt_cmd = 0; //зануляем, ну так на всякий
 	new->pipe = NULL; //зануляем, ну так на всякий
 	new->n_child = 0; //зануляем, ну так на всякий
 	data->exec = new; //привязываем к основной структуре t_info
 	return (0);
+}
+
+int	ft_clean_array_int(int **pipe)
+{
+	int	i;
+
+	i = 0;
+	if (pipe)
+	{
+		while (pipe[i])
+		{
+			free(pipe[i]);
+			pipe[i] = NULL;
+			i++;
+		}
+		free(pipe);
+		pipe = NULL;
+	}
+	return (1);
+}
+
+void	ft_free_exec(t_info *data)
+{
+	if (data->exec->pipe != NULL)
+		ft_clean_array_int(data->exec->pipe);
+	free(data->exec);
+	data->exec = NULL;
 }
 
 int	ft_executor(t_info *data)
@@ -198,10 +254,10 @@ int	ft_executor(t_info *data)
 	if (data->exec == NULL) //при первом заходе инициализирую структуру exec
 		if (ft_struct_exec(data))
 			return (1); //ошибка функции
-	// test_zapolnenie(data);
 	if (ft_preparation(data))
 		return (1);
+	if (data->exec != NULL)
+		ft_free_exec(data); //освобождаю exec перед выходом
 	printf("\nHERE\n"); //del
-	// data->exec = NULL; почистить структуру перед выходом
 	return (0);
 }
