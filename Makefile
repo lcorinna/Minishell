@@ -6,7 +6,7 @@
 #    By: merlich <merlich@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/20 19:17:52 by lcorinna          #+#    #+#              #
-#    Updated: 2022/05/17 14:59:10 by merlich          ###   ########.fr        #
+#    Updated: 2022/05/17 19:53:42 by merlich          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,20 +18,12 @@ FILES			=	minishell.c envp.c llist.c ft_readline.c exit.c \
 					parser.c \
 					ft_check_redir_insource.c ft_check_redir_in.c \
 					ft_check_redir_out.c ft_check_redir_append.c \
-					ft_check_words.c ft_perror.c checkers.c #executor.c 
-					
+					ft_check_words.c ft_perror.c checkers.c executor.c \
+					builtins/cd.c builtins/unset.c builtins/echo.c \
+					builtins/pwd.c builtins/export.c builtins/env.c	\
+					builtins/exit.c	builtins/builtin_utils.c \
+					builtins/export_utils.c \
 
-					# 	builtins/builtins.c 		builtins/cd.c					\
-					# 	builtins/unset.c			builtins/echo.c					\
-					# 	builtins/pwd.c				builtins/export.c				\
-					# 	builtins/env.c				builtins/exit.c					\
-					# 	builtins/builtin_utils.c	builtins/export_utils.c			\
-					# 																\
-					# 	parse_main.c				parse_utils_cmd_token.c			\
-					# 	parse_utils_token.c			parse_utils_cmd_list.c			\
-					# 																\
-					# lex_main.c				lex_general.c		lex_utils.c			\
-					# lex_finisher_main.c 	lex_finisher.c		lex_check_token.c	\
 					# 																\
 					# exec_star.c				exec_cmd_list.c		exec_apply_1.c		\
 					# exec_star_find_file.c	exec_cmd.c			exec_apply_2.c		\

@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/17 18:43:01 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/17 19:50:41 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,27 @@ typedef struct s_info
 }	t_info;
 
 // typedef int	(*t_buildin_ptr)(t_llist *, t_info *);
+
+/* builtins/echo.c */
+void		ft_echo(char **cmd_argv);
+
+/* builtins/cd.c */
+
+
+/* builtins/pwd.c */
+
+
+/* builtins/export.c */
+
+
+/* builtins/unset.c */
+
+
+/* builtins/env.c */
+
+
+/* builtins/exit.c */
+
 
 /* envp.c */
 char		*ft_strjoin_three(char *s1, char *s2, char *s3);
