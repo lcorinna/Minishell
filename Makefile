@@ -6,7 +6,7 @@
 #    By: merlich <merlich@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/20 19:17:52 by lcorinna          #+#    #+#              #
-#    Updated: 2022/05/17 19:53:42 by merlich          ###   ########.fr        #
+#    Updated: 2022/05/17 19:57:17 by merlich          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,11 +18,11 @@ FILES			=	minishell.c envp.c llist.c ft_readline.c exit.c \
 					parser.c \
 					ft_check_redir_insource.c ft_check_redir_in.c \
 					ft_check_redir_out.c ft_check_redir_append.c \
-					ft_check_words.c ft_perror.c checkers.c executor.c \
-					builtins/cd.c builtins/unset.c builtins/echo.c \
+					ft_check_words.c ft_perror.c checkers.c \
+					#builtins/echo.c #builtins/cd.c builtins/unset.c  \
 					builtins/pwd.c builtins/export.c builtins/env.c	\
 					builtins/exit.c	builtins/builtin_utils.c \
-					builtins/export_utils.c \
+					builtins/export_utils.c \ #executor.c
 
 					# 																\
 					# exec_star.c				exec_cmd_list.c		exec_apply_1.c		\
