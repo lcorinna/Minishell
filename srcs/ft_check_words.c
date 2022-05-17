@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_words.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 21:58:31 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/17 17:26:28 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/17 18:42:08 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,24 +82,24 @@ int	ft_check_cmd_path(t_info *data)
 		}
 		else
 			data->cmds_head->cmd_path = ft_strdup(cmd);
-		data->cmds_head->cmd_argv = ft_strdup(data->cmds_head->cmd_path);
+		data->cmds_head->cmd_str = ft_strdup(data->cmds_head->cmd_path);
 		data->token_head = data->token_head->next;
 	}
 	return (0);
 }
 
-int	ft_check_cmd_argv(t_info *data)
+int	ft_check_cmd_str(t_info *data)
 {
 	char	*argv;
 	char	*tmp;
 
 	argv = data->token_head->str_val;
-	tmp = data->cmds_head->cmd_argv;
+	tmp = data->cmds_head->cmd_str;
 	if (data->token_head->type == WORD)
 	{
-		data->cmds_head->cmd_argv = ft_strjoin_three(tmp, " ", argv);
+		data->cmds_head->cmd_str = ft_strjoin_three(tmp, " ", argv);
 		free(tmp);
-		// printf("%s\n", data->cmds_head->cmd_argv);
+		// printf("%s\n", data->cmds_head->cmd_str);
 		data->token_head = data->token_head->next;
 	}
 	return (0);

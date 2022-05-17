@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 22:09:17 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/17 17:50:50 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/17 18:46:02 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	ft_fill_cmd(t_info *data, int priority)
 		}
 		else
 		{
-			if (data->token_head && ft_check_cmd_argv(data))
+			if (data->token_head && ft_check_cmd_str(data))
 				return (data->status);
 			count++;
 		}
@@ -64,6 +64,7 @@ static int	ft_get_groups_cmds(t_info *data, int priority)
 			return (data->status);
 		if (data->token_head && data->token_head->type == PIPE)
 			data->token_head = data->token_head->next;
+		data->cmds_head->cmd_argv = ft_split(data->cmds_head->cmd_str, ' ');
 	}
 	return (0);
 }
@@ -89,27 +90,3 @@ int	ft_get_cmds(t_info *data)
 	}
 	return (0);
 }
-
-
-// int	main(void)
-// {
-// 	t_info	data;
-
-// 	data = (t_info){};
-// 	ft_group_lstadd_back(&data.group_head, ft_group_lstnew());
-// 	// ft_cmd_lstadd_back(&data.group_head->cmds_head, ft_cmd_lstnew());
-// 	// ft_cmd_lstadd_back(&data.group_head->cmds_head, ft_cmd_lstnew());
-// 	// ft_cmd_lstadd_back(&data.group_head->cmds_head, ft_cmd_lstnew());
-// 	// ft_cmd_lstadd_back(&data.group_head->cmds_head, ft_cmd_lstnew());
-// 	// ft_cmd_lstadd_back(&data.group_head->cmds_head, ft_cmd_lstnew());
-// 	// t_cmds	*head = data.group_head->cmds_head;
-// 	while (1)
-// 	{
-// 		ft_get_cmds(&data);
-// 		printf("%d\n", data.group_head->cmds_head->infile);
-// 		// head = head->next;
-// 	}
-
-// 	ft_group_lstclear(&data.group_head);
-// 	return (0);
-// }

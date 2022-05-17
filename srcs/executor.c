@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 16:38:53 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/16 21:39:39 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/17 18:42:08 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_cmds	*ft_t_cmdsnew(int infile, int outfile, void *path, void *argv)
 	new->infile = infile;
 	new->outfile = outfile;
 	new->cmd_path = path;
-	new->cmd_argv = argv;
+	new->cmd_str = argv;
 	new->next = NULL;
 	return (new);
 }
@@ -45,8 +45,8 @@ void	test_zapolnenie(t_info *data)
 	tmp1->next = tmp2;
 	printf("1 - %p\n", tmp1); //del
 	printf("2 - %p\n", tmp1->next); //del
-	printf("tmp1.cmd_argv - %s\n", tmp1->cmd_argv); //del
-	printf("tmp2.cmd_argv - %s\n\n", tmp1->next->cmd_argv); //del
+	printf("tmp1.cmd_str - %s\n", tmp1->cmd_str); //del
+	printf("tmp2.cmd_str - %s\n\n", tmp1->next->cmd_str); //del
 	data->group_head = tmp;
 }
 
@@ -94,9 +94,9 @@ int	ft_exec_one_cmd(t_info	*data)
 		// if (проверить не билтын ли билтыны?) // БИЛТЫНЫ БИЛТЫНЫ БИЛТЫНЫ БИЛТЫНЫ
 		// printf("HERE HERE HERE\n");
 		// printf("%s\n", data->group_head->cmds_head->cmd_path);
-		// printf("%s\n", data->group_head->cmds_head->cmd_argv);
+		// printf("%s\n", data->group_head->cmds_head->cmd_str);
 		execve(data->group_head->cmds_head->cmd_path, \
-		&data->group_head->cmds_head->cmd_argv, data->envp);
+		&data->group_head->cmds_head->cmd_str, data->envp);
 		ft_perror_exit_child("Inside child execve error", 1);
 	}
 	if (wait(&status) == -1)
@@ -164,13 +164,13 @@ int	ft_preparation(t_info *data)
 		printf("tmp->infile - %d\n", tmp->infile); //del
 		printf("tmp->outfile - %d\n", tmp->outfile); //del
 		printf("tmp1.cmd_path - %s\n", tmp->cmd_path); //del
-		printf("tmp1.cmd_argv - %s\n\n", tmp->cmd_argv); //del
+		printf("tmp1.cmd_str - %s\n\n", tmp->cmd_str); //del
 		tmp = tmp->next;
 		data->exec->qtt_cmd++;
 	}
 	// data->exec->qtt_cmd--;
 	printf("new->qtt_cmd - %d\n\n", data->exec->qtt_cmd); //del
-	if (data->exec->qtt_cmd == 1) //одна команда, проверяем cmd_argv и исполняем
+	if (data->exec->qtt_cmd == 1) //одна команда, проверяем cmd_str и исполняем
 		if (ft_exec_one_cmd(data))
 			return (1);
 	// else if (data->exec->qtt_cmd > 1) //много команд, нужны трубы, идем их делать
