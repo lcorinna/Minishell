@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 22:09:17 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/17 15:59:45 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/17 17:20:58 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int	ft_get_cmds(t_info *data)
 			|| data->token_head->type == IF_OR))
 		{
 			data->group_ptr->logical_operation = data->token_head->type;
+			data->group_ptr->priority = priority;
 			data->token_head = data->token_head->next;
 		}
 	}
