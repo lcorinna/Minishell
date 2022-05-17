@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 22:09:17 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/17 00:07:44 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/17 14:12:55 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_group	*ft_group_lstnew(void)
 	new = malloc(sizeof(t_group));
 	if (NULL == new)
 	{
-		exit(-1);
+		exit(ENOMEM);
 	}
 	new->logical_operation = UNDEFINED;
 	new->cmds_head = NULL;

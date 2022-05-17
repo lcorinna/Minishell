@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/17 00:05:46 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/17 17:08:11 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@
 # define QUOTES			"\'\""
 # define SYMBOLS		"<|>()&"
 # define LOGIC_OPER		"&|"
+# define NOT_FIRST		")|&"
 # define LEXER_ERROR	101
+# define SYMBOLS_ERROR	102
 # define UNDEFINED		-1
 // # define IS_SPACE		0
 # define WORD			1
@@ -196,7 +198,6 @@ int			ft_get_cmds(t_info *data);
 
 /* ft_check_redir_insource.c */
 int			ft_check_redir_insource(t_info *data);
-void		ft_print_error(t_info *data, char *infile);
 
 /* ft_check_redir_in.c */
 int			ft_check_redir_in(t_info *data);
@@ -227,6 +228,13 @@ void		ft_group_lstclear(t_group **head);
 
 /* executor */
 int			ft_executor(t_info *data);
+
+/* ft_perror.c */
+void		ft_perror_token(char *token_name);
+void		ft_perror_eof(void);
+void		ft_perror_file(t_info *data, char *infile);
+void		ft_perror_symbols(t_info *data, char *symbol);
+void		ft_perror_cmd(t_info *data, char *cmd);
 
 /* checkers.c */
 void		ft_check_lexer(t_info *data);

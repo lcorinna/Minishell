@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 22:09:17 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/15 21:40:22 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/17 15:12:44 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ t_cmds	*ft_cmd_lstnew(void)
 	new = malloc(sizeof(t_cmds));
 	if (NULL == new)
 	{
-		exit (-1);  	// Отправить сигнал, в основной цикл while о переходе
-	}					// на следующую итерацию (continue) с очисткой памяти
-	new->infile = 0; 	 // выделенной на текущей итерации
+		exit(ENOMEM);
+	}
+	new->infile = 0;
 	new->outfile = 1;
 	new->cmd_path = NULL;
 	new->cmd_argv = NULL;

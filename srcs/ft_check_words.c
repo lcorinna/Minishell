@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 21:58:31 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/16 22:16:59 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/17 17:08:40 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,7 @@ int	ft_check_cmd_path(t_info *data)
 			// printf("%s\n", data->cmds_head->cmd_path);
 			if (!data->cmds_head->cmd_path)
 			{
-				printf("%s\b\b: %s: command not found\n", SHELL, cmd);
-				data->status = errno;
+				ft_perror_cmd(data, cmd);
 				return (data->status);
 			}
 		}
@@ -100,7 +99,7 @@ int	ft_check_cmd_argv(t_info *data)
 	{
 		data->cmds_head->cmd_argv = ft_strjoin_three(tmp, " ", argv);
 		free(tmp);
-		printf("%s\n", data->cmds_head->cmd_argv);
+		// printf("%s\n", data->cmds_head->cmd_argv);
 		data->token_head = data->token_head->next;
 	}
 	return (0);

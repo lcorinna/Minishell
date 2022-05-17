@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 23:34:08 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/15 22:49:40 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/17 17:03:28 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_check_redir_in(t_info *data)
 		data->token_head = data->token_head->next;
 		if (!data->token_head)
 		{
-			printf("%s\b\b: syntax error near unexpected token `newline'\n", SHELL);
+			ft_perror_token("newline");
 			data->status = 258;
 			return (data->status);
 		}
@@ -34,7 +34,7 @@ int	ft_check_redir_in(t_info *data)
 			data->cmds_head->infile = open(infile, O_RDONLY);
 			if (data->cmds_head->infile < 0)
 			{
-				ft_print_error(data, infile);
+				ft_perror_file(data, infile);
 				return (data->status);
 			}
 		}

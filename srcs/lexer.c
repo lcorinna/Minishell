@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 21:05:32 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/13 12:05:51 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/17 16:55:37 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ static int	ft_check_unclosed_quotes(t_info *data, char *str, int *i)
 	}
 	if (single_q || double_q)
 	{
-		ft_token_lstclear(&data->tokens);
-		write(1, "QUOTES ERROR\n", 13);
+		ft_perror_symbols(data, "Quotes error\n");
 		return (LEXER_ERROR);
 	}
 	return (0);

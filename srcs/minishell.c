@@ -6,25 +6,11 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:33:09 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/17 00:06:42 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/17 17:04:51 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-// void	ft_perror(t_info *data, char *msg)
-// {
-// 	char	*s;
-// 	char	*s1;
-// 	char	*tmp;
-
-// 	tmp = ft_strjoin(SHELL, "\b\b: syntax error near unexpected token ");
-// 	s = ft_strjoin_three(tmp, "`", data->tokens->str_val);
-// 	free(tmp);
-// 	s1 = ft_strjoin(s, "'\n");
-// 	free(s);
-// 	ft_putstr_fd(s1, 2);
-// }
 
 static void	ft_fill_builtins(t_info *data)
 {
@@ -37,7 +23,33 @@ static void	ft_fill_builtins(t_info *data)
 	data->res_words[6] = "exit";
 }
 
-static int	ft_lexer(t_info *data)
+static int	ft_check_parentheses(t_info *data)
+{
+	int	left;
+	int	right;
+	int	res;
+
+	left = 0;
+	right = 0;
+	res = 0;
+	data->token_head = data->tokens;
+	while (data->token_head)
+	{
+		if (data->token_head->type == PARN_L)
+			left++;
+		else if (data->token_head->type == PARN_R)
+			right++;
+		data->token_head = data->token_head->next;
+	}
+	if (left != right)
+	{
+		res = 1;
+		ft_perror_symbols(data, "Parentheses error\n");
+	}	
+	return (res);
+}
+
+int	ft_lexer(t_info *data)
 {
 	int	last_type;
 
@@ -47,10 +59,11 @@ static int	ft_lexer(t_info *data)
 	ft_expand(data);
 	ft_symsplit(data);
 	ft_set_tokens_type(data);
-	if (data->tokens && (data->tokens->type == PIPE || data->tokens->type == AND \
-		|| data->tokens->type == IF_AND || data->tokens->type == IF_OR))
+	if (ft_check_parentheses(data))
+		return (LEXER_ERROR);
+	if (data->tokens && ft_strchr(NOT_FIRST, data->tokens->str_val[0]))
 	{
-		printf("%s\b\b: syntax error near unexpected token `%s'\n", SHELL, data->tokens->str_val);
+		ft_perror_token(data->tokens->str_val);
 		return (LEXER_ERROR);
 	}
 	if (data->tokens)
@@ -61,7 +74,7 @@ static int	ft_lexer(t_info *data)
 		ft_readline(data, "> ", 0);
 		if (!data->str) //обработка сигнала "control + d"
 		{
-			printf("\x1b[F> %s\b\b: syntax error: unexpected end of file\n", SHELL);
+			ft_perror_eof();
 			return (LEXER_ERROR);
 		}
 		if (ft_lexer(data))

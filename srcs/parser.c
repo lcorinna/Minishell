@@ -6,23 +6,29 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 22:09:17 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/16 23:49:07 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/17 15:59:45 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../minishell.h"
 
-
-static int	ft_fill_cmd(t_info *data)
+static int	ft_fill_cmd(t_info *data, int priority)
 {
 	int	count;
 
 	count = 0;
 	while (data->token_head && !ft_strchr(LOGIC_OPER, data->token_head->str_val[0]))
 	{
-		if (data->token_head->type == PARN_L || data->token_head->type == PARN_R)
+		if (data->token_head->type == PARN_L)
+		{
+			priority++;
 			data->token_head = data->token_head->next;
+		}
+		else if (data->token_head->type == PARN_R)
+		{
+			priority--;
+			data->token_head = data->token_head->next;
+		}
 		if (data->token_head && ft_check_redir_insource(data))
 			return (data->status);
 		if (data->token_head && ft_check_redir_in(data))
@@ -47,23 +53,32 @@ static int	ft_fill_cmd(t_info *data)
 	return (0);
 }
 
+static int	ft_get_groups_cmds(t_info *data, int priority)
+{
+	while (data->token_head && data->token_head->type != IF_AND \
+			&& data->token_head->type != IF_OR)
+	{
+		ft_cmd_lstadd_back(&data->group_ptr->cmds_head, ft_cmd_lstnew());
+		data->cmds_head = ft_cmd_lstlast(data->group_ptr->cmds_head);
+		if (!data->cmds_head || ft_fill_cmd(data, priority))
+			return (data->status);
+		if (data->token_head && data->token_head->type == PIPE)
+			data->token_head = data->token_head->next;
+	}
+	return (0);
+}
+
 int	ft_get_cmds(t_info *data)
 {
+	static int	priority = 0;
+
 	data->token_head = data->tokens;
 	while (data->token_head)
 	{
-		ft_group_lstadd_back(&data->group_head, ft_group_lstnew());  // Если уже разбили на логические группы, закомментировать/удалить
+		ft_group_lstadd_back(&data->group_head, ft_group_lstnew());
 		data->group_ptr = ft_group_lstlast(data->group_head);
-		while (data->token_head && data->token_head->type != IF_AND \
-				&& data->token_head->type != IF_OR)
-		{
-			ft_cmd_lstadd_back(&data->group_ptr->cmds_head, ft_cmd_lstnew());
-			data->cmds_head = ft_cmd_lstlast(data->group_ptr->cmds_head);
-			if (!data->cmds_head || ft_fill_cmd(data))
-				return (data->status);
-			if (data->token_head && data->token_head->type == PIPE)
-				data->token_head = data->token_head->next;
-		}
+		if (ft_get_groups_cmds(data, priority))
+			return (data->status);
 		if (data->token_head && (data->token_head->type == IF_AND \
 			|| data->token_head->type == IF_OR))
 		{

@@ -6,24 +6,11 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 23:40:27 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/16 21:47:36 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/17 17:03:35 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	ft_print_error(t_info *data, char *infile)
-{
-	char	*s1;
-	char	*s2;
-
-	s1 = ft_strjoin(SHELL, "\b\b: ");
-	s2 = ft_strjoin(s1, infile);
-	perror(s2);
-	free(s1);
-	free(s2);
-	data->status = errno;
-}
 
 static void	ft_fill_here_doc(t_info *data, char *limiter)
 {
@@ -34,11 +21,11 @@ static void	ft_fill_here_doc(t_info *data, char *limiter)
 	fd = open(HEREDOC, O_CREAT | O_WRONLY | O_TRUNC, 000777);
 	if (fd < 0)
 	{
-		ft_print_error(data, HEREDOC);
+		ft_perror_file(data, HEREDOC);
 		return ;
 	}
 	buff = readline("> ");
-	while (buff && ft_strncmp(buff, limiter, ft_strlen(limiter) +  1))
+	while (buff && ft_strncmp(buff, limiter, ft_strlen(limiter) + 1))
 	{
 		write(fd, buff, ft_strlen(buff));
 		free(buff);
@@ -58,22 +45,20 @@ int	ft_check_redir_insource(t_info *data)
 		data->token_head = data->token_head->next;
 		if (!data->token_head)
 		{
-			printf("%s\b\b: syntax error near unexpected token `newline'\n", SHELL);
+			ft_perror_token("newline");
 			data->status = 258;
 			return (data->status);
 		}
 		else
 		{
 			limiter = data->token_head->str_val;
-			// printf("res = %d\n", ft_strncmp("1", "123", 2));
 			ft_fill_here_doc(data, limiter);
 			if (data->cmds_head->infile != 0)
 				close(data->cmds_head->infile);
 			data->cmds_head->infile = open(HEREDOC, O_RDONLY);
-			// printf("%d\n", data->cmds_head->infile);
 			if (data->cmds_head->infile < 0)
 			{
-				ft_print_error(data, HEREDOC);
+				ft_perror_file(data, HEREDOC);
 				return (data->status);
 			}
 		}
