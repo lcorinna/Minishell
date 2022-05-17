@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_redir_out.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 23:34:08 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/17 17:03:40 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/17 17:33:07 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_check_redir_out(t_info *data)
 			outfile = data->token_head->str_val;
 			if (data->cmds_head->outfile != 1)
 				close(data->cmds_head->outfile);
-			data->cmds_head->outfile = open(outfile, O_WRONLY | O_TRUNC | O_CREAT, 000777);
+			data->cmds_head->outfile = open(outfile, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 			if (data->cmds_head->outfile < 0)
 			{
 				ft_perror_file(data, outfile);

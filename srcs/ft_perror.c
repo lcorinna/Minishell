@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_perror.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 14:57:39 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/17 17:12:59 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/17 17:22:58 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	ft_perror_symbols(t_info *data, char *symbol)
 	s1 = ft_strjoin(SHELL, "\b\b: ");
 	s2 = ft_strjoin(s1, symbol);
 	free(s1);
-    ft_putstr_fd(s2, 2);
+	ft_putstr_fd(s2, 2);
 	free(s2);
 	data->status = SYMBOLS_ERROR;
 }
@@ -70,8 +70,8 @@ void	ft_perror_cmd(t_info *data, char *cmd)
 	s1 = ft_strjoin(SHELL, "\b\b: ");
 	s2 = ft_strjoin(s1, cmd);
 	free(s1);
-    ft_putstr_fd(s2, 2);
+	ft_putstr_fd(s2, 2);
 	free(s2);
-    ft_putstr_fd(": command not found\n", 2);
-    data->status = errno;
+	ft_putstr_fd(": command not found\n", 2);
+	data->status = errno;
 }

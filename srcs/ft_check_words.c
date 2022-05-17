@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_words.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 21:58:31 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/17 17:08:40 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/17 17:26:28 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int	ft_check_builtins(t_info *data)
 	len = ft_strlen(data->token_head->str_val);
 	while (data->res_words[i])
 	{
-		if (!ft_strncmp(data->res_words[i], data->token_head->str_val, len))
+		if (!ft_strncmp(data->res_words[i], data->token_head->str_val, len + 1))
 			return (++i);
 		i++;
 	}
