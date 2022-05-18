@@ -1,42 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/17 18:27:38 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/18 21:13:08 by merlich          ###   ########.fr       */
+/*   Created: 2021/11/23 15:17:38 by merlich           #+#    #+#             */
+/*   Updated: 2022/05/12 22:34:46 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_echo(char **cmd_argv)
+char	*ft_str_chr(const char *s, int c)
 {
-	int	i;
-	int	flag;
+	size_t	i;
+	char	*res;
 
-	i = 1;
-	flag = ft_strncmp(cmd_argv[1], "-n", 3);
-	if (cmd_argv)
+	i = 0;
+	res = "";
+	while (i < ft_strlen(s))
 	{
-		if (!flag)
-			i = 2;
-		while (cmd_argv[i])
+		if ((unsigned char) s[i] == (unsigned char) c)
 		{
-			ft_putstr_fd(cmd_argv[i], 1);
-			if (cmd_argv[i + 1])
-				ft_putstr_fd(" ", 1);
-			i++;
+			res = (char *)s + i + 1;
+			return (res);
 		}
-		if (flag)
-			ft_putstr_fd("\n", 1);
+		i++;
 	}
+	return (res);
 }
 
-// int	main(int argc, char **argv)
-// {
-// 	ft_echo(argv);
-// 	return (0);
-// }
+void	ft_str_dup(const char *str, char *ptr)
+{
+	int		i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		ptr[i] = str[i];
+		i++;
+	}
+	ptr[i] = '\0';
+}

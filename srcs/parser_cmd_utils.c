@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 22:09:17 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/17 18:49:35 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/18 20:58:00 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_cmds	*ft_cmd_lstnew(void)
 	new->outfile = 1;
 	new->cmd_path = NULL;
 	new->cmd_str = NULL;
+	new->cmd_argv = NULL;
 	new->next = NULL;
 	return (new);
 }
@@ -88,8 +89,11 @@ void	ft_cmd_lstclear(t_cmds **head)
 			tmp->outfile = 1;
 		}
 		free(tmp->cmd_path);
+			tmp->cmd_path = NULL;
 		free(tmp->cmd_str);
+			tmp->cmd_str = NULL;
 		ft_cleaning_array(tmp->cmd_argv);
 		free(tmp);
+			tmp = NULL;
 	}
 }

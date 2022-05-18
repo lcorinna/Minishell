@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 00:06:17 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/17 17:03:17 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/18 23:57:25 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_check_redir_append(t_info *data)
 		if (!data->token_head)
 		{
 			ft_perror_token("newline");
-			data->status = 258;
+			data->status = TOKEN_ERROR;
 			return (data->status);
 		}
 		else

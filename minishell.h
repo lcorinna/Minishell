@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/18 13:34:40 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/18 23:57:57 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@
 # define NOT_FIRST		")|&"
 # define LEXER_ERROR	101
 # define SYMBOLS_ERROR	102
+# define TOKEN_ERROR	258
 # define UNDEFINED		-1
 # define WORD			1
 # define REDIR_OUT		4
@@ -67,6 +68,7 @@ typedef struct s_cmds
 	char			*cmd_str;
 	char			**cmd_argv;
 	struct s_cmds	*next;
+
 }	t_cmds;
 
 typedef struct s_group
@@ -122,6 +124,7 @@ typedef struct s_info
 
 	t_f_exec		*exec;
 
+	int				priority;
 	t_group			*group_head;
 	t_group			*group_ptr;
 	t_cmds			*cmds_head;
@@ -252,5 +255,12 @@ void		ft_perror_cmd(t_info *data, char *cmd);
 /* checkers.c */
 void		ft_check_lexer(t_info *data);
 void		ft_checker(t_info *data);
+
+/* get_next_line.c */
+char		*get_next_line(int fd);
+
+/* get_next_line_utils.c */
+char		*ft_str_chr(const char *s, int c);
+void		ft_str_dup(const char *str, char *ptr);
 
 #endif

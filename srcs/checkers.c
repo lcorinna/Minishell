@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 00:00:05 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/17 18:54:24 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/18 23:15:22 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,28 +42,28 @@ void	ft_checker(t_info *data)
 		tmp = grp->cmds_head;
 		printf("\nGroup %d:\n", k);
 		printf("priority = %d\n", grp->priority);
-		printf("------------------\n");
+		printf("log_oper = %d\n", grp->logical_operation);
+		printf("------------------------------------------\n");
 		m = 0;
 		arr = NULL;
 		while (tmp)
 		{
-			arr = tmp->cmd_argv;
+			// arr = tmp->cmd_argv;
 			printf("Cmd %d:\n", m);
 			printf("------------------\n");
 			printf("infile = %d\n", tmp->infile);
 			printf("outfile = %d\n", tmp->outfile);
 			printf("cmd_path[%d] = %s\n", m, tmp->cmd_path);
-			while (*arr)
-			{
-				printf("cmd_argv = %s\n", *arr);
-				arr++;
-			}
+			// while (*arr)
+			// {
+			// 	printf("cmd_argv = %s\n", *arr);
+			// 	arr++;
+			// }
 			tmp = tmp->next;
 			m++;
 			printf("------------------\n");
 		}
-		printf("log_oper = %d\n", grp->logical_operation);
-		printf("------------------\n");
+		printf("------------------------------------------\n");
 		grp = grp->right;
 		k++;
 	}

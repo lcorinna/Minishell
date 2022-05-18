@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 21:58:31 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/17 18:42:08 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/18 22:40:02 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static char	*ft_get_bin(char **path, char *bin)
 	char	*tmp;
 	char	*full_path;
 
-	if (bin[0] == '/' && access(bin, X_OK))
+	if (bin && bin[0] == '/' && access(bin, X_OK))
 		return (NULL);
 	else if (!access(bin, X_OK))
 		return (ft_strdup(bin));

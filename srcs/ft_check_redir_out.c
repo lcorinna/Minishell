@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_redir_out.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 23:34:08 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/17 17:33:07 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/18 23:57:25 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_check_redir_out(t_info *data)
 		if (!data->token_head)
 		{
 			ft_perror_token("newline");
-			data->status = 258;
+			data->status = TOKEN_ERROR;
 			return (data->status);
 		}
 		else
