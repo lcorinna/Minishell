@@ -6,11 +6,7 @@
 #    By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/20 19:17:52 by lcorinna          #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2022/05/17 17:42:12 by lcorinna         ###   ########.fr        #
-=======
-#    Updated: 2022/05/17 19:57:17 by merlich          ###   ########.fr        #
->>>>>>> ee6b936d0756735485e78cbe552c1848ecce4716
+#    Updated: 2022/05/18 13:35:24 by lcorinna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,29 +18,14 @@ FILES			=	minishell.c envp.c llist.c ft_readline.c exit.c \
 					parser.c \
 					ft_check_redir_insource.c ft_check_redir_in.c \
 					ft_check_redir_out.c ft_check_redir_append.c \
-<<<<<<< HEAD
-					ft_check_words.c ft_perror.c checkers.c executor.c 
-					
-
-					# 	builtins/builtins.c 		builtins/cd.c					\
-					# 	builtins/unset.c			builtins/echo.c					\
-					# 	builtins/pwd.c				builtins/export.c				\
-					# 	builtins/env.c				builtins/exit.c					\
-					# 	builtins/builtin_utils.c	builtins/export_utils.c			\
-					# 																\
-					# 	parse_main.c				parse_utils_cmd_token.c			\
-					# 	parse_utils_token.c			parse_utils_cmd_list.c			\
-					# 																\
-					# lex_main.c				lex_general.c		lex_utils.c			\
-					# lex_finisher_main.c 	lex_finisher.c		lex_check_token.c	\
-=======
 					ft_check_words.c ft_perror.c checkers.c \
+					executor.c \
+					
 					#builtins/echo.c #builtins/cd.c builtins/unset.c  \
 					builtins/pwd.c builtins/export.c builtins/env.c	\
 					builtins/exit.c	builtins/builtin_utils.c \
-					builtins/export_utils.c \ #executor.c
+					builtins/export_utils.c \
 
->>>>>>> ee6b936d0756735485e78cbe552c1848ecce4716
 					# 																\
 					# exec_star.c				exec_cmd_list.c		exec_apply_1.c		\
 					# exec_star_find_file.c	exec_cmd.c			exec_apply_2.c		\

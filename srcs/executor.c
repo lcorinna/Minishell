@@ -6,32 +6,11 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 16:38:53 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/17 20:49:10 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/18 18:59:08 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-//посчитать кол-во команд (чтобы понимать кол-во труб, нужны ли)
-//если трубы нужны, то ухожу в ветвление с их созданием
-
-void	ft_close_exit(t_info *data, int flag) //неиспользую! нужно удалить
-{
-	if (flag == 1)
-		ft_putstr_fd("The \"dup2\" function does not work\n", 2);
-	else if (flag == 2)
-		ft_putstr_fd("The \"execve\" function does not work\n", 2);
-	else if (flag == 3)
-		ft_putstr_fd("The \"access\" function does not work\n", 2);
-	else if (flag == 4)
-		ft_putstr_fd("The \"dup2\" function does not work\n", 2);
-	else if (flag == 5)
-		ft_putstr_fd("The \"execve\" function does not work\n", 2);
-	else if (flag == 6)
-		ft_putstr_fd("The \"open\" function does not work\n", 2);
-	else if (flag == 7)
-		ft_putstr_fd("The \"get_next_line\" function does not work\n", 2);
-	exit(1);
-}
 
 t_cmds	*ft_t_cmdsnew(int infile, int outfile, void *path, void *argv)
 {
@@ -56,7 +35,7 @@ void	ft_close_all_pipes(t_info *data)
 	int	j;
 
 	i = 0;
-	while (i != data->exec->qtt_cmd)
+	while (i < (data->exec->qtt_cmd - 1))
 	{
 		j = 0;
 		while (j != 2)
@@ -122,19 +101,28 @@ int	ft_exec_one_cmd(t_info	*data)
 int	ft_pipe_many_cmd(t_info	*data)
 {
 	int	i;
-	int	tmp;
+	int	t_qtt_cmd;
 
-	tmp = data->exec->qtt_cmd;
+	t_qtt_cmd = data->exec->qtt_cmd;
 	i = 0;
 	data->exec->pipe = malloc(sizeof(int *) * (data->exec->qtt_cmd - 1));
 	if (data->exec->pipe == NULL)
-		return (1);
-	while (tmp != 1)
+		return (1); //обработать
+	// printf("common pipe\n"); //del
+	while (i < (t_qtt_cmd - 1))
 	{
+		// printf("every pipe - %d\n", t_qtt_cmd); //del
 		data->exec->pipe[i] = malloc(sizeof(int) * 2);
 		if (data->exec->pipe[i] == NULL)
-			return (1);
-		tmp--;
+			return (1); //обработать
+		i++;
+	}
+	i = 0;
+	while (i < (t_qtt_cmd - 1))
+	{
+		if (pipe(data->exec->pipe[i]))
+			return (1); //обработать
+		i++;
 	}
 	return (0);
 }
@@ -145,11 +133,13 @@ void	ft_pipe_closure(t_info *data)
 	int	j;
 
 	i = 0;
-	while (i != data->exec->qtt_cmd)
+	while (i != (data->exec->qtt_cmd - 1))
 	{
 		j = 0;
 		while (j != 2)
 		{
+			if (data->exec->n_child != i && data->exec->n_child - 1 != i) //del
+				printf("Pipe - [%d][%d]\n", i, j); //del
 			if (data->exec->n_child != i && data->exec->n_child - 1 != i)
 				close(data->exec->pipe[i][j]);
 			j++;
@@ -163,85 +153,99 @@ void	ft_routine(t_info *data, t_cmds	*tmp)
 	close(data->exec->pipe[data->exec->n_child - 1][1]);
 	close(data->exec->pipe[data->exec->n_child][0]);
 	ft_pipe_closure(data);
+	// write(1, "\n", 1); //del
 	if (tmp->infile != 0)
 	{
+		// printf("routine infile\n"); //del
 		if (dup2(tmp->infile, 0) == -1)
-			return ; //обработать
+			ft_perror_exit_child("Inside child dup error", DUP);
 		close(tmp->infile);
 	}
 	else if (tmp->infile == 0)
 	{
+		// printf("routine without infile\n"); //del
 		if (dup2(data->exec->pipe[data->exec->n_child - 1][0], 0) == -1)
-			ft_close_exit(data, 4); //обработать
+			ft_perror_exit_child("Inside child dup error", DUP);
 	}
 	if (tmp->outfile != 1)
 	{
+		// printf("routine outfile\n"); //del
 		if (dup2(tmp->outfile, 1) == -1)
-			return ; //обработать
+			ft_perror_exit_child("Inside child dup error", DUP);
 		close(tmp->outfile);
 	}
 	else if (tmp->outfile == 1)
 	{
+		// printf("routine without outfile\n"); //del
 		if (dup2(data->exec->pipe[data->exec->n_child][1], 1) == -1)
-			ft_close_exit(data, 4); //обработать
+			ft_perror_exit_child("Inside child dup error", DUP);
 	}
-	\
 	close(data->exec->pipe[data->exec->n_child - 1][0]);
 	close(data->exec->pipe[data->exec->n_child][1]);
 	execve(tmp->cmd_path, tmp->cmd_argv, data->envp);
-	ft_close_exit(data, 2); //обработать
+	ft_perror_exit_child("Inside child execve error", 1);
 }
 
 void	ft_last_entry(t_info *data, t_cmds	*tmp)
 {
 	close(data->exec->pipe[data->exec->n_child - 1][1]);
 	ft_pipe_closure(data);
+	// write(1, "\n", 1); //del
 	if (tmp->infile != 0)
 	{
+		// printf("last_entry infile\n"); //del
 		if (dup2(tmp->infile, 0) == -1)
-			return ; //обработать
+			ft_perror_exit_child("Inside child dup error", DUP);
 		close(tmp->infile);
 	}
 	else if (tmp->infile == 0)
 	{
+		// printf("last_entry without infile\n"); //del
 		if (dup2(data->exec->pipe[data->exec->n_child - 1][0], 0) == -1)
-			ft_close_exit(data, 1); //обработать
+			ft_perror_exit_child("Inside child dup error", DUP);
 	}
 	if (tmp->outfile != 1)
 	{
+		// printf("last_entry outfile\n"); //del
 		if (dup2(tmp->outfile, 1) == -1)
-			return ; //обработать
+			ft_perror_exit_child("Inside child dup error", DUP);
 		close(tmp->outfile);
 	}
+	// printf("last_entry without outfile\n"); //del
 	close(data->exec->pipe[data->exec->n_child - 1][0]);
 	execve(tmp->cmd_path, tmp->cmd_argv, data->envp);
-	ft_close_exit(data, 2); //обработать
+	ft_perror_exit_child("Inside child execve error", 1);
 }
 
-void	ft_first_entry(t_info *data, t_cmds	*tmp) //tmp->cmd_path, tmp->cmd_argv
+void	ft_first_entry(t_info *data, t_cmds	*tmp)
 {
 	close(data->exec->pipe[data->exec->n_child][0]);
 	ft_pipe_closure(data);
+	// write(1, "\n", 1); //del
 	if (tmp->infile != 0)
 	{
+		// printf("first_entry infile\n"); //del
 		if (dup2(tmp->infile, 0) == -1)
-			ft_close_exit(data, 1); //обработать
+			ft_perror_exit_child("Inside child dup error", DUP);
 		close(tmp->infile);
 	}
+	// printf("first_entry without infile\n"); //del
 	if (tmp->outfile != 1)
 	{
+		// printf("first_entry outfile\n"); //del
 		if (dup2(tmp->outfile, 1) == -1)
-			ft_close_exit(data, 1); //обработать
+			ft_perror_exit_child("Inside child dup error", DUP);
 		close(tmp->outfile);
 	}
 	else if (tmp->outfile == 1)
 	{
+		// printf("first_entry without outfile\n"); //del
 		if (dup2(data->exec->pipe[data->exec->n_child][1], 1) == -1)
-			ft_close_exit(data, 1); //обработать
+			ft_perror_exit_child("Inside child dup error", DUP);
 	}
 	close(data->exec->pipe[data->exec->n_child][1]);
 	execve(tmp->cmd_path, tmp->cmd_argv, data->envp);
-	ft_close_exit(data, 2); //обработать
+	ft_perror_exit_child("Inside child execve error", 1);
 }
 
 int	ft_exec_many_cmd(t_info *data)
@@ -249,16 +253,17 @@ int	ft_exec_many_cmd(t_info *data)
 	t_cmds	*tmp;
 	int		status;
 
-	ft_pipe_many_cmd(data);
+	ft_pipe_many_cmd(data); //внутри может крашнуться, обработать!
 	tmp = data->group_head->cmds_head;
-	while (tmp || data->exec->n_child <= data->exec->qtt_cmd)
+	while (tmp) // || data->exec->n_child <= data->exec->qtt_cmd)
 	{	
+		// printf("DEBAG PROCESS\n"); //del
 		data->exec->pid = fork();
 		if (data->exec->pid == -1)
 			return (1); //обработать
 		else if (data->exec->pid == 0 && data->exec->n_child == 0)
 			ft_first_entry(data, tmp);
-		else if (data->exec->pid == 0 && data->exec->n_child == data->exec->qtt_cmd)
+		else if (data->exec->pid == 0 && data->exec->n_child == (data->exec->qtt_cmd - 1))
 			ft_last_entry(data, tmp);
 		else if (data->exec->pid == 0)
 			ft_routine(data, tmp);
@@ -271,6 +276,7 @@ int	ft_exec_many_cmd(t_info *data)
 		if (wait(&status) == -1)
 			return (1); //обработать
 		data->exec->n_child--;
+		// printf("HERE WAIT\n"); //del
 	}
 	return (0);
 }
@@ -291,11 +297,15 @@ int	ft_preparation(t_info *data)
 	}
 	printf("new->qtt_cmd - %d\n\n", data->exec->qtt_cmd); //del
 	if (data->exec->qtt_cmd == 1) //одна команда, проверяем cmd_str и исполняем
+	{
 		if (ft_exec_one_cmd(data))
 			return (1);
+	}
 	else if (data->exec->qtt_cmd > 1) //много команд, нужны трубы, идем их делать
+	{
 		if (ft_exec_many_cmd(data))
 			return (1);
+	}
 	return (0);
 }
 
@@ -311,19 +321,22 @@ int	ft_struct_exec(t_info *data)
 	return (0);
 }
 
-int	ft_clean_array_int(int **pipe)
+int	ft_clean_array_int(int **pipe, int qtt_cmd)
 {
 	int	i;
 
 	i = 0;
 	if (pipe)
 	{
-		while (pipe[i])
+		// printf("qtt_cmd - %d\n", qtt_cmd); //del
+		while (i < (qtt_cmd - 1))
 		{
 			free(pipe[i]);
 			pipe[i] = NULL;
 			i++;
+			// printf("HERE 1\n"); //del
 		}
+		// printf("HERE 2\n"); //del
 		free(pipe);
 		pipe = NULL;
 	}
@@ -332,8 +345,8 @@ int	ft_clean_array_int(int **pipe)
 
 void	ft_free_exec(t_info *data)
 {
-	if (data->exec->pipe != NULL)
-		ft_clean_array_int(data->exec->pipe);
+	if (data->exec->pipe != NULL) 
+		ft_clean_array_int(data->exec->pipe, data->exec->qtt_cmd);
 	free(data->exec);
 	data->exec = NULL;
 }
