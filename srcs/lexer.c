@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 21:05:32 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/17 16:55:37 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/19 21:28:36 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ static int	ft_check_unclosed_quotes(t_info *data, char *str, int *i)
 	}
 	if (single_q || double_q)
 	{
-		ft_perror_symbols(data, "Quotes error\n");
-		return (LEXER_ERROR);
+		return (ft_perror_symbols(data, "Quotes error\n"));
 	}
 	return (0);
 }
@@ -58,7 +57,7 @@ int	ft_get_tokens(char *str, t_info *data)
 		while (str[i] && !ft_strchr(SPACES, str[i]))
 		{
 			if (ft_check_unclosed_quotes(data, str, &i))
-				return (LEXER_ERROR);
+				return (data->status);
 		}
 		if (i)
 		{

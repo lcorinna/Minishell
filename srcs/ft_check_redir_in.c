@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 23:34:08 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/18 23:57:25 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/19 21:37:03 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,7 @@ int	ft_check_redir_in(t_info *data)
 		data->token_head = data->token_head->next;
 		if (!data->token_head)
 		{
-			ft_perror_token("newline");
-			data->status = TOKEN_ERROR;
-			return (data->status);
+			return (ft_perror_token(data, "newline"));
 		}
 		else
 		{
@@ -34,8 +32,7 @@ int	ft_check_redir_in(t_info *data)
 			data->cmds_head->infile = open(infile, O_RDONLY);
 			if (data->cmds_head->infile < 0)
 			{
-				ft_perror_file(data, infile);
-				return (data->status);
+				return (ft_perror_file(data, infile));
 			}
 		}
 		data->token_head = data->token_head->next;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 16:38:53 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/19 15:30:12 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/19 21:48:21 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	ft_executor(t_info *data)
 	if (data->exec == NULL) //при первом заходе инициализирую структуру exec
 		if (ft_struct_exec(data))
 			return (1); //ошибка функции
-	if (ft_preparation(data))
+	if (data->group_head != NULL && ft_preparation(data))
 		return (1);
 	if (data->exec != NULL)
 		ft_free_exec(data); //освобождаю exec перед выходом

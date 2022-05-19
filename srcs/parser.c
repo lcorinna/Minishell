@@ -6,26 +6,35 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 22:09:17 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/19 00:16:51 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/19 22:45:03 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int	ft_check_parn_r(t_info *data)
+static int	ft_check_parn_l(t_info *data)
 {
-	if (data->token_head->next && (data->token_head->next->type != PIPE && data->token_head->next->type != IF_AND && data->token_head->next->type != IF_OR))
+	if (data->token_head->prev && data->token_head->prev->type != PIPE && data->token_head->prev->type != IF_AND && data->token_head->prev->type != IF_OR)
+		return (ft_perror_token(data, data->token_head->next->str_val));
+	else
 	{
-		if (data->token_head->next)
-			ft_perror_token(data->token_head->next);
-		else
-			ft_perror_token("newline");
-		data->status = TOKEN_ERROR;
-		retutn (data->status);
+		data->priority++;
+		data->token_head = data->token_head->next;
 	}
 	return (0);
 }
 
+static int	ft_check_parn_r(t_info *data)
+{
+	if (data->token_head->next && data->token_head->next->type != PIPE && data->token_head->next->type != IF_AND && data->token_head->next->type != IF_OR)
+		return (ft_perror_token(data, data->token_head->next->str_val));
+	else
+	{
+		data->priority--;
+		data->token_head = data->token_head->next;
+	}
+	return (0);
+}
 
 static int	ft_fill_cmd(t_info *data)
 {
@@ -36,17 +45,13 @@ static int	ft_fill_cmd(t_info *data)
 	{
 		if (data->token_head->type == PARN_L)
 		{
-			// if (ft_check_parn_l(data))
-			// 	return (data->status);
-			data->priority++;
-			data->token_head = data->token_head->next;
+			if (ft_check_parn_l(data))
+				return (data->status);
 		}
 		if (data->token_head->type == PARN_R)
 		{
-			// if (ft_check_parn_r(data))
-			// 	return (data->status);
-			data->priority--;
-			data->token_head = data->token_head->next;
+			if (ft_check_parn_r(data))
+				return (data->status);
 		}
 		if (data->token_head && ft_check_redir_insource(data))
 			return (data->status);

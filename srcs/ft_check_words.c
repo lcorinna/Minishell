@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 21:58:31 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/18 22:40:02 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/19 21:31:58 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,7 @@ int	ft_check_cmd_path(t_info *data)
 			// printf("%s\n", data->cmds_head->cmd_path);
 			if (!data->cmds_head->cmd_path)
 			{
-				ft_perror_cmd(data, cmd);
-				return (data->status);
+				return (ft_perror_cmd(data, cmd));
 			}
 		}
 		else

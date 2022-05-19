@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_perror.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 14:57:39 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/17 17:22:58 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/19 21:38:51 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_perror_token(char *token_name)
+int	ft_perror_token(t_info *data, char *token_name)
 {
 	char	*s;
 	char	*tmp;
@@ -22,9 +22,11 @@ void	ft_perror_token(char *token_name)
 	free(tmp);
 	ft_putstr_fd(s, 2);
 	free(s);
+	data->status = TOKEN_ERROR;
+	return (data->status);
 }
 
-void	ft_perror_eof(void)
+int	ft_perror_eof(t_info *data)
 {
 	char	*s;
 	char	*tmp;
@@ -34,9 +36,11 @@ void	ft_perror_eof(void)
 	free(tmp);
 	ft_putstr_fd(s, 2);
 	free(s);
+	data->status = TOKEN_ERROR;
+	return (data->status);
 }
 
-void	ft_perror_file(t_info *data, char *infile)
+int	ft_perror_file(t_info *data, char *infile)
 {
 	char	*s1;
 	char	*s2;
@@ -47,9 +51,10 @@ void	ft_perror_file(t_info *data, char *infile)
 	perror(s2);
 	free(s2);
 	data->status = errno;
+	return (data->status);
 }
 
-void	ft_perror_symbols(t_info *data, char *symbol)
+int	ft_perror_symbols(t_info *data, char *symbol)
 {
 	char	*s1;
 	char	*s2;
@@ -60,9 +65,10 @@ void	ft_perror_symbols(t_info *data, char *symbol)
 	ft_putstr_fd(s2, 2);
 	free(s2);
 	data->status = SYMBOLS_ERROR;
+	return (data->status);
 }
 
-void	ft_perror_cmd(t_info *data, char *cmd)
+int	ft_perror_cmd(t_info *data, char *cmd)
 {
 	char	*s1;
 	char	*s2;
@@ -73,5 +79,6 @@ void	ft_perror_cmd(t_info *data, char *cmd)
 	ft_putstr_fd(s2, 2);
 	free(s2);
 	ft_putstr_fd(": command not found\n", 2);
-	data->status = errno;
+	data->status = CMD_NOT_FOUND;
+	return (data->status);
 }

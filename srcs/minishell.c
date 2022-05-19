@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:33:09 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/19 11:43:31 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/19 23:40:57 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ static int	ft_check_parentheses(t_info *data)
 	}
 	if (left != right)
 	{
-		res = 1;
-		ft_perror_symbols(data, "Parentheses error\n");
+		res = ft_perror_symbols(data, "Parentheses error\n");
 	}	
 	return (res);
 }
@@ -55,17 +54,16 @@ int	ft_lexer(t_info *data)
 
 	last_type = UNDEFINED;
 	if (ft_get_tokens(data->str, data))
-		return (LEXER_ERROR);
+		return (data->status);
 	ft_expand(data);
 	ft_symsplit(data);
 	ft_set_tokens_type(data);
-	if (ft_check_parentheses(data))
-		return (LEXER_ERROR);
 	if (data->tokens && ft_strchr(NOT_FIRST, data->tokens->str_val[0]))
 	{
-		ft_perror_token(data->tokens->str_val);
-		return (LEXER_ERROR);
+		return (ft_perror_token(data, data->tokens->str_val));
 	}
+	if (ft_check_parentheses(data))
+		return (data->status);
 	if (data->tokens)
 		last_type = ft_token_lstlast(data->tokens)->type;
 	if (data->tokens && (last_type == PIPE || last_type == AND \
@@ -74,17 +72,17 @@ int	ft_lexer(t_info *data)
 		ft_readline(data, "> ", 0);
 		if (!data->str)
 		{
-			ft_perror_eof();
-			return (LEXER_ERROR);
+			return (ft_perror_eof(data));
 		}
 		if (ft_lexer(data))
-			return (LEXER_ERROR);
+			return (data->status);
 	}
 	return (0);
 }
 
 void	ft_cleanup(t_info *data)
 {
+	data->priority = 0;
 	if (data->path)
 	{
 		free(data->path);
@@ -119,10 +117,11 @@ int	main(int argc, char **argv, char **envp)
 		// parser
 		if (ft_get_cmds(&data))
 			continue ;
+		ft_build_bin_tree(&data);
 		ft_checker(&data);
 		// executor
-		if (ft_executor(&data))
-			printf("im found mistake in executor\n"); //del
+		// if (ft_executor(&data))
+		// 	printf("im found mistake in executor\n"); //del
 	}
 	ft_cleanup(&data);
 	ft_clean_struct(&data);

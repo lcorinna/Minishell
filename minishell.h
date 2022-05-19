@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/19 12:39:29 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/19 23:39:15 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@
 # define LEXER_ERROR	101
 # define SYMBOLS_ERROR	102
 # define TOKEN_ERROR	258
+# define CMD_NOT_FOUND	127
 # define UNDEFINED		-1
 # define WORD			1
 # define REDIR_OUT		4
@@ -54,8 +55,8 @@
 # define REDIR_INSOURCE	7
 # define PIPE			8
 # define AND			13
-# define IF_AND			9
-# define IF_OR			10
+# define IF_AND			9 //&&
+# define IF_OR			10 //||
 # define PARN_L			11
 # define PARN_R			12
 # define DUP			81
@@ -242,6 +243,9 @@ void		ft_group_lstadd_front(t_group **head, t_group *new);
 void		ft_group_lstadd_back(t_group **head, t_group *new);
 void		ft_group_lstclear(t_group **head);
 
+/* bin_tree.c */
+void		ft_build_bin_tree(t_info *data);
+
 /* executor */
 int			ft_executor(t_info *data);
 
@@ -265,11 +269,11 @@ void		ft_close_all_pipes(t_info *data);
 void		ft_pipe_closure(t_info *data);
 
 /* ft_perror.c */
-void		ft_perror_token(char *token_name);
-void		ft_perror_eof(void);
-void		ft_perror_file(t_info *data, char *infile);
-void		ft_perror_symbols(t_info *data, char *symbol);
-void		ft_perror_cmd(t_info *data, char *cmd);
+int			ft_perror_token(t_info *data, char *token_name);
+int			ft_perror_eof(t_info *data);
+int			ft_perror_file(t_info *data, char *infile);
+int			ft_perror_symbols(t_info *data, char *symbol);
+int			ft_perror_cmd(t_info *data, char *cmd);
 
 /* checkers.c */
 void		ft_check_lexer(t_info *data);

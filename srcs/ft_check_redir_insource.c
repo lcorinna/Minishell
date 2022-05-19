@@ -6,13 +6,13 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 23:40:27 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/18 23:57:25 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/19 21:37:10 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	ft_fill_here_doc(t_info *data, char *limiter)
+static int	ft_fill_here_doc(t_info *data, char *limiter)
 {
 	int		fd;
 	char	*buff;
@@ -23,8 +23,7 @@ static void	ft_fill_here_doc(t_info *data, char *limiter)
 	fd = open(HEREDOC, O_CREAT | O_WRONLY | O_TRUNC, 000777);
 	if (fd < 0)
 	{
-		ft_perror_file(data, HEREDOC);
-		return ;
+		return (ft_perror_file(data, HEREDOC));
 	}
 	tmp = readline("> ");
 	while (tmp && ft_strncmp(tmp, limiter, ft_strlen(limiter) + 1))
@@ -37,6 +36,7 @@ static void	ft_fill_here_doc(t_info *data, char *limiter)
 	}
 	free(tmp);
 	close(fd);
+	return (0);
 }
 
 int	ft_check_redir_insource(t_info *data)
@@ -49,21 +49,19 @@ int	ft_check_redir_insource(t_info *data)
 		data->token_head = data->token_head->next;
 		if (!data->token_head)
 		{
-			ft_perror_token("newline");
-			data->status = TOKEN_ERROR;
-			return (data->status);
+			return (ft_perror_token(data, "newline"));
 		}
 		else
 		{
 			limiter = data->token_head->str_val;
-			ft_fill_here_doc(data, limiter);
+			if (ft_fill_here_doc(data, limiter))
+				return (data->status);
 			if (data->cmds_head->infile != 0)
 				close(data->cmds_head->infile);
 			data->cmds_head->infile = open(HEREDOC, O_RDONLY);
 			if (data->cmds_head->infile < 0)
 			{
-				ft_perror_file(data, HEREDOC);
-				return (data->status);
+				return (ft_perror_file(data, HEREDOC));
 			}
 		}
 		data->token_head = data->token_head->next;
