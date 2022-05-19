@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/18 23:57:57 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/19 12:39:29 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,6 +244,25 @@ void		ft_group_lstclear(t_group **head);
 
 /* executor */
 int			ft_executor(t_info *data);
+
+/* executor_one_cmd */
+void		ft_pipe_one_cmd(t_info *data);
+int			ft_exec_one_cmd(t_info	*data);
+void		ft_perror_exit_child(char *str, int error);
+
+
+/* executor_many_cmd */
+int			ft_exec_many_cmd(t_info *data);
+void		ft_first_entry(t_info *data, t_cmds	*tmp);
+void		ft_last_entry(t_info *data, t_cmds	*tmp);
+void		ft_routine(t_info *data, t_cmds	*tmp);
+int			ft_pipe_many_cmd(t_info	*data);
+
+/* executor_utils */
+void		ft_free_exec(t_info *data);
+int			ft_clean_array_int(int **pipe, int qtt_cmd);
+void		ft_close_all_pipes(t_info *data);
+void		ft_pipe_closure(t_info *data);
 
 /* ft_perror.c */
 void		ft_perror_token(char *token_name);
