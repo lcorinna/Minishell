@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/19 23:39:15 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/20 22:08:34 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,16 +119,16 @@ typedef struct s_info
 	int				envp_f;
 	int				exit_f;
 	int				status;
+	int				priority;
 	t_token			*tokens;
+	t_group			*group_head;
 	t_token			*token_head;
 	t_llist			*envp_head;
-
-	t_f_exec		*exec;
-
-	int				priority;
-	t_group			*group_head;
 	t_group			*group_ptr;
 	t_cmds			*cmds_head;
+	t_group			*root;
+
+	t_f_exec		*exec;
 
 }	t_info;
 
@@ -244,7 +244,9 @@ void		ft_group_lstadd_back(t_group **head, t_group *new);
 void		ft_group_lstclear(t_group **head);
 
 /* bin_tree.c */
-void		ft_build_bin_tree(t_info *data);
+t_group		*ft_group_logic_last(t_group *last);
+void		ft_build_bin_tree(t_info *data, t_group *last);
+void		ft_in_order_traverse(t_group *root);
 
 /* executor */
 int			ft_executor(t_info *data);
@@ -253,7 +255,6 @@ int			ft_executor(t_info *data);
 void		ft_pipe_one_cmd(t_info *data);
 int			ft_exec_one_cmd(t_info	*data);
 void		ft_perror_exit_child(char *str, int error);
-
 
 /* executor_many_cmd */
 int			ft_exec_many_cmd(t_info *data);

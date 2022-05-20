@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:33:09 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/19 23:40:57 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/20 22:10:54 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,10 @@ int	main(int argc, char **argv, char **envp)
 		// parser
 		if (ft_get_cmds(&data))
 			continue ;
-		ft_build_bin_tree(&data);
-		ft_checker(&data);
+		data.root = ft_group_logic_last(ft_group_lstlast(data.group_head));
+		ft_build_bin_tree(&data, ft_group_lstlast(data.group_head));
+		ft_in_order_traverse(data.root);
+		// ft_checker(&data);
 		// executor
 		// if (ft_executor(&data))
 		// 	printf("im found mistake in executor\n"); //del
