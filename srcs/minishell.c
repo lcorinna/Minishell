@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:33:09 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/20 22:10:54 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/21 23:46:23 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,21 @@ static int	ft_check_parentheses(t_info *data)
 			right++;
 		data->token_head = data->token_head->next;
 	}
-	if (left != right)
-	{
-		res = ft_perror_symbols(data, "Parentheses error\n");
-	}	
+	if (left == right)
+		res = 0;
+	else if (left < right)
+		res = ft_perror_token(data, ")");
+	else if (left > right)
+		res = 1;
 	return (res);
 }
 
 int	ft_lexer(t_info *data)
 {
+	int	parn_num;
 	int	last_type;
 
+	parn_num = 0;
 	last_type = UNDEFINED;
 	if (ft_get_tokens(data->str, data))
 		return (data->status);
@@ -59,21 +63,18 @@ int	ft_lexer(t_info *data)
 	ft_symsplit(data);
 	ft_set_tokens_type(data);
 	if (data->tokens && ft_strchr(NOT_FIRST, data->tokens->str_val[0]))
-	{
 		return (ft_perror_token(data, data->tokens->str_val));
-	}
-	if (ft_check_parentheses(data))
+	parn_num = ft_check_parentheses(data);
+	if (parn_num == TOKEN_ERROR)
 		return (data->status);
 	if (data->tokens)
 		last_type = ft_token_lstlast(data->tokens)->type;
-	if (data->tokens && (last_type == PIPE || last_type == AND \
-		|| last_type == IF_AND || last_type == IF_OR))
+	if (parn_num || (data->tokens && (last_type == PIPE || last_type == AND \
+		|| last_type == IF_AND || last_type == IF_OR)))
 	{
 		ft_readline(data, "> ", 0);
 		if (!data->str)
-		{
 			return (ft_perror_eof(data));
-		}
 		if (ft_lexer(data))
 			return (data->status);
 	}

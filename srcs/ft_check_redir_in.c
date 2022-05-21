@@ -6,11 +6,24 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 23:34:08 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/19 21:37:03 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/22 00:01:52 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+static void	ft_do_wildcard(t_info *data)
+{
+	DIR				*curr_dir;
+	struct dirent	*s_dir;
+
+	curr_dir = opendir("./");
+	while (s_dir = readdir(curr_dir))
+	{
+		printf("%s\n", s_dir->d_name);	
+	}
+	closedir(curr_dir);
+}
 
 int	ft_check_redir_in(t_info *data)
 {
@@ -27,6 +40,8 @@ int	ft_check_redir_in(t_info *data)
 		else
 		{
 			infile = data->token_head->str_val;
+			if (ft_strchr(infile, '*'))
+				ft_do_wildcard(data);
 			if (data->cmds_head->infile != 0)
 				close(data->cmds_head->infile);
 			data->cmds_head->infile = open(infile, O_RDONLY);

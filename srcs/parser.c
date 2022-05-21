@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 22:09:17 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/19 22:45:03 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/21 23:26:34 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	ft_check_parn_l(t_info *data)
 		return (ft_perror_token(data, data->token_head->next->str_val));
 	else
 	{
-		data->priority++;
+		data->priority += 1;
 		data->token_head = data->token_head->next;
 	}
 	return (0);
@@ -30,7 +30,7 @@ static int	ft_check_parn_r(t_info *data)
 		return (ft_perror_token(data, data->token_head->next->str_val));
 	else
 	{
-		data->priority--;
+		data->priority -= 1;
 		data->token_head = data->token_head->next;
 	}
 	return (0);

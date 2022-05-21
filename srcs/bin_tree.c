@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 23:09:34 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/20 22:31:01 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/21 22:37:34 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@ t_group	*ft_group_logic_last(t_group *last)
 	return (last);
 }
 
-static t_group	*ft_group_logic_first(t_group *head)
-{
+// static t_group	*ft_group_logic_first(t_group *head)
+// {
 
-	while (head && !head->logical_operation)
-	{
-		head = head->right;
-	}
-	return (head);
-}
+// 	while (head && !head->logical_operation)
+// 	{
+// 		head = head->right;
+// 	}
+// 	return (head);
+// }
 
 void	ft_build_bin_tree(t_info *data, t_group *last)
 {
@@ -38,13 +38,16 @@ void	ft_build_bin_tree(t_info *data, t_group *last)
 	t_group	*log_last_but_one;
 
 	log_last = ft_group_logic_last(last);
-	log_last->left->right = NULL;
-	log_last->right->left = NULL;
-	log_last_but_one = ft_group_logic_last(ft_group_logic_last(log_last->left));
-	if (log_last_but_one)
-		log_last->left = log_last_but_one;
-	if (log_last_but_one && log_last_but_one->logical_operation)
-		ft_build_bin_tree(data, log_last_but_one);
+	if (log_last)
+	{
+		log_last->left->right = NULL;
+		log_last->right->left = NULL;
+		log_last_but_one = ft_group_logic_last(ft_group_logic_last(log_last->left));
+		if (log_last_but_one)
+			log_last->left = log_last_but_one;
+		if (log_last_but_one && log_last_but_one->logical_operation)
+			ft_build_bin_tree(data, log_last_but_one);
+	}
 }
 
 void	ft_in_order_traverse(t_group *root)
