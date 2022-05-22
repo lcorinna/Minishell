@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 20:25:41 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/17 17:50:16 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/21 16:22:38 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	ft_cleaning_array(char **arr)
 	{
 		while (arr[i])
 		{
+			// printf("i - %d\n", i); //del
 			free(arr[i]);
 			arr[i] = NULL;
 			i++;

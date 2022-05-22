@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 16:38:53 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/19 21:48:21 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/20 17:53:43 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,20 +46,21 @@ int	ft_preparation(t_info *data)
 	t_cmds	*tmp;
 
 	tmp = data->group_head->cmds_head;
+	printf("new->qtt_cmd - %d\n\n", data->exec->qtt_cmd); //del
 	while (tmp)
 	{
 		printf("tmp->infile - %d\n", tmp->infile); //del
 		printf("tmp->outfile - %d\n", tmp->outfile); //del
 		printf("tmp1.cmd_path - %s\n", tmp->cmd_path); //del
-		printf("tmp1.cmd_argv[0] - %s\n", tmp->cmd_argv[0]); //del
+		// printf("tmp1.cmd_argv[0] - %p\n", tmp->cmd_argv[0]); //del
 		printf("tmp1.cmd_str - %s\n\n", tmp->cmd_str); //del
 		tmp = tmp->next;
 		data->exec->qtt_cmd++;
 	}
 	printf("new->qtt_cmd - %d\n\n", data->exec->qtt_cmd); //del
+	tmp = data->group_head->cmds_head;
 	if (data->exec->qtt_cmd == 1) //одна команда, проверяем cmd_str и исполняем
 	{
-		tmp = data->group_head->cmds_head;
 		if (tmp->cmd_path != NULL && ft_exec_one_cmd(data))
 			return (1);
 	}
@@ -80,6 +81,6 @@ int	ft_executor(t_info *data)
 		return (1);
 	if (data->exec != NULL)
 		ft_free_exec(data); //освобождаю exec перед выходом
-	printf("\nHERE\n"); //del
+	// printf("\nHERE\n"); //del
 	return (0);
 }

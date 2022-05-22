@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/19 23:39:15 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/22 19:45:27 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,26 +134,29 @@ typedef struct s_info
 
 // typedef int	(*t_buildin_ptr)(t_llist *, t_info *);
 
+/* builtins/builtins_utils.c */
+int			ft_memcmp_l(const void *s1, const void *s2, size_t n);
+int			ft_only_parent_need(char **arr);
+void		ft_builtins_command(t_info *data, char **arr);
+
 /* builtins/echo.c */
 void		ft_echo(char **cmd_argv);
 
 /* builtins/cd.c */
 
-
 /* builtins/pwd.c */
-
+void		ft_pwd(char **arr);
 
 /* builtins/export.c */
 
-
 /* builtins/unset.c */
 
-
 /* builtins/env.c */
-
+void		ft_env(t_info *data);
 
 /* builtins/exit.c */
-
+void		ft_exit(char **arr);
+int			ft_is_number(char *str);
 
 /* envp.c */
 char		*ft_strjoin_three(char *s1, char *s2, char *s3);
@@ -163,7 +166,7 @@ void		ft_envp(t_info *data);
 void		ft_transfer(int argc, char **argv, char **envp, t_info *data);
 
 /* llist.c */
-t_llist		*ft_lstnew(void *key, void *value);
+t_llist		*ft_lstnew(void **key, void **value);
 void		ft_lstadd_front(t_llist **lst, t_llist *new);
 t_llist		*ft_lstlast(t_llist *lst);
 void		ft_lstadd_back(t_llist **lst, t_llist *new);
@@ -253,7 +256,7 @@ int			ft_executor(t_info *data);
 void		ft_pipe_one_cmd(t_info *data);
 int			ft_exec_one_cmd(t_info	*data);
 void		ft_perror_exit_child(char *str, int error);
-
+int			ft_memcmp_l(const void *s1, const void *s2, size_t n);
 
 /* executor_many_cmd */
 int			ft_exec_many_cmd(t_info *data);

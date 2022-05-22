@@ -6,11 +6,11 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 18:27:38 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/19 16:17:00 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/22 19:25:12 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 void	ft_echo(char **cmd_argv)
 {
@@ -18,7 +18,8 @@ void	ft_echo(char **cmd_argv)
 	int	flag;
 
 	i = 1;
-	flag = ft_strncmp(cmd_argv[1], "-n", 3);
+	if (cmd_argv[1])
+		flag = ft_strncmp(cmd_argv[1], "-n", 3);
 	if (cmd_argv)
 	{
 		if (!flag)
@@ -33,10 +34,5 @@ void	ft_echo(char **cmd_argv)
 		if (flag)
 			ft_putstr_fd("\n", 1);
 	}
+	exit(0);
 }
-
-// int	main(int argc, char **argv)
-// {
-// 	ft_echo(argv);
-// 	return (0);
-// }

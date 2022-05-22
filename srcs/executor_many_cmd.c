@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor_second.c                                  :+:      :+:    :+:   */
+/*   executor_many_cmd.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 18:02:28 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/19 12:19:07 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/20 17:17:13 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	ft_last_entry(t_info *data, t_cmds	*tmp)
 	// printf("last_entry without outfile\n"); //del
 	close(data->exec->pipe[data->exec->n_child - 1][0]);
 	execve(tmp->cmd_path, tmp->cmd_argv, data->envp);
-	ft_perror_exit_child("Inside child execve error", 1);
+	ft_perror_exit_child("Inside last child execve error", 1);
 }
 
 void	ft_first_entry(t_info *data, t_cmds	*tmp)
@@ -108,8 +108,8 @@ void	ft_first_entry(t_info *data, t_cmds	*tmp)
 			ft_perror_exit_child("Inside child dup error", DUP);
 	}
 	close(data->exec->pipe[data->exec->n_child][1]);
-	execve(tmp->cmd_path, tmp->cmd_argv, data->envp);
-	ft_perror_exit_child("Inside child execve error", 1);
+	if (execve(tmp->cmd_path, tmp->cmd_argv, data->envp) == -1)
+		ft_perror_exit_child("Inside first child execve error", 1);
 }
 
 int	ft_pipe_many_cmd(t_info	*data)
@@ -154,11 +154,13 @@ int	ft_exec_many_cmd(t_info *data)
 		data->exec->pid = fork();
 		if (data->exec->pid == -1)
 			return (1); //обработать
+		else if (tmp->cmd_path == NULL && data->exec->pid == 0)
+			exit(1);
 		else if (data->exec->pid == 0 && data->exec->n_child == 0)
 			ft_first_entry(data, tmp);
 		else if (data->exec->pid == 0 && data->exec->n_child == (data->exec->qtt_cmd - 1))
 			ft_last_entry(data, tmp);
-		else if (data->exec->pid == 0)
+		else if (tmp->cmd_path != NULL && data->exec->pid == 0)
 			ft_routine(data, tmp);
 		data->exec->n_child++;
 		tmp = tmp->next;

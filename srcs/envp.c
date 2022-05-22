@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 12:52:50 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/13 11:23:00 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/22 19:46:57 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,29 @@ int	ft_envp2(char *envp, char **key, char **value, int j)
 	return (0);
 }
 
+void	ft_added_shlvl(t_info *data)
+{
+	t_llist	*tmp;
+	t_llist	*new;
+	int		lvl;
+
+	lvl = 1;
+	tmp = data->envp_list;
+	while (tmp)
+	{
+		if ((ft_memcmp_l("SHLVL", tmp->key, 6) == 6))
+			lvl = 0;
+		tmp = tmp->next;
+	}
+	// if (lvl == 1) //сделать если нет
+	// {
+	// 	new = ft_lstnew("SHLVL", "1");
+	// 	if (!new)
+	// 		ft_error_exit(data, 1);
+	// 	ft_lstadd_back(&tmp, new);
+	// }
+}
+
 void	ft_envp(t_info *data)
 {
 	t_llist	*new;
@@ -117,13 +140,13 @@ void	ft_envp(t_info *data)
 		// printf("\nenvp[%d] = %s \n", i, envp[i]); //del ДЕБАГЕР
 		if (ft_envp2(data->envp[i], &key, &value, j)) //парсинг на key и value
 			ft_error_exit(data, 1);
-		new = ft_lstnew(key, value); //создаю новый элемент
+		new = ft_lstnew(&key, &value); //создаю новый элемент
 		if (!new)
 			ft_error_exit(data, 1);
 		ft_lstadd_back(&data->envp_list, new); //кладу новый элемент в конец
 		i++;
 	}
-	// data->free_me.envp_list = data->envp_list; //пока не работает
+	ft_added_shlvl(data);
 }
 
 void	ft_transfer(int argc, char **argv, char **envp, t_info *data)
@@ -136,10 +159,7 @@ void	ft_transfer(int argc, char **argv, char **envp, t_info *data)
 		argc++;
 	data->envp = malloc(sizeof(char *) * (argc + 1));
 	if (!data->envp)
-	{
-		perror("");
-		exit(1); //чистить пока нечего. номер ошибки Malloc
-	}
+		ft_perror_exit_child("", 12);
 	argc = 0;
 	while (envp[argc]) //копирую все в наш массив чтобы работал ft_clean_struct
 	{
