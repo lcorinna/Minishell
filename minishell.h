@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/22 23:18:59 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/22 23:52:04 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,12 @@
 # define SYMBOLS		"<|>()&"
 # define LOGIC_OPER		"&|"
 # define NOT_FIRST		")|&"
+
 # define LEXER_ERROR	101
 # define SYMBOLS_ERROR	102
 # define TOKEN_ERROR	258
 # define CMD_NOT_FOUND	127
+# define AMBIG_REDIR	1
 # define UNDEFINED		-1
 # define WORD			1
 # define REDIR_OUT		4
@@ -289,6 +291,7 @@ char		*ft_str_chr(const char *s, int c);
 void		ft_str_dup(const char *str, char *ptr);
 
 /* wildcards.c */
+int			ft_perror_wcds(t_info *data, char *file);
 char		*ft_do_wildcard(t_info *data, char *str);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 23:34:08 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/22 23:41:10 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/23 00:01:59 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,14 @@ int	ft_check_redir_in(t_info *data)
 				close(data->cmds_head->infile);
 			if (ft_strchr(infile, '*'))
 				infile = ft_do_wildcard(data, infile);
-			printf("infile = %s\n", infile);
-			data->cmds_head->infile = open(infile, O_RDONLY);
-			// printf("%d\n", data->cmds_head->infile); 
-			if (data->cmds_head->infile < 0)
+			if (ft_strchr(infile + 1, ' '))
 			{
-				return (ft_perror_file(data, infile));
+				free(infile);
+				return (ft_perror_wcds(data, data->token_head->str_val));
 			}
+			data->cmds_head->infile = open(infile, O_RDONLY);
+			if (data->cmds_head->infile < 0)
+				return (ft_perror_file(data, infile));
 		}
 		data->token_head = data->token_head->next;
 	}

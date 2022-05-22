@@ -6,11 +6,26 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 23:18:06 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/22 23:41:01 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/23 00:00:38 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	ft_perror_wcds(t_info *data, char *file)
+{
+	char	*s1;
+	char	*s2;
+
+	s1 = ft_strjoin(SHELL, "\b\b: ");
+	s2 = ft_strjoin(s1, file);
+	free(s1);
+	ft_putstr_fd(s2, 2);
+	free(s2);
+	ft_putstr_fd(": ambiguous redirect\n", 2);
+	data->status = AMBIG_REDIR;
+	return (data->status);
+}
 
 static void	ft_get_files(t_info *data)
 {
@@ -60,7 +75,7 @@ char	*ft_do_wildcard(t_info *data, char *str)
 		if (s)
 		{
 			tmp = wcds;
-			wcds = ft_strjoin_three(wcds, s, " ");
+			wcds = ft_strjoin_three(wcds, " ", s);
 			if (tmp[0] != '\0')  // if (ft_strncmp(tmp, "\0", 1))
 				free(tmp);
 		}
