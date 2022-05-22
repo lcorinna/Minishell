@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/20 22:08:34 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/22 23:18:59 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,8 @@ typedef struct s_info
 	t_group			*group_ptr;
 	t_cmds			*cmds_head;
 	t_group			*root;
-
+	t_list			*dir_files;
+	t_list			*dir_head;
 	t_f_exec		*exec;
 
 }	t_info;
@@ -163,10 +164,10 @@ void		ft_envp(t_info *data);
 void		ft_transfer(int argc, char **argv, char **envp, t_info *data);
 
 /* llist.c */
-t_llist		*ft_lstnew(void *key, void *value);
-void		ft_lstadd_front(t_llist **lst, t_llist *new);
-t_llist		*ft_lstlast(t_llist *lst);
-void		ft_lstadd_back(t_llist **lst, t_llist *new);
+t_llist		*ft_llstnew(void *key, void *value);
+void		ft_llstadd_front(t_llist **lst, t_llist *new);
+t_llist		*ft_llstlast(t_llist *lst);
+void		ft_llstadd_back(t_llist **lst, t_llist *new);
 
 /* ft_readline.c */
 void		ft_readline(t_info *data, char *prompt, int print_exit);
@@ -286,5 +287,8 @@ char		*get_next_line(int fd);
 /* get_next_line_utils.c */
 char		*ft_str_chr(const char *s, int c);
 void		ft_str_dup(const char *str, char *ptr);
+
+/* wildcards.c */
+char		*ft_do_wildcard(t_info *data, char *str);
 
 #endif

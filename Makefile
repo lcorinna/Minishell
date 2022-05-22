@@ -6,7 +6,7 @@
 #    By: merlich <merlich@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/20 19:17:52 by lcorinna          #+#    #+#              #
-#    Updated: 2022/05/21 23:46:07 by merlich          ###   ########.fr        #
+#    Updated: 2022/05/22 23:19:29 by merlich          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ FILES			=	minishell.c envp.c llist.c ft_readline.c exit.c \
 					parser.c bin_tree.c \
 					ft_check_redir_insource.c ft_check_redir_in.c \
 					ft_check_redir_out.c ft_check_redir_append.c \
-					ft_check_words.c ft_perror.c checkers.c \
+					ft_check_words.c ft_perror.c wildcards.c\
+					checkers.c \
 					#executor.c executor_one_cmd.c executor_many_cmd.c \
 					executor_utils.c \
 					get_next_line.c get_next_line_utils.c \
@@ -53,6 +54,7 @@ all				:	libmake $(NAME_M)
 
 libmake			:
 					make -C $(PATH_LIBFT)
+					make bonus -C $(PATH_LIBFT)
 					cp $(PATH_LIBFT)$(LIBFT) $(LIBFT)
 
 bonus			:	all

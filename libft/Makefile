@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+         #
+#    By: merlich <merlich@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/09 18:20:29 by merlich           #+#    #+#              #
-#    Updated: 2022/05/06 20:52:12 by lcorinna         ###   ########.fr        #
+#    Updated: 2022/05/22 21:05:48 by merlich          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,11 +22,11 @@ SRCS		=	ft_strlen.c	ft_putstr_fd.c	ft_split.c	ft_strtrim.c \
 				ft_strdup.c  ft_strjoin.c ft_strtrim.c ft_itoa.c ft_strmapi.c \
 				ft_striteri.c ft_putchar_fd.c ft_putendl_fd.c ft_putnbr_fd.c
 
-# SRCS_BONUS 	= 	ft_lstnew_bonus.c ft_lstadd_front_bonus.c \
-# 				ft_lstsize_bonus.c \
-# 				ft_lstlast_bonus.c ft_lstadd_back_bonus.c \
-# 				ft_lstdelone_bonus.c ft_lstclear_bonus.c \
-# 				ft_lstiter_bonus.c ft_lstmap_bonus.c
+SRCS_BONUS 	= 	ft_lstnew_bonus.c ft_lstadd_front_bonus.c \
+				ft_lstsize_bonus.c \
+				ft_lstlast_bonus.c ft_lstadd_back_bonus.c \
+				ft_lstdelone_bonus.c ft_lstclear_bonus.c \
+				ft_lstiter_bonus.c ft_lstmap_bonus.c
 
 D_FILES		=	${SRCS:.c=.d} ${SRCS_BONUS:.c=.d}
 

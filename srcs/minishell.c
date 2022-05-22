@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:33:09 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/21 23:46:23 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/22 23:11:11 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void	ft_cleanup(t_info *data)
 		free(data->path);
 		data->path = NULL;
 	}
+	ft_lstclear(&data->dir_files, free);
 	ft_token_lstclear(&data->tokens);
 	ft_group_lstclear(&data->group_head);
 	unlink(HEREDOC);
