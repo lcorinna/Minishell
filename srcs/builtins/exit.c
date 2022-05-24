@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 16:38:53 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/22 19:42:06 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/24 23:29:36 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ft_exit(char **arr)
 	int		i;
 	char	c;
 
-	if (arr[2] != NULL && !ft_is_number(arr[1]))
+	if (arr[2] != NULL && !ft_is_number(arr[1]))  // A: Здесь будет SegFault!
 	{
 		ft_putstr_fd("exit\nminishell: exit", 2);
 		ft_putstr_fd(": too many arguments\n", 2);
