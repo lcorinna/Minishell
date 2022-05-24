@@ -6,23 +6,31 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 13:00:17 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/04/16 16:12:38 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/21 16:35:20 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_llist	*ft_lstnew(void *key, void *value)
+t_llist	*ft_lstnew(void **key, void **value)
 {
 	t_llist	*new;
+	int		lvl;
 
 	new = malloc(sizeof(t_llist));
 	if (new == NULL)
-	{
 		return (NULL);
+	if ((ft_memcmp_l("SHLVL", (*key), 6) == 6))
+	{
+		lvl = ft_atoi((*value));
+		lvl++;
+		free((*value));
+		*value = ft_itoa(lvl);
+		if (*value == NULL)
+			return (NULL);
 	}
-	new->key = key;
-	new->value = value;
+	new->value = (*value);
+	new->key = (*key);
 	new->next = NULL;
 	return (new);
 }

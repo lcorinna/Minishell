@@ -6,11 +6,12 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:33:09 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/20 22:10:54 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/24 23:17:50 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
 
 static void	ft_fill_builtins(t_info *data)
 {
@@ -105,8 +106,8 @@ int	main(int argc, char **argv, char **envp)
 	{
 		ft_cleanup(&data);
 		// data.envp_f = 1; //проверяю как перезаписывается наш envp из односвязного списка t_llist //del
-		if (data.envp_f)
-			ft_array_envp(&data); //переписываю наш envp, если это нужно
+		if (data.envp_f) //флаг нужен?
+			ft_array_envp(&data); //переписываю envp
 		ft_readline(&data, SHELL, 1);
 		if (!data.str) //обработка сигнала "control + d"
 			break ;
@@ -122,8 +123,8 @@ int	main(int argc, char **argv, char **envp)
 		ft_in_order_traverse(data.root);
 		// ft_checker(&data);
 		// executor
-		// if (ft_executor(&data))
-		// 	printf("im found mistake in executor\n"); //del
+		if (ft_executor(&data))
+			printf("im found mistake in executor\n"); //del
 	}
 	ft_cleanup(&data);
 	ft_clean_struct(&data);
