@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 23:18:06 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/23 00:00:38 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/24 23:12:02 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	ft_perror_wcds(t_info *data, char *file)
 	return (data->status);
 }
 
-static void	ft_get_files(t_info *data)
+static void	ft_get_dir_files(t_info *data)
 {
 	DIR				*curr_dir;
 	struct dirent	*s_dir;
@@ -51,37 +51,74 @@ static char	*ft_compare_filenames(t_info *data, char *str)
 	{
 		tmp = ft_strrchr(filename, str[ind + 1]);
 		if (tmp && !ft_strncmp(tmp, str + ind + 1, ft_strlen(str) - ind))
+		{
 			return (filename);
+		}
 	}
 	return (NULL);
 }
 
-char	*ft_do_wildcard(t_info *data, char *str)
+char	*ft_do_wildcards_file(t_info *data, char *str)
 {
-	int		ind;
 	char	*s;
-	char	*tmp;
-	char	*wcds;
+	t_list	*wcds;
 
-	ind = 0;
+	s = NULL;
+	wcds = NULL;
+	ft_get_dir_files(data);
+	data->dir_head = data->dir_files;
+	while (data->dir_head)
+	{
+		s = ft_compare_filenames(data, str);
+		if (s)
+			ft_lstadd_back(&wcds, ft_lstnew(ft_strdup(s)));
+		data->dir_head = data->dir_head->next;
+	}	
+	if (!wcds)
+	{}
+	else if (ft_lstsize(wcds) == 1)
+	{
+		free(str);
+		str = ft_strdup(wcds->content);
+	}
+	else
+	{
+		free(str);
+		str = NULL;
+	}
+	ft_lstclear(&wcds, free);
+	return (str);
+}
+
+char	*ft_do_wildcards_argv(t_info *data, char *str)
+{
+	char	*s;
+	char 	*tmp;
+	char	*res;
+
 	s = NULL;
 	tmp = NULL;
-	wcds = "\0";
-	ft_get_files(data);
+	res = ft_strdup("\0");
+	ft_get_dir_files(data);
 	data->dir_head = data->dir_files;
 	while (data->dir_head)
 	{
 		s = ft_compare_filenames(data, str);
 		if (s)
 		{
-			tmp = wcds;
-			wcds = ft_strjoin_three(wcds, " ", s);
-			if (tmp[0] != '\0')  // if (ft_strncmp(tmp, "\0", 1))
-				free(tmp);
+			tmp = res;
+			res = ft_strjoin_three(tmp, s, " ");
+			// printf("%s\n", res);
+			free(tmp);
 		}
 		data->dir_head = data->dir_head->next;
 	}
-	if (wcds)
-		str = wcds;
+	res[ft_strlen(res) - 1] = '\0';
+	// printf("%s\n", res);
+	if (ft_strlen(res))
+	{
+		free(str);
+		str = res;
+	}
 	return (str);
 }

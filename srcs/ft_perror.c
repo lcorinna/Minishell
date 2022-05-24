@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 14:57:39 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/22 22:49:56 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/24 20:44:05 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	ft_perror_file(t_info *data, char *infile)
 
 	s1 = ft_strjoin(SHELL, "\b\b: ");
 	s2 = ft_strjoin(s1, infile);
+	free(infile);
 	free(s1);
 	perror(s2);
 	free(s2);

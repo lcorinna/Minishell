@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 21:58:31 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/19 21:31:58 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/24 22:48:23 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ int	ft_check_cmd_path(t_info *data)
 			ft_get_cmd_paths(data);
 			data->cmds_head->cmd_path = ft_get_bin(data->path, cmd);
 			// printf("%s\n", data->cmds_head->cmd_path);
+			ft_cleaning_array(data->path);
+			data->path = NULL;
 			if (!data->cmds_head->cmd_path)
 			{
 				return (ft_perror_cmd(data, cmd));
@@ -92,13 +94,16 @@ int	ft_check_cmd_str(t_info *data)
 	char	*argv;
 	char	*tmp;
 
-	argv = data->token_head->str_val;
+	argv = ft_strdup(data->token_head->str_val);
 	tmp = data->cmds_head->cmd_str;
 	if (data->token_head->type == WORD)
 	{
+		if (ft_strchr(argv, '*'))
+			argv = ft_do_wildcards_argv(data, argv);
 		data->cmds_head->cmd_str = ft_strjoin_three(tmp, " ", argv);
 		free(tmp);
-		// printf("%s\n", data->cmds_head->cmd_str);
+		free(argv);
+		printf("%s\n", data->cmds_head->cmd_str);
 		data->token_head = data->token_head->next;
 	}
 	return (0);

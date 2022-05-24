@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/22 23:52:04 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/24 21:52:48 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,12 +124,14 @@ typedef struct s_info
 	int				priority;
 	t_token			*tokens;
 	t_group			*group_head;
+	t_group			*root;
+	t_list			*dir_files;
+	
+
 	t_token			*token_head;
 	t_llist			*envp_head;
 	t_group			*group_ptr;
 	t_cmds			*cmds_head;
-	t_group			*root;
-	t_list			*dir_files;
 	t_list			*dir_head;
 	t_f_exec		*exec;
 
@@ -292,6 +294,7 @@ void		ft_str_dup(const char *str, char *ptr);
 
 /* wildcards.c */
 int			ft_perror_wcds(t_info *data, char *file);
-char		*ft_do_wildcard(t_info *data, char *str);
+char		*ft_do_wildcards_file(t_info *data, char *str);
+char		*ft_do_wildcards_argv(t_info *data, char *str);
 
 #endif

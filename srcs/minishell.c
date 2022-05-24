@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:33:09 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/22 23:11:11 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/24 22:53:26 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,10 @@ int	ft_lexer(t_info *data)
 void	ft_cleanup(t_info *data)
 {
 	data->priority = 0;
+	data->status = 0;
 	if (data->path)
 	{
-		free(data->path);
+		ft_cleaning_array(data->path);
 		data->path = NULL;
 	}
 	ft_lstclear(&data->dir_files, free);
@@ -115,7 +116,7 @@ int	main(int argc, char **argv, char **envp)
 		// lexer
 		if (ft_lexer(&data))
 			continue ;
-		ft_check_lexer(&data);
+		// ft_check_lexer(&data);
 		// parser
 		if (ft_get_cmds(&data))
 			continue ;

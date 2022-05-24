@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 22:09:17 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/22 23:01:52 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/24 20:27:20 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static int	ft_fill_cmd(t_info *data)
 				return (data->status);
 			count++;
 		}
-		ft_lstclear(&data->dir_files, free);
+		// ft_lstclear(&data->dir_files, free);
 	}
 	return (0);
 }
