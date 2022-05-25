@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 23:09:34 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/25 23:09:48 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/26 00:06:20 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ void	ft_free_bin_tree(t_group **root)
 {
 	if (*root)
 	{
-		ft_free_bin_tree((*root)->left);
+		ft_free_bin_tree(&(*root)->left);
 		ft_cmd_lstclear(&(*root)->cmds_head);
 		free((*root));
-		ft_free_bin_tree((*root)->right);
+		ft_free_bin_tree(&(*root)->right);
 	}
 }
