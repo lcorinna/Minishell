@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 21:37:24 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/17 15:38:41 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/25 22:53:42 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,3 @@ void	ft_readline(t_info *data, char *prompt, int print_exit)
 		ft_putstr_fd("exit\n", 2);
 	}
 }
-
-// LEAKS
-
-// char	*ft_readline(const char *prompt, t_info *data)
-// {
-// 	char	*str;
-
-// 	str = readline(prompt);
-// 	if (str)
-// 	{
-// 		data->free_me.str = str;
-// 		add_history(str);
-// 	}	
-// 	return (str);
-// }

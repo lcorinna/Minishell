@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 23:18:06 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/24 23:12:02 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/25 23:44:46 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,19 @@ static void	ft_get_dir_files(t_info *data)
 	struct dirent	*s_dir;
 
 	curr_dir = opendir("./");
-	while ((s_dir = readdir(curr_dir)))
+	s_dir = readdir(curr_dir);
+	while (s_dir)
+	{
 		ft_lstadd_back(&data->dir_files, ft_lstnew(ft_strdup(s_dir->d_name)));
+		s_dir = readdir(curr_dir);
+	}
 	closedir(curr_dir);
 }
 
 static char	*ft_compare_filenames(t_info *data, char *str)
 {
 	int		ind;
-	char 	*filename;
+	char	*filename;
 	char	*tmp;
 
 	ind = ft_search(str, '*');
@@ -51,9 +55,7 @@ static char	*ft_compare_filenames(t_info *data, char *str)
 	{
 		tmp = ft_strrchr(filename, str[ind + 1]);
 		if (tmp && !ft_strncmp(tmp, str + ind + 1, ft_strlen(str) - ind))
-		{
 			return (filename);
-		}
 	}
 	return (NULL);
 }
@@ -73,18 +75,15 @@ char	*ft_do_wildcards_file(t_info *data, char *str)
 		if (s)
 			ft_lstadd_back(&wcds, ft_lstnew(ft_strdup(s)));
 		data->dir_head = data->dir_head->next;
-	}	
-	if (!wcds)
-	{}
-	else if (ft_lstsize(wcds) == 1)
+	}
+	if (ft_lstsize(wcds) == 1)
 	{
 		free(str);
 		str = ft_strdup(wcds->content);
 	}
-	else
+	else if (ft_lstsize(wcds) > 1)
 	{
-		free(str);
-		str = NULL;
+		ft_cleaning_str(str);
 	}
 	ft_lstclear(&wcds, free);
 	return (str);
@@ -93,7 +92,7 @@ char	*ft_do_wildcards_file(t_info *data, char *str)
 char	*ft_do_wildcards_argv(t_info *data, char *str)
 {
 	char	*s;
-	char 	*tmp;
+	char	*tmp;
 	char	*res;
 
 	s = NULL;
@@ -108,13 +107,11 @@ char	*ft_do_wildcards_argv(t_info *data, char *str)
 		{
 			tmp = res;
 			res = ft_strjoin_three(tmp, s, " ");
-			// printf("%s\n", res);
 			free(tmp);
 		}
 		data->dir_head = data->dir_head->next;
 	}
 	res[ft_strlen(res) - 1] = '\0';
-	// printf("%s\n", res);
 	if (ft_strlen(res))
 	{
 		free(str);

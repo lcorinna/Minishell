@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 00:00:05 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/20 22:10:41 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/25 23:29:48 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_check_lexer(t_info *data)
 	printf("------------------\n");
 }
 
-void	ft_checker(t_info *data)
+void	ft_checker_parser(t_info *data)
 {
 	t_group	*grp;
 	t_cmds	*tmp;
@@ -69,4 +69,22 @@ void	ft_checker(t_info *data)
 		k++;
 	}
 	// ft_in_order_traverse(data->root);
+}
+
+void	ft_check_bin_tree(t_group *root)
+{
+	if (root)
+	{
+		ft_check_bin_tree(root->left);
+		if (root->logical_operation == 9)
+			printf("&&\n");
+		if (root->logical_operation == 10)
+			printf("||\n");
+		if (root->logical_operation == 0)
+		{
+			if (root->cmds_head)
+				printf("%s\n", root->cmds_head->cmd_path);
+		}
+		ft_check_bin_tree(root->right);
+	}
 }

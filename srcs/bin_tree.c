@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 23:09:34 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/21 22:37:34 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/25 23:09:48 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 t_group	*ft_group_logic_last(t_group *last)
 {
-
 	while (last && !last->logical_operation)
 	{
 		last = last->left;
@@ -22,48 +21,31 @@ t_group	*ft_group_logic_last(t_group *last)
 	return (last);
 }
 
-// static t_group	*ft_group_logic_first(t_group *head)
-// {
-
-// 	while (head && !head->logical_operation)
-// 	{
-// 		head = head->right;
-// 	}
-// 	return (head);
-// }
-
 void	ft_build_bin_tree(t_info *data, t_group *last)
 {
 	t_group	*log_last;
-	t_group	*log_last_but_one;
+	t_group	*log_penult;
 
 	log_last = ft_group_logic_last(last);
 	if (log_last)
 	{
 		log_last->left->right = NULL;
 		log_last->right->left = NULL;
-		log_last_but_one = ft_group_logic_last(ft_group_logic_last(log_last->left));
-		if (log_last_but_one)
-			log_last->left = log_last_but_one;
-		if (log_last_but_one && log_last_but_one->logical_operation)
-			ft_build_bin_tree(data, log_last_but_one);
+		log_penult = ft_group_logic_last(ft_group_logic_last(log_last->left));
+		if (log_penult)
+			log_last->left = log_penult;
+		if (log_penult && log_penult->logical_operation)
+			ft_build_bin_tree(data, log_penult);
 	}
 }
 
-void	ft_in_order_traverse(t_group *root)
+void	ft_free_bin_tree(t_group **root)
 {
-	if (root)
+	if (*root)
 	{
-		ft_in_order_traverse(root->left);
-		if (root->logical_operation == 9)
-			printf("&&\n");
-		if (root->logical_operation == 10)
-			printf("||\n");
-		if (root->logical_operation == 0)
-		{
-			if (root->cmds_head)
-				printf("%s\n", root->cmds_head->cmd_path);
-		}
-		ft_in_order_traverse(root->right);
+		ft_free_bin_tree((*root)->left);
+		ft_cmd_lstclear(&(*root)->cmds_head);
+		free((*root));
+		ft_free_bin_tree((*root)->right);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 21:58:31 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/24 22:48:23 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/25 23:36:17 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	ft_get_cmd_paths(t_info *data)
 	}
 	if (NULL == data->envp_head)
 		return ;
-	data->path = ft_split(data->envp_head->value, ':');
+	data->cmd_paths = ft_split(data->envp_head->value, ':');
 }
 
 static char	*ft_get_bin(char **path, char *bin)
@@ -72,10 +72,10 @@ int	ft_check_cmd_path(t_info *data)
 		if (!ft_check_builtins(data))
 		{
 			ft_get_cmd_paths(data);
-			data->cmds_head->cmd_path = ft_get_bin(data->path, cmd);
+			data->cmds_head->cmd_path = ft_get_bin(data->cmd_paths, cmd);
 			// printf("%s\n", data->cmds_head->cmd_path);
-			ft_cleaning_array(data->path);
-			data->path = NULL;
+			ft_cleaning_array(data->cmd_paths);
+			data->cmd_paths = NULL;
 			if (!data->cmds_head->cmd_path)
 			{
 				return (ft_perror_cmd(data, cmd));
