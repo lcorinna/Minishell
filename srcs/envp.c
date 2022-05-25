@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 12:52:50 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/22 19:46:57 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/25 23:59:53 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,10 +140,10 @@ void	ft_envp(t_info *data)
 		// printf("\nenvp[%d] = %s \n", i, envp[i]); //del ДЕБАГЕР
 		if (ft_envp2(data->envp[i], &key, &value, j)) //парсинг на key и value
 			ft_error_exit(data, 1);
-		new = ft_lstnew(&key, &value); //создаю новый элемент
+		new = ft_llstnew(key, value); //создаю новый элемент
 		if (!new)
 			ft_error_exit(data, 1);
-		ft_lstadd_back(&data->envp_list, new); //кладу новый элемент в конец
+		ft_llstadd_back(&data->envp_list, new); //кладу новый элемент в конец
 		i++;
 	}
 	ft_added_shlvl(data);

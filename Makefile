@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+         #
+#    By: merlich <merlich@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/20 19:17:52 by lcorinna          #+#    #+#              #
-#    Updated: 2022/05/22 19:48:51 by lcorinna         ###   ########.fr        #
+#    Updated: 2022/05/25 23:57:11 by merlich          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,8 @@ NAME_M			=	minishell
 
 FILES			=	minishell.c envp.c llist.c ft_readline.c exit.c \
 					lexer.c lexer_utils.c lexer_utils_2.c lexer_env_var.c \
-					ft_symsplit.c parser_cmd_utils.c parser_group_utils.c \
-					parser.c bin_tree.c \
+					ft_handle_symbols.c parser_cmd_utils.c \
+					parser_group_utils.c parser.c bin_tree.c \
 					ft_check_redir_insource.c ft_check_redir_in.c \
 					ft_check_redir_out.c ft_check_redir_append.c \
 					ft_check_words.c ft_perror.c checkers.c \
@@ -24,6 +24,10 @@ FILES			=	minishell.c envp.c llist.c ft_readline.c exit.c \
 					get_next_line.c get_next_line_utils.c \
 					builtins/builtin_utils.c builtins/pwd.c\
 					builtins/echo.c builtins/env.c builtins/exit.c \
+					ft_check_words.c ft_perror.c wildcards.c \
+					checkers.c \
+					executor.c executor_one_cmd.c executor_many_cmd.c \
+					executor_utils.c \
 					
 					# builtins/cd.c builtins/unset.c builtins/export.c \
 					# builtins/export_utils.c \
@@ -47,7 +51,7 @@ DEP				=	$(SRC:.c=.d)
 INCLUDE			=	./includes
 INCLUDE_SYS		=	$(HOMEBREW_PREFIX)/opt/readline/include
 LIB_SYS			=	$(HOMEBREW_PREFIX)/opt/readline/lib
-CFLAGS			=	-Wall -Wextra -MMD -g -fsanitize=address #удобно сразу смотреть где читаем память мимо\
+CFLAGS			=	-Wall -Wextra -MMD -g #-fsanitize=address #удобно сразу смотреть где читаем память мимо\
 													# make && Leaks --atExit -- ./minishell
 all				:	libmake $(NAME_M)
 

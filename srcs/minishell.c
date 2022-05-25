@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:33:09 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/24 23:17:50 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/25 23:58:51 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,39 +42,40 @@ static int	ft_check_parentheses(t_info *data)
 			right++;
 		data->token_head = data->token_head->next;
 	}
-	if (left != right)
-	{
-		res = ft_perror_symbols(data, "Parentheses error\n");
-	}	
+	if (left == right)
+		res = 0;
+	else if (left < right)
+		res = ft_perror_token(data, ")");
+	else if (left > right)
+		res = 1;
 	return (res);
 }
 
 int	ft_lexer(t_info *data)
 {
+	int	parn_num;
 	int	last_type;
 
+	parn_num = 0;
 	last_type = UNDEFINED;
 	if (ft_get_tokens(data->str, data))
 		return (data->status);
 	ft_expand(data);
-	ft_symsplit(data);
+	ft_handle_symbols(data);
 	ft_set_tokens_type(data);
 	if (data->tokens && ft_strchr(NOT_FIRST, data->tokens->str_val[0]))
-	{
 		return (ft_perror_token(data, data->tokens->str_val));
-	}
-	if (ft_check_parentheses(data))
+	parn_num = ft_check_parentheses(data);
+	if (parn_num == TOKEN_ERROR)
 		return (data->status);
 	if (data->tokens)
 		last_type = ft_token_lstlast(data->tokens)->type;
-	if (data->tokens && (last_type == PIPE || last_type == AND \
-		|| last_type == IF_AND || last_type == IF_OR))
+	if (parn_num || (data->tokens && (last_type == PIPE || last_type == AND \
+		|| last_type == IF_AND || last_type == IF_OR)))
 	{
 		ft_readline(data, "> ", 0);
 		if (!data->str)
-		{
 			return (ft_perror_eof(data));
-		}
 		if (ft_lexer(data))
 			return (data->status);
 	}
@@ -84,13 +85,16 @@ int	ft_lexer(t_info *data)
 void	ft_cleanup(t_info *data)
 {
 	data->priority = 0;
-	if (data->path)
+	data->status = 0;
+	if (data->cmd_paths)
 	{
-		free(data->path);
-		data->path = NULL;
+		ft_cleaning_array(data->cmd_paths);
+		data->cmd_paths = NULL;
 	}
+	ft_lstclear(&data->dir_files, free);
 	ft_token_lstclear(&data->tokens);
 	ft_group_lstclear(&data->group_head);
+	// ft_free_bin_tree(&data->root);
 	unlink(HEREDOC);
 }
 
@@ -116,15 +120,15 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		ft_check_lexer(&data);
 		// parser
-		if (ft_get_cmds(&data))
+		if (ft_get_logic_group(&data))
 			continue ;
-		data.root = ft_group_logic_last(ft_group_lstlast(data.group_head));
-		ft_build_bin_tree(&data, ft_group_lstlast(data.group_head));
-		ft_in_order_traverse(data.root);
-		// ft_checker(&data);
-		// executor
-		if (ft_executor(&data))
-			printf("im found mistake in executor\n"); //del
+		ft_checker_parser(&data);
+		// data.root = ft_group_logic_last(ft_group_lstlast(data.group_head));
+		// ft_build_bin_tree(&data, ft_group_lstlast(data.group_head));
+		// ft_check_bin_tree(data.root);
+		// // executor
+		// if (ft_executor(&data))
+		// 	printf("im found mistake in executor\n"); //del
 	}
 	ft_cleanup(&data);
 	ft_clean_struct(&data);

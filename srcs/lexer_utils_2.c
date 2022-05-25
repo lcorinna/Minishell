@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 22:51:34 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/13 22:37:19 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/25 22:54:38 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,32 +89,3 @@ void	ft_token_lstmerge_next(t_token *node)
 			tmp->prev = node;
 	}
 }
-
-// int	main(void)
-// {
-// 	t_token *head;
-// 	t_token *my_head;
-
-// 	head = NULL;
-// 	ft_token_lstadd_back(&head, ft_token_lstnew("str0"));
-// 	ft_token_lstadd_back(&head, ft_token_lstnew("str1"));
-// 	ft_token_lstadd_back(&head, ft_token_lstnew("str2"));
-// 	ft_token_lstadd_back(&head, ft_token_lstnew(">"));
-// 	ft_token_lstadd_back(&head, ft_token_lstnew(">"));
-// 	ft_token_lstadd_back(&head, ft_token_lstnew("str3"));
-// 	ft_token_lstadd_back(&head, ft_token_lstnew("str4"));
-// 	my_head = head;
-// 	while (my_head)
-// 	{
-// 		printf("%s\n", my_head->str_val);
-// 		my_head = my_head->next;
-// 	}
-// 	printf("\n");
-// 	my_head = head;
-// 	ft_token_lstmerge_next(my_head->next->next->next);
-// 	while (my_head)
-// 	{
-// 		printf("%s\n", my_head->str_val);
-// 		my_head = my_head->next;
-// 	}
-// }

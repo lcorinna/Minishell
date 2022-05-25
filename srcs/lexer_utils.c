@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/17 21:17:51 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/17 14:13:30 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/25 22:45:02 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_token	*ft_token_lstnew(char *value)
 	t_token	*new;
 
 	new = NULL;
-	if (value && value[0] != '\0')
+	if (value)
 	{
 		new = malloc(sizeof(t_token));
 		if (NULL == new)

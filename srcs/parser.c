@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 22:09:17 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/19 22:45:03 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/25 21:35:16 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 
 static int	ft_check_parn_l(t_info *data)
 {
-	if (data->token_head->prev && data->token_head->prev->type != PIPE && data->token_head->prev->type != IF_AND && data->token_head->prev->type != IF_OR)
+	if (data->token_head->prev && data->token_head->prev->type != PIPE \
+		&& data->token_head->prev->type != IF_AND \
+		&& data->token_head->prev->type != IF_OR)
 		return (ft_perror_token(data, data->token_head->next->str_val));
 	else
 	{
-		data->priority++;
+		data->priority += 1;
 		data->token_head = data->token_head->next;
 	}
 	return (0);
@@ -26,11 +28,13 @@ static int	ft_check_parn_l(t_info *data)
 
 static int	ft_check_parn_r(t_info *data)
 {
-	if (data->token_head->next && data->token_head->next->type != PIPE && data->token_head->next->type != IF_AND && data->token_head->next->type != IF_OR)
+	if (data->token_head->next && data->token_head->next->type != PIPE \
+		&& data->token_head->next->type != IF_AND \
+		&& data->token_head->next->type != IF_OR)
 		return (ft_perror_token(data, data->token_head->next->str_val));
 	else
 	{
-		data->priority--;
+		data->priority -= 1;
 		data->token_head = data->token_head->next;
 	}
 	return (0);
@@ -93,7 +97,7 @@ static int	ft_get_groups_cmds(t_info *data)
 	return (0);
 }
 
-int	ft_get_cmds(t_info *data)
+int	ft_get_logic_group(t_info *data)
 {
 	data->token_head = data->tokens;
 	while (data->token_head)
