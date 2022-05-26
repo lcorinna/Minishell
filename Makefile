@@ -6,7 +6,7 @@
 #    By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/20 19:17:52 by lcorinna          #+#    #+#              #
-#    Updated: 2022/05/26 15:05:40 by lcorinna         ###   ########.fr        #
+#    Updated: 2022/05/26 19:58:47 by lcorinna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,24 +14,17 @@ NAME_M			=	minishell
 
 FILES			=	minishell.c envp.c llist.c ft_readline.c exit.c \
 					lexer.c lexer_utils.c lexer_utils_2.c lexer_env_var.c \
-					ft_symsplit.c parser_cmd_utils.c parser_group_utils.c \
-					parser.c bin_tree.c \
+					ft_handle_symbols.c parser_cmd_utils.c \
+					parser_group_utils.c parser.c bin_tree.c \
 					ft_check_redir_insource.c ft_check_redir_in.c \
 					ft_check_redir_out.c ft_check_redir_append.c \
-					ft_check_words.c ft_perror.c checkers.c \
+					ft_check_words.c ft_perror.c wildcards.c checkers.c \
 					executor.c executor_one_cmd.c executor_many_cmd.c \
-					executor_utils.c \
-					get_next_line.c get_next_line_utils.c \
-					builtins/builtin_utils.c builtins/pwd.c builtins/unset.c \
-					builtins/echo.c builtins/env.c builtins/exit.c \
-					builtins/cd.c builtins/cd_utils.c builtins/export.c \
-					# builtins/export_utils.c \
-
-					# 																\
-					# exec_star.c				exec_cmd_list.c		exec_apply_1.c		\
-					# exec_star_find_file.c	exec_cmd.c			exec_apply_2.c		\
-					# exec_cmd_token_list.c	exec_cmd_utils.c	exec_utils.c		\
-					# exec_cmd_list_check.c	ft_link.c			exec_utils_2.c
+					executor_utils.c builtins/cd.c builtins/cd_utils.c \
+					builtins/export.c builtins/builtin_utils.c builtins/pwd.c \
+					builtins/unset.c builtins/echo.c builtins/env.c \
+					builtins/exit.c \
+				
 
 PATH_LIBFT		=	./libft/
 LIBFT			=	libft.a
@@ -46,7 +39,7 @@ DEP				=	$(SRC:.c=.d)
 INCLUDE			=	./includes
 INCLUDE_SYS		=	$(HOMEBREW_PREFIX)/opt/readline/include
 LIB_SYS			=	$(HOMEBREW_PREFIX)/opt/readline/lib
-CFLAGS			=	-Wall -Wextra -MMD -g -fsanitize=address #удобно сразу смотреть где читаем память мимо\
+CFLAGS			=	-Wall -Wextra -MMD -g #-fsanitize=address #удобно сразу смотреть где читаем память мимо\
 													# make && Leaks --atExit -- ./minishell
 all				:	libmake $(NAME_M)
 

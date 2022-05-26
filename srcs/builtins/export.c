@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 18:55:57 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/26 19:25:59 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/26 19:50:12 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,10 @@ void	ft_cp_env_in_exp(t_info *data, t_llist *envp_l)
 		value1 = ft_strdup(tmp->value);
 		if (key1 == NULL || value1 == NULL)
 			ft_perror_exit_child("", 12);
-		new = ft_lstnew(key1, value1);
+		new = ft_llstnew(key1, value1);
 		if (new == NULL)
 			ft_perror_exit_child("", 12);
-		ft_lstadd_back(&data->export, new);
+		ft_llstadd_back(&data->export, new);
 		// printf("key - %s\n", tmp->key); //del
 		tmp = tmp->next;
 	}

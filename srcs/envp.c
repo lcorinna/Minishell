@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 12:52:50 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/23 13:11:22 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/26 19:48:45 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void	ft_added_shlvl(t_info *data, t_llist **new)
 	value = ft_strdup("1");
 	if (key == NULL || value == NULL)
 		ft_error_exit(data, 1);
-	(*new) = ft_lstnew(key, value);
+	(*new) = ft_llstnew(key, value);
 	if (!new)
 		ft_error_exit(data, 1);
 }
@@ -141,7 +141,7 @@ void	ft_check_shlvl(t_info *data)
 	if (flag == 1)
 	{
 		ft_added_shlvl(data, &new);
-		ft_lstadd_back(&data->envp_list, new);
+		ft_llstadd_back(&data->envp_list, new);
 	}
 }
 
@@ -162,10 +162,10 @@ void	ft_envp(t_info *data)
 		// printf("\nenvp[%d] = %s \n", i, envp[i]); //del ДЕБАГЕР
 		if (ft_envp2(data->envp[i], &key, &value, j)) //парсинг на key и value
 			ft_error_exit(data, 1);
-		new = ft_lstnew(key, value); //создаю новый элемент
+		new = ft_llstnew(key, value); //создаю новый элемент
 		if (!new)
 			ft_error_exit(data, 1);
-		ft_lstadd_back(&data->envp_list, new); //кладу новый элемент в конец
+		ft_llstadd_back(&data->envp_list, new); //кладу новый элемент в конец
 		i++;
 	}
 	ft_check_shlvl(data);

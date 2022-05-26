@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checkers.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 00:00:05 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/20 16:46:47 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/26 18:49:32 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_check_lexer(t_info *data)
 	printf("------------------\n");
 }
 
-void	ft_checker(t_info *data)
+void	ft_checker_parser(t_info *data)
 {
 	t_group	*grp;
 	t_cmds	*tmp;
@@ -40,10 +40,11 @@ void	ft_checker(t_info *data)
 	while (grp)
 	{
 		tmp = grp->cmds_head;
-		// printf("\nGroup %d:\n", k);
-		// printf("############\n");
-		// printf("priority = %d\n", grp->priority);
-		// printf("log_oper = %d\n", grp->logical_operation);
+		printf("\nGroup %d:\n", k);
+		printf("\nGroup %p:\n", grp);
+		printf("############\n");
+		printf("priority = %d\n", grp->priority);
+		printf("log_oper = %d\n", grp->logical_operation);
 		// printf("------------------------------------------\n");
 		m = 0;
 		arr = NULL;
@@ -54,7 +55,8 @@ void	ft_checker(t_info *data)
 			// printf("------------------\n");
 			// printf("infile = %d\n", tmp->infile);
 			// printf("outfile = %d\n", tmp->outfile);
-			// printf("cmd_path[%d] = %s\n", m, tmp->cmd_path);
+			printf("cmd_path[%d] = %s\n", m, tmp->cmd_path);
+			printf("cmd_path[%d] = %p\n\n", m, tmp->cmd_path);
 			// while (*arr)
 			// {
 			// 	printf("cmd_argv = %s\n", *arr);
@@ -67,5 +69,24 @@ void	ft_checker(t_info *data)
 		// printf("############\n");
 		grp = grp->right;
 		k++;
+	}
+	// ft_in_order_traverse(data->root);
+}
+
+void	ft_check_bin_tree(t_group *root)
+{
+	if (root)
+	{
+		ft_check_bin_tree(root->left);
+		if (root->logical_operation == 9)
+			printf("&&\n");
+		if (root->logical_operation == 10)
+			printf("||\n");
+		if (root->logical_operation == 0)
+		{
+			if (root->cmds_head)
+				printf("%s\n", root->cmds_head->cmd_path);
+		}
+		ft_check_bin_tree(root->right);
 	}
 }

@@ -6,15 +6,14 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 23:09:34 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/19 23:44:48 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/26 00:06:20 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static t_group	*ft_group_logic_last(t_group *last)
+t_group	*ft_group_logic_last(t_group *last)
 {
-
 	while (last && !last->logical_operation)
 	{
 		last = last->left;
@@ -22,15 +21,31 @@ static t_group	*ft_group_logic_last(t_group *last)
 	return (last);
 }
 
-void	ft_build_bin_tree(t_info *data)
+void	ft_build_bin_tree(t_info *data, t_group *last)
 {
-	t_group	*tmp;
-	t_group	*last;
-	t_group	*last_but_one;
+	t_group	*log_last;
+	t_group	*log_penult;
 
-	last = ft_group_logic_last(ft_group_lstlast(data->group_head));
-	last_but_one = ft_group_logic_last(ft_group_lstlast(last->left));
-	tmp = last->left;
-	last->left = last_but_one;
-	tmp->right = NULL;
+	log_last = ft_group_logic_last(last);
+	if (log_last)
+	{
+		log_last->left->right = NULL;
+		log_last->right->left = NULL;
+		log_penult = ft_group_logic_last(ft_group_logic_last(log_last->left));
+		if (log_penult)
+			log_last->left = log_penult;
+		if (log_penult && log_penult->logical_operation)
+			ft_build_bin_tree(data, log_penult);
+	}
+}
+
+void	ft_free_bin_tree(t_group **root)
+{
+	if (*root)
+	{
+		ft_free_bin_tree(&(*root)->left);
+		ft_cmd_lstclear(&(*root)->cmds_head);
+		free((*root));
+		ft_free_bin_tree(&(*root)->right);
+	}
 }

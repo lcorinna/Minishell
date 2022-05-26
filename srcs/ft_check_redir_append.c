@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 00:06:17 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/19 21:36:58 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/24 21:22:20 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,20 @@ int	ft_check_redir_append(t_info *data)
 	{
 		data->token_head = data->token_head->next;
 		if (!data->token_head)
-		{
 			return (ft_perror_token(data, "newline"));
-		}
 		else
 		{
-			outfile = data->token_head->str_val;
+			outfile = ft_strdup(data->token_head->str_val);
 			if (data->cmds_head->outfile != 1)
 				close(data->cmds_head->outfile);
-			data->cmds_head->outfile = open(outfile, O_WRONLY | O_APPEND | O_CREAT, 000777);
-			// printf("%d\n", data->cmds_head->outfile);
+			if (ft_strchr(outfile, '*'))
+				outfile = ft_do_wildcards_file(data, outfile);
+			if (!outfile)
+				return (ft_perror_wcds(data, data->token_head->str_val));
+			data->cmds_head->outfile = open(outfile, O_WRONLY | O_APPEND | O_CREAT, 0644);
 			if (data->cmds_head->outfile < 0)
-			{
 				return (ft_perror_file(data, outfile));
-			}
+			free(outfile);
 		}
 		data->token_head = data->token_head->next;
 	}

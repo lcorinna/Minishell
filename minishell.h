@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/26 15:58:45 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/26 19:57:00 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@
 # define SYMBOLS_ERROR	102
 # define TOKEN_ERROR	258
 # define CMD_NOT_FOUND	127
+# define AMBIG_REDIR	1
 # define UNDEFINED		-1
 # define WORD			1
 # define REDIR_OUT		4
@@ -88,6 +89,7 @@ typedef struct s_llist
 	void			*value;
 	int				num;
 	struct s_llist	*next;
+
 }	t_llist;
 
 typedef struct s_token
@@ -101,19 +103,19 @@ typedef struct s_token
 
 typedef struct s_f_exec
 {
-	int				qtt_cmd;
-	pid_t			pid;
-	int				**pipe;
-	int				n_child;
+	int		qtt_cmd;
+	pid_t	pid;
+	int		**pipe;
+	int		n_child;
 }	t_f_exec;
 
 typedef struct s_info
 {
-	// t_buildin_ptr	builtins[7];
-	char			*res_words[7];
+	char			*res_words[8];
 	char			**envp;
 	t_llist			*envp_list; //функция для чистки ft_clean_envp_list
 	t_llist			*export;
+	t_list			*dir_files;
 	char			**cmd_paths;
 	char			**path;
 	char			*str;
@@ -130,10 +132,9 @@ typedef struct s_info
 	t_group			*group_head;
 	t_group			*group_ptr;
 	t_cmds			*cmds_head;
+	t_list			*dir_head;
 
 }	t_info;
-
-// typedef int	(*t_buildin_ptr)(t_llist *, t_info *);
 
 /* builtins/builtins_utils.c */
 int			ft_memcmp_l(const void *s1, const void *s2, size_t n);
@@ -145,6 +146,10 @@ void		ft_echo(char **cmd_argv);
 
 /* builtins/cd.c */
 void		ft_cd(t_info *data, char **arr);
+
+/* builtins/cd_utils.c */
+void		ft_search_oldpwd(char **oldpwd, t_llist *envp_l);
+void		ft_cd_error(char **arr, int flag);
 
 /* builtins/cd_utils.c */
 void		ft_search_oldpwd(char **oldpwd, t_llist *envp_l);
@@ -174,10 +179,10 @@ void		ft_envp(t_info *data);
 void		ft_transfer(int argc, char **argv, char **envp, t_info *data);
 
 /* llist.c */
-t_llist		*ft_lstnew(void *key, void *value);
-void		ft_lstadd_front(t_llist **lst, t_llist *new);
-t_llist		*ft_lstlast(t_llist *lst);
-void		ft_lstadd_back(t_llist **lst, t_llist *new);
+t_llist		*ft_llstnew(void *key, void *value);
+void		ft_llstadd_front(t_llist **lst, t_llist *new);
+t_llist		*ft_llstlast(t_llist *lst);
+void		ft_llstadd_back(t_llist **lst, t_llist *new);
 
 /* ft_readline.c */
 void		ft_readline(t_info *data, char *prompt, int print_exit);
@@ -219,10 +224,10 @@ void		ft_expand(t_info *data);
 /* ft_symsplit.c */
 size_t		ft_search(char *s, char c);
 int			ft_check_quotes(char *str, int index);
-void		ft_symsplit(t_info *data);
+void		ft_handle_symbols(t_info *data);
 
 /* parser.c */
-int			ft_get_cmds(t_info *data);
+int			ft_get_logic_group(t_info *data);
 
 /* ft_check_redir_insource.c */
 int			ft_check_redir_insource(t_info *data);
@@ -255,7 +260,9 @@ void		ft_group_lstadd_back(t_group **head, t_group *new);
 void		ft_group_lstclear(t_group **head);
 
 /* bin_tree.c */
-void		ft_build_bin_tree(t_info *data);
+t_group		*ft_group_logic_last(t_group *last);
+void		ft_build_bin_tree(t_info *data, t_group *last);
+void		ft_free_bin_tree(t_group **root);
 
 /* executor */
 int			ft_executor(t_info *data);
@@ -290,11 +297,9 @@ int			ft_perror_cmd(t_info *data, char *cmd);
 void		ft_check_lexer(t_info *data);
 void		ft_checker(t_info *data);
 
-/* get_next_line.c */
-char		*get_next_line(int fd);
-
-/* get_next_line_utils.c */
-char		*ft_str_chr(const char *s, int c);
-void		ft_str_dup(const char *str, char *ptr);
+/* wildcards.c */
+int			ft_perror_wcds(t_info *data, char *file);
+char		*ft_do_wildcards_file(t_info *data, char *str);
+char		*ft_do_wildcards_argv(t_info *data, char *str);
 
 #endif

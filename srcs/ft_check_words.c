@@ -6,22 +6,25 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 21:58:31 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/19 21:31:58 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/26 18:39:00 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	ft_get_cmd_paths(t_info *data)
+static char	**ft_get_cmd_paths(t_info *data)
 {
+	char	**ptr;
+
+	ptr = NULL;
 	data->envp_head = data->envp_list;
 	while (data->envp_head && ft_strncmp(data->envp_head->key, "PATH", 4))
 	{
 		data->envp_head = data->envp_head->next;
 	}
-	if (NULL == data->envp_head)
-		return ;
-	data->path = ft_split(data->envp_head->value, ':');
+	if (data->envp_head)
+		ptr = ft_split(data->envp_head->value, ':');
+	return (ptr);
 }
 
 static char	*ft_get_bin(char **path, char *bin)
@@ -65,19 +68,18 @@ static int	ft_check_builtins(t_info *data)
 int	ft_check_cmd_path(t_info *data)
 {
 	char	*cmd;
+	char	**cmd_paths;
 
-	cmd = data->token_head->str_val;
 	if (data->token_head->type == WORD)
 	{
+		cmd = data->token_head->str_val;
 		if (!ft_check_builtins(data))
 		{
-			ft_get_cmd_paths(data);
-			data->cmds_head->cmd_path = ft_get_bin(data->path, cmd);
-			// printf("%s\n", data->cmds_head->cmd_path);
+			cmd_paths = ft_get_cmd_paths(data);
+			data->cmds_head->cmd_path = ft_get_bin(cmd_paths, cmd);
+			ft_cleaning_array(cmd_paths);
 			if (!data->cmds_head->cmd_path)
-			{
 				return (ft_perror_cmd(data, cmd));
-			}
 		}
 		else
 			data->cmds_head->cmd_path = ft_strdup(cmd);
@@ -92,13 +94,15 @@ int	ft_check_cmd_str(t_info *data)
 	char	*argv;
 	char	*tmp;
 
-	argv = data->token_head->str_val;
-	tmp = data->cmds_head->cmd_str;
 	if (data->token_head->type == WORD)
 	{
+		argv = ft_strdup(data->token_head->str_val);
+		tmp = data->cmds_head->cmd_str;
+		if (ft_strchr(argv, '*'))
+			argv = ft_do_wildcards_argv(data, argv);
 		data->cmds_head->cmd_str = ft_strjoin_three(tmp, " ", argv);
 		free(tmp);
-		// printf("%s\n", data->cmds_head->cmd_str);
+		free(argv);
 		data->token_head = data->token_head->next;
 	}
 	return (0);

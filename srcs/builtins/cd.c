@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 18:55:57 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/25 19:02:32 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/26 19:55:11 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ void	ft_cd_pwd(t_llist *tmp, int flag, t_llist *envp_l)
 		value = ft_strdup(tmp1);
 		if (key == NULL || value == NULL)
 			ft_perror_exit_child("", 12);
-		new = ft_lstnew(key, value);
+		new = ft_llstnew(key, value);
 		if (!new)
 			ft_perror_exit_child("", 12);
-		ft_lstadd_back(&envp_l, new);
+		ft_llstadd_back(&envp_l, new);
 	}
 }
 
@@ -80,10 +80,10 @@ void	ft_cd_oldpwd(t_llist *tmp, int flag, t_llist *envp_l, char *oldpwd)
 		free(oldpwd);
 		if (key == NULL || value == NULL)
 			ft_perror_exit_child("", 12);
-		new = ft_lstnew(key, value);
+		new = ft_llstnew(key, value);
 		if (!new)
 			ft_perror_exit_child("", 12);
-		ft_lstadd_back(&envp_l, new);
+		ft_llstadd_back(&envp_l, new);
 	}
 }
 

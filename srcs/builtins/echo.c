@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 18:27:38 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/22 19:25:12 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/26 19:59:10 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,11 @@ void	ft_echo(char **cmd_argv)
 	int	flag;
 
 	i = 1;
-	if (cmd_argv[1])
-		flag = ft_strncmp(cmd_argv[1], "-n", 3);
+	flag = 0;
 	if (cmd_argv)
 	{
+		if (cmd_argv[0] && cmd_argv[1])
+			flag = ft_strncmp(cmd_argv[1], "-n", 3);
 		if (!flag)
 			i = 2;
 		while (cmd_argv[i])
