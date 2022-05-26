@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:33:09 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/26 21:14:29 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/27 00:01:53 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,9 @@ int	ft_lexer(t_info *data)
 
 void	ft_cleanup(t_info *data)
 {
-	data->priority = 0;
+	data->priority = 1;
+	data->priority_step = 1;
+	data->nesting_level = 0;
 	data->status = 0;
 	ft_token_lstclear(&data->tokens);
 	// ft_group_lstclear(&data->group_head);

@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 22:09:17 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/18 22:23:47 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/26 23:00:53 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ t_group	*ft_group_lstnew(void)
 		exit(ENOMEM);
 	}
 	new->logical_operation = 0;
-	new->priority = UNDEFINED;
+	new->priority = 0;
+	new->nesting_level = 0;
 	new->cmds_head = NULL;
 	new->left = NULL;
 	new->right = NULL;

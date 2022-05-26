@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 22:09:17 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/26 18:00:01 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/27 00:07:41 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,15 @@ static int	ft_check_parn_l(t_info *data)
 		&& data->token_head->prev->type != IF_AND \
 		&& data->token_head->prev->type != IF_OR)
 		return (ft_perror_token(data, data->token_head->next->str_val));
-	else
+	if (!data->token_head->prev \
+		|| data->token_head->prev->type == IF_AND \
+		|| data->token_head->prev->type == IF_OR \
+		|| data->token_head->prev->type == PARN_L)
 	{
-		data->priority += 1;
-		data->token_head = data->token_head->next;
+		data->priority_step += 1;
+		data->nesting_level++;
 	}
+	data->token_head = data->token_head->next;
 	return (0);
 }
 
@@ -32,11 +36,15 @@ static int	ft_check_parn_r(t_info *data)
 		&& data->token_head->next->type != IF_AND \
 		&& data->token_head->next->type != IF_OR)
 		return (ft_perror_token(data, data->token_head->next->str_val));
-	else
+	if (!data->token_head->next \
+		|| data->token_head->prev->next == IF_AND \
+		|| data->token_head->prev->next == IF_OR \
+		|| data->token_head->prev->next == PARN_R)
 	{
-		data->priority -= 1;
-		data->token_head = data->token_head->next;
+		data->priority_step -= 1;
+		data->nesting_level--;
 	}
+	data->token_head = data->token_head->next;
 	return (0);
 }
 
@@ -47,16 +55,10 @@ static int	ft_fill_cmd(t_info *data)
 	count = 0;
 	while (data->token_head && !ft_strchr(LOGIC_OPER, data->token_head->str_val[0]))
 	{
-		if (data->token_head->type == PARN_L)
-		{
-			if (ft_check_parn_l(data))
-				return (data->status);
-		}
-		if (data->token_head->type == PARN_R)
-		{
-			if (ft_check_parn_r(data))
-				return (data->status);
-		}
+		if (data->token_head->type == PARN_L && ft_check_parn_l(data))
+			return (data->status);
+		if (data->token_head->type == PARN_R && ft_check_parn_r(data))
+			return (data->status);
 		if (data->token_head && ft_check_redir_insource(data))
 			return (data->status);
 		if (data->token_head && ft_check_redir_in(data))
@@ -90,6 +92,7 @@ static int	ft_get_groups_cmds(t_info *data)
 			data->token_head = data->token_head->next;
 		data->cmds_head->cmd_argv = ft_split(data->cmds_head->cmd_str, ' ');
 	}
+	data->priority += data->priority_step;
 	return (0);
 }
 
@@ -100,16 +103,18 @@ int	ft_get_logic_group(t_info *data)
 	{
 		ft_group_lstadd_back(&data->group_head, ft_group_lstnew());
 		data->group_ptr = ft_group_lstlast(data->group_head);
+		data->group_ptr->priority = data->priority;
 		if ((data->token_head->type == IF_AND \
 			|| data->token_head->type == IF_OR))
 		{
 			data->group_ptr->logical_operation = data->token_head->type;
-			data->group_ptr->priority = data->priority;
+			data->group_ptr->nesting_level = data->nesting_level;
 			data->token_head = data->token_head->next;
 			continue ;
 		}
 		if (ft_get_groups_cmds(data))
 			return (data->status);
+		data->group_ptr->nesting_level = data->nesting_level;
 	}
 	return (0);
 }

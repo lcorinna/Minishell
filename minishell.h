@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/26 21:09:21 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/26 23:10:50 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_cmds
 {
 	int				infile;
 	int				outfile;
+	// int				priority;
 	char			*cmd_path;
 	char			*cmd_str;
 	char			**cmd_argv;
@@ -78,6 +79,7 @@ typedef struct s_group
 	t_cmds			*cmds_head;
 	int				logical_operation;
 	int				priority;
+	int				nesting_level;
 	struct s_group	*right;
 	struct s_group	*left;
 
@@ -122,7 +124,11 @@ typedef struct s_info
 	int				envp_f;
 	int				exit_f;
 	int				status;
+
 	int				priority;
+	int				priority_step;
+	int				nesting_level;
+
 	t_token			*tokens;
 	t_group			*group_head;
 	t_group			*root;
