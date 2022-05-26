@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 00:00:05 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/25 23:29:48 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/26 17:29:36 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	ft_checker_parser(t_info *data)
 	{
 		tmp = grp->cmds_head;
 		printf("\nGroup %d:\n", k);
+		printf("\nGroup %p:\n", grp);
 		printf("############\n");
 		printf("priority = %d\n", grp->priority);
 		printf("log_oper = %d\n", grp->logical_operation);
@@ -55,6 +56,7 @@ void	ft_checker_parser(t_info *data)
 			// printf("infile = %d\n", tmp->infile);
 			// printf("outfile = %d\n", tmp->outfile);
 			printf("cmd_path[%d] = %s\n", m, tmp->cmd_path);
+			printf("cmd_path[%d] = %p\n\n", m, tmp->cmd_path);
 			// while (*arr)
 			// {
 			// 	printf("cmd_argv = %s\n", *arr);
