@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/22 19:45:27 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/26 15:58:45 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ typedef struct s_llist
 {
 	void			*key;
 	void			*value;
+	int				num;
 	struct s_llist	*next;
-
 }	t_llist;
 
 typedef struct s_token
@@ -101,10 +101,10 @@ typedef struct s_token
 
 typedef struct s_f_exec
 {
-	int		qtt_cmd;
-	pid_t	pid;
-	int		**pipe;
-	int		n_child;
+	int				qtt_cmd;
+	pid_t			pid;
+	int				**pipe;
+	int				n_child;
 }	t_f_exec;
 
 typedef struct s_info
@@ -113,6 +113,7 @@ typedef struct s_info
 	char			*res_words[7];
 	char			**envp;
 	t_llist			*envp_list; //функция для чистки ft_clean_envp_list
+	t_llist			*export;
 	char			**cmd_paths;
 	char			**path;
 	char			*str;
@@ -143,13 +144,20 @@ void		ft_builtins_command(t_info *data, char **arr);
 void		ft_echo(char **cmd_argv);
 
 /* builtins/cd.c */
+void		ft_cd(t_info *data, char **arr);
+
+/* builtins/cd_utils.c */
+void		ft_search_oldpwd(char **oldpwd, t_llist *envp_l);
+void		ft_cd_error(char **arr, int flag);
 
 /* builtins/pwd.c */
 void		ft_pwd(char **arr);
 
 /* builtins/export.c */
+void		ft_export(t_info *data, t_llist *envpl, char **arr);
 
 /* builtins/unset.c */
+void		ft_unset(t_llist *envp_l, char **arr);
 
 /* builtins/env.c */
 void		ft_env(t_info *data);
@@ -166,7 +174,7 @@ void		ft_envp(t_info *data);
 void		ft_transfer(int argc, char **argv, char **envp, t_info *data);
 
 /* llist.c */
-t_llist		*ft_lstnew(void **key, void **value);
+t_llist		*ft_lstnew(void *key, void *value);
 void		ft_lstadd_front(t_llist **lst, t_llist *new);
 t_llist		*ft_lstlast(t_llist *lst);
 void		ft_lstadd_back(t_llist **lst, t_llist *new);

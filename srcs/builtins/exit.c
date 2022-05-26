@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 16:38:53 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/22 19:42:06 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/23 16:01:46 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ void	ft_exit(char **arr)
 	int		i;
 	char	c;
 
-	if (arr[2] != NULL && !ft_is_number(arr[1]))
+	if (arr[1] == NULL)
+		exit(0);
+	else if (arr[2] != NULL && !ft_is_number(arr[1]))
 	{
 		ft_putstr_fd("exit\nminishell: exit", 2);
 		ft_putstr_fd(": too many arguments\n", 2);

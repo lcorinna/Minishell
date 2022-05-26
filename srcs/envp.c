@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 12:52:50 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/22 19:46:57 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/23 13:11:22 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,27 +100,49 @@ int	ft_envp2(char *envp, char **key, char **value, int j)
 	return (0);
 }
 
-void	ft_added_shlvl(t_info *data)
+void	ft_added_shlvl(t_info *data, t_llist **new)
+{
+	char	*key;
+	char	*value;
+
+	key = ft_strdup("SHLVL");
+	value = ft_strdup("1");
+	if (key == NULL || value == NULL)
+		ft_error_exit(data, 1);
+	(*new) = ft_lstnew(key, value);
+	if (!new)
+		ft_error_exit(data, 1);
+}
+
+void	ft_check_shlvl(t_info *data)
 {
 	t_llist	*tmp;
 	t_llist	*new;
 	int		lvl;
+	int		flag;
 
-	lvl = 1;
+	flag = 1;
+	new = NULL;
 	tmp = data->envp_list;
 	while (tmp)
 	{
 		if ((ft_memcmp_l("SHLVL", tmp->key, 6) == 6))
-			lvl = 0;
+		{
+			lvl = ft_atoi(tmp->value);
+			lvl++;
+			free(tmp->value);
+			tmp->value = ft_itoa(lvl);
+			if (tmp->value == NULL)
+				ft_error_exit(data, 1);
+			flag = 0;
+		}
 		tmp = tmp->next;
 	}
-	// if (lvl == 1) //сделать если нет
-	// {
-	// 	new = ft_lstnew("SHLVL", "1");
-	// 	if (!new)
-	// 		ft_error_exit(data, 1);
-	// 	ft_lstadd_back(&tmp, new);
-	// }
+	if (flag == 1)
+	{
+		ft_added_shlvl(data, &new);
+		ft_lstadd_back(&data->envp_list, new);
+	}
 }
 
 void	ft_envp(t_info *data)
@@ -140,13 +162,13 @@ void	ft_envp(t_info *data)
 		// printf("\nenvp[%d] = %s \n", i, envp[i]); //del ДЕБАГЕР
 		if (ft_envp2(data->envp[i], &key, &value, j)) //парсинг на key и value
 			ft_error_exit(data, 1);
-		new = ft_lstnew(&key, &value); //создаю новый элемент
+		new = ft_lstnew(key, value); //создаю новый элемент
 		if (!new)
 			ft_error_exit(data, 1);
 		ft_lstadd_back(&data->envp_list, new); //кладу новый элемент в конец
 		i++;
 	}
-	ft_added_shlvl(data);
+	ft_check_shlvl(data);
 }
 
 void	ft_transfer(int argc, char **argv, char **envp, t_info *data)

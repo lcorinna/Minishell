@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 18:55:57 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/22 19:39:55 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/23 12:08:01 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	ft_pwd(char **arr)
 {
 	char	tmp[1024];
 
+	(void)arr;
 	getcwd(tmp, 1024);
 	ft_putendl_fd(tmp, 1);
 	exit(0);
