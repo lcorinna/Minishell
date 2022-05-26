@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 23:09:34 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/26 20:33:59 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/26 21:11:38 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,13 @@ void	ft_build_bin_tree(t_info *data, t_group *last)
 		log_last->right->left = NULL;
 		log_penult = ft_group_logic_last(ft_group_logic_last(log_last->left));
 		if (log_penult)
+		{
 			log_last->left = log_penult;
+		}
 		if (log_penult && log_penult->logical_operation)
+		{
 			ft_build_bin_tree(data, log_penult);
+		}
 	}
 }
 
@@ -50,23 +54,11 @@ static void	ft_free_node(t_group **root)
 
 void	ft_free_bin_tree(t_group **root)
 {
-	t_group	*tmp;
-
-	tmp = *root;
 	if ((*root))
 	{
 		ft_free_bin_tree(&(*root)->left);
 		ft_free_bin_tree(&(*root)->right);
-		if ((*root)->logical_operation == 9)
-			printf("&&\n");
-		else if ((*root)->logical_operation == 10)
-			printf("||\n");
-		else if ((*root)->logical_operation == 0)
-		{
-			if ((*root)->cmds_head)
-				printf("%s\n", (*root)->cmds_head->cmd_path);
-		}
 		ft_free_node(root);
-		// *root = NULL;
+		*root = NULL;
 	}
 }

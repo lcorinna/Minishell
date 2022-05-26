@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:33:09 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/26 20:36:23 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/26 21:14:29 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,10 @@ void	ft_cleanup(t_info *data)
 {
 	data->priority = 0;
 	data->status = 0;
-	ft_lstclear(&data->dir_files, free);
 	ft_token_lstclear(&data->tokens);
 	// ft_group_lstclear(&data->group_head);
 	ft_free_bin_tree(&data->root);
-	data->root = NULL;
+	data->group_head = NULL;
 	unlink(HEREDOC);
 }
 
@@ -121,10 +120,10 @@ int	main(int argc, char **argv, char **envp)
 		// ft_checker_parser(&data);
 		data.root = ft_group_logic_last(ft_group_lstlast(data.group_head));
 		ft_build_bin_tree(&data, ft_group_lstlast(data.group_head));
-		// ft_check_bin_tree(data.root);
+		ft_check_bin_tree(data.root);
 		// // executor
-		if (ft_executor(&data))
-			printf("im found mistake in executor\n"); //del
+		// if (ft_executor(&data))
+		// 	printf("im found mistake in executor\n"); //del
 	}
 	ft_cleanup(&data);
 	ft_clean_struct(&data);

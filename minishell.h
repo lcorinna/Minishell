@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/26 19:57:00 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/26 21:09:21 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,14 +122,14 @@ typedef struct s_info
 	int				envp_f;
 	int				exit_f;
 	int				status;
+	int				priority;
 	t_token			*tokens;
-	t_token			*token_head;
-	t_llist			*envp_head;
-
+	t_group			*group_head;
+	t_group			*root;
 	t_f_exec		*exec;
 
-	int				priority;
-	t_group			*group_head;
+	t_token			*token_head;
+	t_llist			*envp_head;
 	t_group			*group_ptr;
 	t_cmds			*cmds_head;
 	t_list			*dir_head;
@@ -296,6 +296,7 @@ int			ft_perror_cmd(t_info *data, char *cmd);
 /* checkers.c */
 void		ft_check_lexer(t_info *data);
 void		ft_checker(t_info *data);
+void		ft_check_bin_tree(t_group *root);
 
 /* wildcards.c */
 int			ft_perror_wcds(t_info *data, char *file);
