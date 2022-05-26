@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 22:09:17 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/25 21:35:16 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/26 18:00:01 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,8 @@ static int	ft_fill_cmd(t_info *data)
 				return (data->status);
 			count++;
 		}
-		else
-		{
-			if (data->token_head && ft_check_cmd_str(data))
-				return (data->status);
-			count++;
-		}
+		if (data->token_head && ft_check_cmd_str(data))
+			return (data->status);
 	}
 	return (0);
 }

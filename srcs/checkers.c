@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 00:00:05 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/25 23:59:02 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/26 18:49:32 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,11 @@ void	ft_checker_parser(t_info *data)
 	while (grp)
 	{
 		tmp = grp->cmds_head;
-		// printf("\nGroup %d:\n", k);
-		// printf("############\n");
-		// printf("priority = %d\n", grp->priority);
-		// printf("log_oper = %d\n", grp->logical_operation);
+		printf("\nGroup %d:\n", k);
+		printf("\nGroup %p:\n", grp);
+		printf("############\n");
+		printf("priority = %d\n", grp->priority);
+		printf("log_oper = %d\n", grp->logical_operation);
 		// printf("------------------------------------------\n");
 		m = 0;
 		arr = NULL;
@@ -54,7 +55,8 @@ void	ft_checker_parser(t_info *data)
 			// printf("------------------\n");
 			// printf("infile = %d\n", tmp->infile);
 			// printf("outfile = %d\n", tmp->outfile);
-			// printf("cmd_path[%d] = %s\n", m, tmp->cmd_path);
+			printf("cmd_path[%d] = %s\n", m, tmp->cmd_path);
+			printf("cmd_path[%d] = %p\n\n", m, tmp->cmd_path);
 			// while (*arr)
 			// {
 			// 	printf("cmd_argv = %s\n", *arr);

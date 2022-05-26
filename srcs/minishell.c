@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:33:09 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/25 23:58:51 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/26 18:49:12 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static void	ft_fill_builtins(t_info *data)
 	data->res_words[4] = "unset";
 	data->res_words[5] = "env";
 	data->res_words[6] = "exit";
+	data->res_words[7] = NULL;
 }
 
 static int	ft_check_parentheses(t_info *data)
@@ -86,11 +87,6 @@ void	ft_cleanup(t_info *data)
 {
 	data->priority = 0;
 	data->status = 0;
-	if (data->cmd_paths)
-	{
-		ft_cleaning_array(data->cmd_paths);
-		data->cmd_paths = NULL;
-	}
 	ft_lstclear(&data->dir_files, free);
 	ft_token_lstclear(&data->tokens);
 	ft_group_lstclear(&data->group_head);
@@ -118,11 +114,11 @@ int	main(int argc, char **argv, char **envp)
 		// lexer
 		if (ft_lexer(&data))
 			continue ;
-		ft_check_lexer(&data);
+		// ft_check_lexer(&data);
 		// parser
 		if (ft_get_logic_group(&data))
 			continue ;
-		ft_checker_parser(&data);
+		// ft_checker_parser(&data);
 		// data.root = ft_group_logic_last(ft_group_lstlast(data.group_head));
 		// ft_build_bin_tree(&data, ft_group_lstlast(data.group_head));
 		// ft_check_bin_tree(data.root);

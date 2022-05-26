@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/25 23:56:31 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/26 18:49:06 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,10 +111,9 @@ typedef struct s_f_exec
 
 typedef struct s_info
 {
-	char			*res_words[7];
+	char			*res_words[8];
 	char			**envp;
 	t_llist			*envp_list; //функция для чистки ft_clean_envp_list
-	char			**cmd_paths;
 	char			*str;
 	int				envp_f;
 	int				exit_f;
