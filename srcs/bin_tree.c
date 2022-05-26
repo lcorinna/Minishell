@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 23:09:34 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/26 00:06:20 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/26 20:33:59 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,34 @@ void	ft_build_bin_tree(t_info *data, t_group *last)
 	}
 }
 
+static void	ft_free_node(t_group **root)
+{
+	t_group	*tmp;
+	
+	tmp = *root;
+	ft_cmd_lstclear(&tmp->cmds_head);
+	free(tmp);
+}
+
 void	ft_free_bin_tree(t_group **root)
 {
-	if (*root)
+	t_group	*tmp;
+
+	tmp = *root;
+	if ((*root))
 	{
 		ft_free_bin_tree(&(*root)->left);
-		ft_cmd_lstclear(&(*root)->cmds_head);
-		free((*root));
 		ft_free_bin_tree(&(*root)->right);
+		if ((*root)->logical_operation == 9)
+			printf("&&\n");
+		else if ((*root)->logical_operation == 10)
+			printf("||\n");
+		else if ((*root)->logical_operation == 0)
+		{
+			if ((*root)->cmds_head)
+				printf("%s\n", (*root)->cmds_head->cmd_path);
+		}
+		ft_free_node(root);
+		// *root = NULL;
 	}
 }

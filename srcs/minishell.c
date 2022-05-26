@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:33:09 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/26 18:34:14 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/26 20:32:29 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,9 @@ void	ft_cleanup(t_info *data)
 	data->status = 0;
 	ft_lstclear(&data->dir_files, free);
 	ft_token_lstclear(&data->tokens);
-	ft_group_lstclear(&data->group_head);
-	// ft_free_bin_tree(&data->root);
+	// ft_group_lstclear(&data->group_head);
+	ft_free_bin_tree(&data->root);
+	data->root = NULL;
 	unlink(HEREDOC);
 }
 
@@ -118,8 +119,8 @@ int	main(int argc, char **argv, char **envp)
 		if (ft_get_logic_group(&data))
 			continue ;
 		// ft_checker_parser(&data);
-		// data.root = ft_group_logic_last(ft_group_lstlast(data.group_head));
-		// ft_build_bin_tree(&data, ft_group_lstlast(data.group_head));
+		data.root = ft_group_logic_last(ft_group_lstlast(data.group_head));
+		ft_build_bin_tree(&data, ft_group_lstlast(data.group_head));
 		// ft_check_bin_tree(data.root);
 		// // executor
 		// if (ft_executor(&data))

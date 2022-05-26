@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 00:00:05 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/26 17:29:36 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/26 19:08:52 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	ft_check_bin_tree(t_group *root)
 			if (root->cmds_head)
 				printf("%s\n", root->cmds_head->cmd_path);
 		}
+		printf("priority = %d\n", root->priority);
 		ft_check_bin_tree(root->right);
 	}
 }

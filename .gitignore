@@ -1,6 +1,6 @@
 # Git files
 .git
-# .gitignore
+.gitignore
 
 # Prerequisites
 *.d
