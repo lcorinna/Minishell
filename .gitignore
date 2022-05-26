@@ -1,6 +1,6 @@
 # Git files
 .git
-.gitignore
+# .gitignore
 
 # Prerequisites
 *.d
@@ -39,6 +39,7 @@
 *.i*86
 *.x86_64
 *.hex
+minishell
 
 # Debug files
 *.DS_Store
