@@ -6,40 +6,45 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 23:09:34 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/26 21:11:38 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/27 20:39:16 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_group	*ft_group_logic_last(t_group *last)
+static void	ft_build_left_branch(t_group **root)
 {
-	while (last && !last->logical_operation)
-	{
-		last = last->left;
-	}
-	return (last);
+	t_group	*tmp;
+	t_group	*min_left;
+	
+	tmp = (*root)->left;
+	min_left = ft_get_logic_min_left((*root)->left);
+	if (min_left)
+		(*root)->left = min_left;
+	tmp->right = NULL;
 }
 
-void	ft_build_bin_tree(t_info *data, t_group *last)
+static void	ft_build_right_branch(t_group **root)
 {
-	t_group	*log_last;
-	t_group	*log_penult;
+	t_group	*tmp;
+	t_group	*min_right;
 
-	log_last = ft_group_logic_last(last);
-	if (log_last)
+	tmp = (*root)->right;
+	min_right = ft_get_logic_min_right((*root)->right);
+	if (min_right)
+		(*root)->left = min_right;
+	tmp->left = NULL;
+}
+
+void	ft_build_bin_tree(t_group **root)
+{
+	if (*root)
 	{
-		log_last->left->right = NULL;
-		log_last->right->left = NULL;
-		log_penult = ft_group_logic_last(ft_group_logic_last(log_last->left));
-		if (log_penult)
-		{
-			log_last->left = log_penult;
-		}
-		if (log_penult && log_penult->logical_operation)
-		{
-			ft_build_bin_tree(data, log_penult);
-		}
+		ft_build_left_branch(root);
+		printf("root.left = %d\n", (*root)->left->logical_operation);
+		ft_build_bin_tree(&(*root)->left);
+		// ft_build_right_branch(root);
+		// ft_build_bin_tree(&(*root)->right);
 	}
 }
 

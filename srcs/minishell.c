@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:33:09 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/27 00:01:53 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/27 20:22:02 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,13 +84,13 @@ int	ft_lexer(t_info *data)
 
 void	ft_cleanup(t_info *data)
 {
-	data->priority = 1;
-	data->priority_step = 1;
+	// data->priority = 1;
+	// data->priority_step = 1;
+	// ft_group_lstclear(&data->group_head);
 	data->nesting_level = 0;
 	data->status = 0;
 	ft_token_lstclear(&data->tokens);
-	// ft_group_lstclear(&data->group_head);
-	ft_free_bin_tree(&data->root);
+	// ft_free_bin_tree(&data->root);
 	data->group_head = NULL;
 	unlink(HEREDOC);
 }
@@ -119,9 +119,9 @@ int	main(int argc, char **argv, char **envp)
 		// parser
 		if (ft_get_logic_group(&data))
 			continue ;
-		// ft_checker_parser(&data);
-		data.root = ft_group_logic_last(ft_group_lstlast(data.group_head));
-		ft_build_bin_tree(&data, ft_group_lstlast(data.group_head));
+		// ft_check_parser(&data);
+		data.root = ft_get_logic_min_last(data.group_head);
+		ft_build_bin_tree(&data.root);
 		ft_check_bin_tree(data.root);
 		// // executor
 		// if (ft_executor(&data))

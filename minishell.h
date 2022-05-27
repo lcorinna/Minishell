@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/26 23:10:50 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/27 20:08:48 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ typedef struct s_cmds
 {
 	int				infile;
 	int				outfile;
-	// int				priority;
 	char			*cmd_path;
 	char			*cmd_str;
 	char			**cmd_argv;
@@ -78,7 +77,7 @@ typedef struct s_group
 {
 	t_cmds			*cmds_head;
 	int				logical_operation;
-	int				priority;
+	// int				priority;
 	int				nesting_level;
 	struct s_group	*right;
 	struct s_group	*left;
@@ -119,16 +118,13 @@ typedef struct s_info
 	t_llist			*export;
 	t_list			*dir_files;
 	char			**cmd_paths;
-	char			**path;
 	char			*str;
 	int				envp_f;
 	int				exit_f;
 	int				status;
-
-	int				priority;
-	int				priority_step;
+	// int				priority;
+	// int				priority_step;
 	int				nesting_level;
-
 	t_token			*tokens;
 	t_group			*group_head;
 	t_group			*root;
@@ -266,9 +262,15 @@ void		ft_group_lstadd_back(t_group **head, t_group *new);
 void		ft_group_lstclear(t_group **head);
 
 /* bin_tree.c */
-t_group		*ft_group_logic_last(t_group *last);
-void		ft_build_bin_tree(t_info *data, t_group *last);
+void		ft_build_bin_tree(t_group **root);
 void		ft_free_bin_tree(t_group **root);
+
+/* bin_tree_utils.c */
+t_group		*ft_get_logic_min_last(t_group *last);
+
+/* bin_tree_branches_utils.c */
+t_group		*ft_get_logic_min_left(t_group *root);
+t_group		*ft_get_logic_min_right(t_group *root);
 
 /* executor */
 int			ft_executor(t_info *data);
@@ -301,7 +303,7 @@ int			ft_perror_cmd(t_info *data, char *cmd);
 
 /* checkers.c */
 void		ft_check_lexer(t_info *data);
-void		ft_checker(t_info *data);
+void		ft_check_parser(t_info *data);
 void		ft_check_bin_tree(t_group *root);
 
 /* wildcards.c */
