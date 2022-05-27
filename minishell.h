@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/27 20:08:48 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/27 23:54:02 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 # define SPACES			" \f\n\r\t\v"
 # define QUOTES			"\'\""
 # define SYMBOLS		"<|>()&"
-# define LOGIC_OPER		"&|"
+# define LOGIC			"&|"
 # define NOT_FIRST		")|&"
 # define LEXER_ERROR	101
 # define SYMBOLS_ERROR	102
@@ -77,7 +77,6 @@ typedef struct s_group
 {
 	t_cmds			*cmds_head;
 	int				logical_operation;
-	// int				priority;
 	int				nesting_level;
 	struct s_group	*right;
 	struct s_group	*left;
@@ -114,7 +113,7 @@ typedef struct s_info
 {
 	char			*res_words[8];
 	char			**envp;
-	t_llist			*envp_list; //функция для чистки ft_clean_envp_list
+	t_llist			*envp_list;
 	t_llist			*export;
 	t_list			*dir_files;
 	char			**cmd_paths;
@@ -122,8 +121,6 @@ typedef struct s_info
 	int				envp_f;
 	int				exit_f;
 	int				status;
-	// int				priority;
-	// int				priority_step;
 	int				nesting_level;
 	t_token			*tokens;
 	t_group			*group_head;
@@ -219,13 +216,14 @@ void		ft_token_lstadd_prev(t_token *head, t_token *new);
 void		ft_token_lstadd_next(t_token *head, t_token *new);
 void		ft_token_lstmerge_next(t_token *node);
 
-/* lexer_env_var.c */
-// int			ft_search(const char *str, int c);
-void		ft_expand(t_info *data);
-
-/* ft_symsplit.c */
+/* lexer_utils_3.c */
 size_t		ft_search(char *s, char c);
 int			ft_check_quotes(char *str, int index);
+
+/* lexer_env_var.c */
+void		ft_expand(t_info *data);
+
+/* ft_handle_symbols.c */
 void		ft_handle_symbols(t_info *data);
 
 /* parser.c */

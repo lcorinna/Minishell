@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 20:04:49 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/27 21:59:01 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/27 22:44:37 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static t_group	*ft_group_lstfirst(t_group *root)
 t_group	*ft_get_logic_min_left(t_group *root)
 {
 	int		min;
-	t_group *first;
+	t_group	*first;
 
 	if (root)
 	{

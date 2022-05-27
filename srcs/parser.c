@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 22:09:17 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/27 17:33:11 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/27 23:24:26 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int	ft_fill_cmd(t_info *data)
 	int	count;
 
 	count = 0;
-	while (data->token_head && !ft_strchr(LOGIC_OPER, data->token_head->str_val[0]))
+	while (data->token_head && !ft_strchr(LOGIC, data->token_head->str_val[0]))
 	{
 		if (data->token_head->type == PARN_L && ft_check_parn_l(data))
 			return (data->status);

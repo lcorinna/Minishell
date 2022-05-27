@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 00:00:05 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/27 18:07:35 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/27 23:19:06 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,26 @@ void	ft_check_lexer(t_info *data)
 	while (data->token_head)
 	{
 		printf("string = %s\n", data->token_head->str_val);
-		// printf("type == %d\n\n", data->token_head->type);
 		data->token_head = data->token_head->next;
 	}
 	printf("------------------\n");
+}
+
+static void	ft_print_groups_elems(t_group *grp, t_cmds *tmp)
+{
+	int	m;
+
+	m = 0;
+	while (tmp)
+	{
+		if (grp->logical_operation == 9)
+			printf("&&\n");
+		else if (grp->logical_operation == 10)
+			printf("||\n");
+		printf("cmd_path[%d] = %s\n\n", m, tmp->cmd_str);
+		tmp = tmp->next;
+		m++;
+	}
 }
 
 void	ft_check_parser(t_info *data)
@@ -30,12 +46,8 @@ void	ft_check_parser(t_info *data)
 	t_group	*grp;
 	t_cmds	*tmp;
 	int		k;
-	int		m;
-	char	**arr;
 
 	k = 0;
-	m = 0;
-	arr = NULL;
 	grp = data->group_head;
 	while (grp)
 	{
@@ -43,39 +55,11 @@ void	ft_check_parser(t_info *data)
 		printf("\nGroup %d:\n", k);
 		printf("adress = %p:\n", grp);
 		printf("############\n");
-		// printf("log_oper = %d\n", grp->logical_operation);
 		printf("level = %d\n", grp->nesting_level);
-		// printf("priority = %d\n", grp->priority);
-		// printf("------------------------------------------\n");
-		m = 0;
-		arr = NULL;
-		while (tmp)
-		{
-			if (grp->logical_operation == 9)
-				printf("&&\n");
-			else if (grp->logical_operation == 10)
-				printf("||\n");
-			// arr = tmp->cmd_argv;
-			// printf("Cmd %d:\n", m);
-			// printf("------------------\n");
-			// printf("infile = %d\n", tmp->infile);
-			// printf("outfile = %d\n", tmp->outfile);
-			// printf("cmd_path[%d] = %s\n", m, tmp->cmd_path);
-			printf("cmd_path[%d] = %s\n\n", m, tmp->cmd_str);
-			// while (*arr)
-			// {
-			// 	printf("cmd_argv = %s\n", *arr);
-			// 	arr++;
-			// }
-			tmp = tmp->next;
-			m++;
-			// printf("------------------\n");
-		}
-		// printf("############\n");
+		ft_print_groups_elems(grp, tmp);
 		grp = grp->right;
 		k++;
 	}
-	// ft_in_order_traverse(data->root);
 }
 
 void	ft_check_bin_tree(t_group *root)
@@ -92,7 +76,6 @@ void	ft_check_bin_tree(t_group *root)
 			if (root->cmds_head)
 				printf("%s\n", root->cmds_head->cmd_str);
 		}
-		// printf("priority = %d\n", root->priority);
 		ft_check_bin_tree(root->right);
 	}
 }
