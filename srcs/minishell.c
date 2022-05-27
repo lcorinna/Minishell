@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:33:09 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/27 20:45:16 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/27 22:40:01 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int	main(int argc, char **argv, char **envp)
 		// parser
 		if (ft_get_logic_group(&data))
 			continue ;
-		ft_check_parser(&data);
+		// ft_check_parser(&data);
 		// data.root = ft_get_logic_min_last(data.group_head);
 		// ft_build_bin_tree(&data.root);
 		// ft_check_bin_tree(data.root);

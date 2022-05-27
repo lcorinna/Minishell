@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 17:36:32 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/27 20:05:17 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/27 22:05:46 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,7 @@ t_group	*ft_get_logic_min_last(t_group *group_head)
 
 	min = ft_get_min_level(group_head);
 	last = ft_group_lstlast(group_head);
-	while (last && !(last->logical_operation && last->nesting_level == min))
-	{
+	while (last && last->left && !(last->logical_operation && last->nesting_level == min))
 		last = last->left;
-	}
 	return (last);
 }

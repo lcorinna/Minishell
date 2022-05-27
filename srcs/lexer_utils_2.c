@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 22:51:34 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/26 17:27:46 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/27 22:32:54 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ void	ft_token_lstdelone(t_token *lst)
 {
 	if (NULL != lst)
 	{
-		// printf("%s\n", lst->str_val);
-		// printf("%p\n\n", lst->str_val);
 		free(lst->str_val);
 		free(lst);
 	}

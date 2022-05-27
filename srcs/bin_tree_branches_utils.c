@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 20:04:49 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/27 20:32:50 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/27 21:59:01 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,10 @@ static int	ft_get_min_level(t_group *group_head, t_group **root)
 
 static t_group	*ft_group_lstfirst(t_group *root)
 {
-	while (root)
+	if (root)
 	{
-		root = root->left;
+		while (root->left)
+			root = root->left;
 	}
 	return (root);
 }
@@ -54,12 +55,12 @@ t_group	*ft_get_logic_min_left(t_group *root)
 	int		min;
 	t_group *first;
 
-	first = ft_group_lstfirst(root);
-	min = ft_get_min_level(first, &root);
-	// root = root->left;
-	while (root && !(root->logical_operation && root->nesting_level == min))
+	if (root)
 	{
-		root = root->left;
+		first = ft_group_lstfirst(root);
+		min = ft_get_min_level(first, &root);
+		while (root && !(root->logical_operation && root->nesting_level == min))
+			root = root->left;
 	}
 	return (root);
 }
@@ -68,10 +69,11 @@ t_group	*ft_get_logic_min_right(t_group *root)
 {
 	int		min;
 
-	min = ft_get_min_level(root, &root);
-	while (root && !(root->logical_operation && root->nesting_level == min))
+	if (root)
 	{
-		root = root->right;
+		min = ft_get_min_level(root, &root->left);
+		while (root && !(root->logical_operation && root->nesting_level == min))
+			root = root->right;
 	}
 	return (root);
 }
