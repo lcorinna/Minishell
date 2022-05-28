@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/27 23:54:02 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/28 16:28:12 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,6 +223,12 @@ int			ft_check_quotes(char *str, int index);
 /* lexer_env_var.c */
 void		ft_expand(t_info *data);
 
+/* lexer_env_var_utils.c */
+int			ft_find_ind_el(char *str);
+int			ft_search_excl(char *s);
+void		ft_replace(t_info *data);
+void		ft_replace_2(t_info *data);
+
 /* ft_handle_symbols.c */
 void		ft_handle_symbols(t_info *data);
 
@@ -304,9 +310,15 @@ void		ft_check_lexer(t_info *data);
 void		ft_check_parser(t_info *data);
 void		ft_check_bin_tree(t_group *root);
 
-/* wildcards.c */
-int			ft_perror_wcds(t_info *data, char *file);
+/* wildcards_filename.c */
 char		*ft_do_wildcards_file(t_info *data, char *str);
+
+/* wildcards_argv.c */
 char		*ft_do_wildcards_argv(t_info *data, char *str);
+
+/* wildcards_utils.c */
+int			ft_perror_wcds(t_info *data, char *file);
+void		ft_get_dir_files(t_info *data);
+char		*ft_compare_filenames(t_info *data, char *str);
 
 #endif

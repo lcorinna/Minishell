@@ -6,7 +6,7 @@
 #    By: merlich <merlich@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/20 19:17:52 by lcorinna          #+#    #+#              #
-#    Updated: 2022/05/27 23:25:22 by merlich          ###   ########.fr        #
+#    Updated: 2022/05/28 16:30:15 by merlich          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,19 +15,20 @@ NAME_M			=	minishell
 FILES			=	minishell.c \
 					envp.c llist.c ft_readline.c exit.c \
 					lexer.c lexer_utils.c lexer_utils_2.c lexer_utils_3.c \
-					lexer_env_var.c ft_handle_symbols.c \
+					lexer_env_var.c lexer_env_var_utils.c \
+					ft_handle_symbols.c \
 					parser.c parser_cmd_utils.c parser_group_utils.c \
 					ft_check_redir_insource.c ft_check_redir_in.c \
 					ft_check_redir_out.c ft_check_redir_append.c \
 					ft_check_words.c ft_perror.c \
 					bin_tree.c bin_tree_utils.c bin_tree_branches_utils.c \
-					wildcards.c checkers.c \
+					wildcards_filename.c wildcards_argv.c wildcards_utils.c \
+					checkers.c \
 					executor.c executor_one_cmd.c executor_many_cmd.c \
 					executor_utils.c builtins/cd.c builtins/cd_utils.c \
 					builtins/export.c builtins/builtin_utils.c builtins/pwd.c \
 					builtins/unset.c builtins/echo.c builtins/env.c \
 					builtins/exit.c \
-				
 
 PATH_LIBFT		=	./libft/
 LIBFT			=	libft.a
@@ -42,7 +43,7 @@ DEP				=	$(SRC:.c=.d)
 INCLUDE			=	./includes
 INCLUDE_SYS		=	$(HOMEBREW_PREFIX)/opt/readline/include
 LIB_SYS			=	$(HOMEBREW_PREFIX)/opt/readline/lib
-CFLAGS			=	-Wall -Wextra  -MMD -g #-fsanitize=address #удобно сразу смотреть где читаем память мимо\
+CFLAGS			=	-Wall -Wextra  -MMD -g -fsanitize=address #удобно сразу смотреть где читаем память мимо\
 													# make && Leaks --atExit -- ./minishell
 all				:	libmake $(NAME_M)
 
