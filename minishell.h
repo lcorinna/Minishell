@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/27 23:54:02 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/28 18:41:32 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@
 # define PIPE			8
 # define AND			13
 # define IF_AND			9 //&&
-# define IF_OR			10 //||
+# define IF_OR			10 //|| //
 # define PARN_L			11
 # define PARN_R			12
 # define DUP			81
