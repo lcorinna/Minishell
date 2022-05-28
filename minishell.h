@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/28 16:28:12 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/28 17:59:35 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 # include <term.h>
 # include <fcntl.h>
 
-# define SHELL			"minishell$ "
+# define SHELL			"\nminishell$ "
 # define HEREDOC		".here_doc"
 # define SPACES			" \f\n\r\t\v"
 # define QUOTES			"\'\""
@@ -135,39 +135,46 @@ typedef struct s_info
 
 }	t_info;
 
+/* signal.c */
+void		ft_signal(t_info *data, int i);
+
 /* builtins/builtins_utils.c */
 int			ft_memcmp_l(const void *s1, const void *s2, size_t n);
 int			ft_only_parent_need(char **arr);
-void		ft_builtins_command(t_info *data, char **arr);
+int			ft_builtins_command(t_info *data, char **arr);
 
-/* builtins/echo.c */
+/* builtins/b_echo.c */
 void		ft_echo(char **cmd_argv);
 
-/* builtins/cd.c */
+/* builtins/b_cd.c */
 void		ft_cd(t_info *data, char **arr);
 
-/* builtins/cd_utils.c */
+/* builtins/b_cd_utils.c */
 void		ft_search_oldpwd(char **oldpwd, t_llist *envp_l);
-void		ft_cd_error(char **arr, int flag);
+void		ft_cd_error(t_info *data, char **arr, int flag);
 
-/* builtins/cd_utils.c */
-void		ft_search_oldpwd(char **oldpwd, t_llist *envp_l);
-void		ft_cd_error(char **arr, int flag);
-
-/* builtins/pwd.c */
+/* builtins/b_pwd.c */
 void		ft_pwd(char **arr);
 
-/* builtins/export.c */
-void		ft_export(t_info *data, t_llist *envpl, char **arr);
+/* builtins/b_export.c */
+void		ft_export(t_info *data, char **arr);
 
-/* builtins/unset.c */
-void		ft_unset(t_llist *envp_l, char **arr);
+/* builtins/b_export_utils.c */
+void		ft_cp_env_in_exp(t_info *data, t_llist *envp_l);
+char		*ft_max_key(t_llist *export);
 
-/* builtins/env.c */
+/* builtins/b_export_print.c */
+void		ft_print_exp(t_llist *export);
+void		ft_need_sort(t_llist *export);
+
+/* builtins/b_unset.c */
+void		ft_unset(t_info *data, t_llist *envp_l, char **arr);
+
+/* builtins/b_env.c */
 void		ft_env(t_info *data);
 
-/* builtins/exit.c */
-void		ft_exit(char **arr);
+/* builtins/b_exit.c */
+void		ft_exit(t_info *data, char **arr);
 int			ft_is_number(char *str);
 
 /* envp.c */
@@ -223,12 +230,6 @@ int			ft_check_quotes(char *str, int index);
 /* lexer_env_var.c */
 void		ft_expand(t_info *data);
 
-/* lexer_env_var_utils.c */
-int			ft_find_ind_el(char *str);
-int			ft_search_excl(char *s);
-void		ft_replace(t_info *data);
-void		ft_replace_2(t_info *data);
-
 /* ft_handle_symbols.c */
 void		ft_handle_symbols(t_info *data);
 
@@ -283,7 +284,7 @@ int			ft_executor(t_info *data);
 void		ft_pipe_one_cmd(t_info *data);
 int			ft_exec_one_cmd(t_info	*data);
 void		ft_perror_exit_child(char *str, int error);
-int			ft_memcmp_l(const void *s1, const void *s2, size_t n);
+void		ft_waitpid(int pid);
 
 /* executor_many_cmd */
 int			ft_exec_many_cmd(t_info *data);
@@ -310,15 +311,9 @@ void		ft_check_lexer(t_info *data);
 void		ft_check_parser(t_info *data);
 void		ft_check_bin_tree(t_group *root);
 
-/* wildcards_filename.c */
-char		*ft_do_wildcards_file(t_info *data, char *str);
-
-/* wildcards_argv.c */
-char		*ft_do_wildcards_argv(t_info *data, char *str);
-
-/* wildcards_utils.c */
+/* wildcards.c */
 int			ft_perror_wcds(t_info *data, char *file);
-void		ft_get_dir_files(t_info *data);
-char		*ft_compare_filenames(t_info *data, char *str);
+char		*ft_do_wildcards_file(t_info *data, char *str);
+char		*ft_do_wildcards_argv(t_info *data, char *str);
 
 #endif

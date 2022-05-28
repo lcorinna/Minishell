@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 16:38:53 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/22 19:51:11 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/28 17:41:46 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,31 +35,51 @@ void	ft_pipe_one_cmd(t_info *data)
 	}
 }
 
-int	ft_exec_one_cmd(t_info	*data)
+void	ft_birth_child(t_info *data)
+{
+	ft_signal(data, 2);
+	data->exec->pid = fork();
+	if (data->exec->pid == -1)
+		ft_perror_exit_child("", 1);
+	else if (data->group_head->cmds_head->cmd_path == NULL && data->exec->pid == 0)
+		exit(1);
+	else if (data->exec->pid == 0) //ребенок
+	{
+		ft_signal(data, 3);
+		if (data->group_head->cmds_head->infile != 0 || \
+		data->group_head->cmds_head->outfile != 1) //сделать dup2
+			ft_pipe_one_cmd(data);
+		ft_builtins_command(data, data->group_head->cmds_head->cmd_argv); //не билтын ли?
+		execve(data->group_head->cmds_head->cmd_path, \
+		data->group_head->cmds_head->cmd_argv, data->envp);
+		ft_perror_exit_child("Inside child execve error", 1);
+	}
+}
+
+void	ft_waitpid(int pid)
 {
 	int	status;
+
+	if (waitpid(pid, &status, WUNTRACED) == -1)
+		ft_perror_exit_child("", 1);
+	if (WIFSIGNALED(status))
+	{
+		if (WTERMSIG(status) == 3)
+			ft_putstr_fd("Quit: 3\n", 1); //back slash
+		else
+			ft_putstr_fd("\n", 1); //^C //yes | head // проверить
+	}
+}
+
+int	ft_exec_one_cmd(t_info	*data)
+{
 	int	control;
 
 	control = ft_only_parent_need(data->group_head->cmds_head->cmd_argv);
 	if (control == 0)
 	{
-		data->exec->pid = fork();
-		if (data->exec->pid == -1)
-			return (1);
-		else if (data->group_head->cmds_head->cmd_path == NULL && data->exec->pid == 0)
-				exit(1);
-		else if (data->exec->pid == 0) //ребенок
-		{
-			if (data->group_head->cmds_head->infile != 0 || \
-			data->group_head->cmds_head->outfile != 1) //сделать dup2
-				ft_pipe_one_cmd(data);
-			ft_builtins_command(data, data->group_head->cmds_head->cmd_argv); //не билтын ли?
-			execve(data->group_head->cmds_head->cmd_path, \
-			data->group_head->cmds_head->cmd_argv, data->envp);
-			ft_perror_exit_child("Inside child execve error", 1);
-		}
-		if (wait(&status) == -1) //родитель ждем дитя
-			return (1);
+		ft_birth_child(data);
+		ft_waitpid(data->exec->pid);
 	}
 	else if (control)
 		ft_builtins_command(data, data->group_head->cmds_head->cmd_argv);

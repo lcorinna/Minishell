@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:33:09 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/28 16:28:59 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/28 17:41:14 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	ft_cleanup(t_info *data)
 	// data->priority_step = 1;
 	ft_group_lstclear(&data->group_head);
 	data->nesting_level = 0;
-	data->status = 0;
+	// data->status = 0;
 	ft_token_lstclear(&data->tokens);
 	// ft_free_bin_tree(&data->root);
 	data->group_head = NULL;
@@ -102,9 +102,9 @@ int	main(int argc, char **argv, char **envp)
 	data = (t_info){};
 	ft_fill_builtins(&data);
 	ft_transfer(argc, argv, envp, &data);
-	// ft_signal(); //буду делать в конце
 	while (!data.exit_f)
 	{
+		ft_signal(&data, 1);
 		ft_cleanup(&data);
 		// data.envp_f = 1; //проверяю как перезаписывается наш envp из односвязного списка t_llist //del
 		if (data.envp_f) //флаг нужен?
@@ -124,8 +124,8 @@ int	main(int argc, char **argv, char **envp)
 		// ft_build_bin_tree(&data.root);
 		// ft_check_bin_tree(data.root);
 		// // executor
-		// if (ft_executor(&data))
-		// 	printf("im found mistake in executor\n"); //del
+		if (ft_executor(&data))
+			printf("im found mistake in executor\n"); //del
 	}
 	ft_cleanup(&data);
 	ft_clean_struct(&data);

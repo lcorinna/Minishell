@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd_utils.c                                         :+:      :+:    :+:   */
+/*   b_cd_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 18:55:57 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/25 19:09:31 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/27 14:26:13 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,18 @@ void	ft_search_oldpwd(char **oldpwd, t_llist *envp_l)
 		ft_perror_exit_child("", 12);
 }
 
-void	ft_cd_error(char **arr, int flag)
+void	ft_cd_error(t_info *data, char **arr, int flag)
 {
 	if (flag == 1)
+	{
 		ft_putstr_fd("minishell: cd: HOME not set \n", 2);
+		data->status = 1;
+	}
 	else if (flag == 2)
 	{
 		ft_putstr_fd("minishell: cd: ", 2);
 		ft_putstr_fd(arr[1], 2);
 		ft_putstr_fd(": No such file or directory\n", 2);
+		data->status = 1;
 	}
 }

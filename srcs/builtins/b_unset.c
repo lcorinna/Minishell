@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
+/*   b_unset.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 18:55:57 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/25 16:44:28 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/28 16:44:27 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	ft_error_message_unset(char *str)
+void	ft_error_message_unset(t_info *data, char *str)
 {
 	ft_putstr_fd("minishell: unset: \'", 2);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd("\': not a valid identifier\n", 2);
+	data->status = 1;
 }
 
-void	ft_check_arguments_unset(char **arr)
+void	ft_check_arguments_unset(t_info *data, char **arr)
 {
 	int	i;
 	int	j;
@@ -32,14 +33,15 @@ void	ft_check_arguments_unset(char **arr)
 		{
 			if (j == 0 && arr[i][j] >= '0' && arr[i][j] <= '9')
 			{
-				ft_error_message_unset(arr[i]);
+				ft_error_message_unset(data, arr[i]);
 				break ;
 			}
 			if ((arr[i][j] >= '!' && arr[i][j] <= '/') || \
-			(arr[i][j] >= ':' && arr[i][j] <= '@') || \
-			(arr[i][j] >= '[' && arr[i][j] <= '^'))
+				(arr[i][j] >= ':' && arr[i][j] <= '@') || \
+				(arr[i][j] >= '[' && arr[i][j] <= '^') || \
+				(arr[i][j] >= '{' && arr[i][j] <= '~'))
 			{
-				ft_error_message_unset(arr[i]);
+				ft_error_message_unset(data, arr[i]);
 				break ;
 			}
 			j++;
@@ -95,8 +97,8 @@ void	ft_find_argument(t_llist *envp_l, char **arr)
 	}
 }
 
-void	ft_unset(t_llist *envp_l, char **arr)
+void	ft_unset(t_info *data, t_llist *envp_l, char **arr)
 {
-	ft_check_arguments_unset(arr);
+	ft_check_arguments_unset(data, arr);
 	ft_find_argument(envp_l, arr);
 }

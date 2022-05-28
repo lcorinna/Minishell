@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   b_cd.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 18:55:57 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/26 19:55:11 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/27 14:25:02 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,13 +130,13 @@ void	ft_cd(t_info *data, char **arr)
 	{
 		mistake = ft_without_argument(data->envp_list, path);
 		if (mistake == 1) //если 1, то ошибка
-			ft_cd_error(arr, 1);
+			ft_cd_error(data, arr, 1);
 	}
 	else
 	{
 		mistake = chdir(arr[1]); //пытаемся перейти в другую папку
 		if (mistake == -1)
-			ft_cd_error(arr, 2);
+			ft_cd_error(data, arr, 2);
 	}
 	if (mistake == 0) //переписываем все PWD
 		ft_added_pwd_oldpwd(oldpwd, data->envp_list);

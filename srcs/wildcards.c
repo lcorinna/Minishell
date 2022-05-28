@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wildcards_utils.c                                  :+:      :+:    :+:   */
+/*   wildcards.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/28 15:37:09 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/28 16:20:44 by merlich          ###   ########.fr       */
+/*   Created: 2022/05/22 23:18:06 by merlich           #+#    #+#             */
+/*   Updated: 2022/05/27 22:38:57 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	ft_perror_wcds(t_info *data, char *file)
 	return (data->status);
 }
 
-void	ft_get_dir_files(t_info *data)
+static void	ft_get_dir_files(t_info *data)
 {
 	DIR				*curr_dir;
 	struct dirent	*s_dir;
@@ -42,7 +42,7 @@ void	ft_get_dir_files(t_info *data)
 	closedir(curr_dir);
 }
 
-char	*ft_compare_filenames(t_info *data, char *str)
+static char	*ft_compare_filenames(t_info *data, char *str)
 {
 	int		ind;
 	char	*filename;
@@ -58,4 +58,64 @@ char	*ft_compare_filenames(t_info *data, char *str)
 			return (filename);
 	}
 	return (NULL);
+}
+
+char	*ft_do_wildcards_file(t_info *data, char *str)
+{
+	char	*s;
+	t_list	*wcds;
+
+	s = NULL;
+	wcds = NULL;
+	ft_get_dir_files(data);
+	data->dir_head = data->dir_files;
+	while (data->dir_head)
+	{
+		s = ft_compare_filenames(data, str);
+		if (s)
+			ft_lstadd_back(&wcds, ft_lstnew(ft_strdup(s)));
+		data->dir_head = data->dir_head->next;
+	}
+	if (ft_lstsize(wcds) == 1)
+	{
+		free(str);
+		str = ft_strdup(wcds->content);
+	}
+	else if (ft_lstsize(wcds) > 1)
+	{
+		ft_cleaning_str(str);
+	}
+	ft_lstclear(&wcds, free);
+	return (str);
+}
+
+char	*ft_do_wildcards_argv(t_info *data, char *str)
+{
+	char	*s;
+	char	*tmp;
+	char	*res;
+
+	s = NULL;
+	tmp = NULL;
+	res = ft_strdup("\0");
+	ft_get_dir_files(data);
+	data->dir_head = data->dir_files;
+	while (data->dir_head)
+	{
+		s = ft_compare_filenames(data, str);
+		if (s)
+		{
+			tmp = res;
+			res = ft_strjoin_three(tmp, s, " ");
+			free(tmp);
+		}
+		data->dir_head = data->dir_head->next;
+	}
+	res[ft_strlen(res) - 1] = '\0';
+	if (ft_strlen(res))
+	{
+		free(str);
+		str = res;
+	}
+	return (str);
 }

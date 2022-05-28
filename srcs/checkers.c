@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checkers.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 00:00:05 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/27 23:19:06 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/28 17:47:40 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	ft_print_groups_elems(t_group *grp, t_cmds *tmp)
 			printf("&&\n");
 		else if (grp->logical_operation == 10)
 			printf("||\n");
-		printf("cmd_path[%d] = %s\n\n", m, tmp->cmd_str);
+		printf("tmp->cmd_str[%d] = %s\n\n", m, tmp->cmd_str);
 		tmp = tmp->next;
 		m++;
 	}

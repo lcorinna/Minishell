@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 14:28:23 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/26 18:30:35 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/28 17:18:27 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,16 @@ int	ft_only_parent_need(char **arr)
 	return (0);
 }
 
-void	ft_builtins_command(t_info *data, char **arr)
+int	ft_builtins_command(t_info *data, char **arr)
 {
 	if (ft_memcmp_l("exit", arr[0], 5) == 5) //exit with no options
-		ft_exit(arr);
+		ft_exit(data, arr);
 	else if (ft_memcmp_l("cd", arr[0], 3) == 3) //cd with only a relative or absolute path
 		ft_cd(data, arr);
 	else if (ft_memcmp_l("export", arr[0], 7) == 7) //export with no options
-		ft_export(data, data->envp_list, arr);
+		ft_export(data, arr);
 	else if (ft_memcmp_l("unset", arr[0], 6) == 6) //unset with no options
-		ft_unset(data->envp_list, arr);
+		ft_unset(data, data->envp_list, arr);
 	else if (ft_memcmp_l("echo", arr[0], 5) == 5) //echo with option -n
 		ft_echo(arr);
 	else if (ft_memcmp_l("pwd", arr[0], 4) == 4) //pwd with no options
@@ -60,5 +60,9 @@ void	ft_builtins_command(t_info *data, char **arr)
 	else if (ft_memcmp_l("env", arr[0], 4) == 4) //env with no options or arguments
 		ft_env(data);
 	else if (ft_memcmp_l("./minishell", arr[0], 12) == 12) //./minishell SHLVL=1
+	{
 		ft_array_envp(data);
+		return (0);
+	}
+	return (1);
 }
