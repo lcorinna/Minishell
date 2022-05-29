@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 16:38:53 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/29 15:53:00 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/29 20:31:06 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@ void	ft_pipe_one_cmd(t_info *data)
 	}
 }
 
-void	ft_birth_child(t_info *data)
+void	ft_birth_child(t_info *data, t_cmds *head)
 {
 	ft_signal(data, 2);
 	data->exec->pid = fork();
 	if (data->exec->pid == -1)
 		ft_perror_exit_child("", 1);
-	else if (data->group_head->cmds_head->cmd_path == NULL && data->exec->pid == 0)
+	else if (head->cmd_path == NULL && data->exec->pid == 0)
 		exit(1);
 	else if (data->exec->pid == 0) //ребенок
 	{
@@ -49,14 +49,13 @@ void	ft_birth_child(t_info *data)
 		if (data->group_head->cmds_head->infile != 0 || \
 		data->group_head->cmds_head->outfile != 1) //сделать dup2
 			ft_pipe_one_cmd(data);
-		ft_builtins_command(data, data->group_head->cmds_head->cmd_argv); //не билтын ли?
-		execve(data->group_head->cmds_head->cmd_path, \
-		data->group_head->cmds_head->cmd_argv, data->envp);
+		ft_builtins_command(data, head->cmd_argv); //не билтын ли?
+		data->status = execve(head->cmd_path, head->cmd_argv, data->envp);
 		ft_perror_exit_child("Inside child execve error", 1);
 	}
 }
 
-void	ft_waitpid(int pid)
+void	ft_waitpid(t_info *data, int pid)
 {
 	int	status;
 
@@ -65,21 +64,27 @@ void	ft_waitpid(int pid)
 	if (WIFSIGNALED(status))
 	{
 		if (WTERMSIG(status) == 3)
+		{
+			data->status = 131;
 			ft_putstr_fd("Quit: 3\n", 1); //back slash
+		}
 		else if (WTERMSIG(status) == 2)
+		{
+			data->status = 132;
 			ft_putstr_fd("\n", 1); //^C //yes | head // проверить
+		}
 	}
 }
 
-int	ft_exec_one_cmd(t_info	*data)
+int	ft_exec_one_cmd(t_info	*data, t_cmds *head)
 {
 	int	control;
 
 	control = ft_only_parent_need(data->group_head->cmds_head->cmd_argv);
 	if (control == 0)
 	{
-		ft_birth_child(data);
-		ft_waitpid(data->exec->pid);
+		ft_birth_child(data, head);
+		ft_waitpid(data, data->exec->pid);
 	}
 	else if (control)
 		ft_builtins_command(data, data->group_head->cmds_head->cmd_argv);

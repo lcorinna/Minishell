@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcards.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 23:18:06 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/29 16:12:41 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/29 16:51:41 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ char	*ft_do_wildcards_file(t_info *data, char *str)
 char	*ft_do_wildcards_argv(t_info *data, char *str)
 {
 	char	*s;
-	char 	*tmp;
+	char	*tmp;
 	char	*res;
 
 	s = NULL;

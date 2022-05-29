@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/28 17:59:35 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/29 20:09:06 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -282,9 +282,9 @@ int			ft_executor(t_info *data);
 
 /* executor_one_cmd */
 void		ft_pipe_one_cmd(t_info *data);
-int			ft_exec_one_cmd(t_info	*data);
+int			ft_exec_one_cmd(t_info	*data, t_cmds *head);
 void		ft_perror_exit_child(char *str, int error);
-void		ft_waitpid(int pid);
+void		ft_waitpid(t_info *data, int pid);
 
 /* executor_many_cmd */
 int			ft_exec_many_cmd(t_info *data);

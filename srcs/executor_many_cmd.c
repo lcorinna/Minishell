@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 18:02:28 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/28 17:42:01 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/29 20:44:06 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	ft_routine(t_info *data, t_cmds	*tmp)
 	ft_builtins_command(data, tmp->cmd_argv);
 	if (ft_only_parent_need(tmp->cmd_argv))
 		exit (1);
-	execve(tmp->cmd_path, tmp->cmd_argv, data->envp);
+	data->status = execve(tmp->cmd_path, tmp->cmd_argv, data->envp);
 	ft_perror_exit_child("Inside child execve error", 1);
 }
 
@@ -83,7 +83,7 @@ void	ft_last_entry(t_info *data, t_cmds	*tmp)
 	ft_builtins_command(data, tmp->cmd_argv);
 	if (ft_only_parent_need(tmp->cmd_argv))
 		exit (1);
-	execve(tmp->cmd_path, tmp->cmd_argv, data->envp);
+	data->status = execve(tmp->cmd_path, tmp->cmd_argv, data->envp);
 	ft_perror_exit_child("Inside last child execve error", 1);
 }
 
@@ -113,7 +113,7 @@ void	ft_first_entry(t_info *data, t_cmds	*tmp)
 	ft_builtins_command(data, tmp->cmd_argv);
 	if (ft_only_parent_need(tmp->cmd_argv))
 		exit (1);
-	execve(tmp->cmd_path, tmp->cmd_argv, data->envp);
+	data->status = execve(tmp->cmd_path, tmp->cmd_argv, data->envp);
 	ft_perror_exit_child("Inside first child execve error", 1);
 }
 
@@ -169,6 +169,6 @@ int	ft_exec_many_cmd(t_info *data)
 	}
 	ft_close_all_pipes(data);
 	while (--data->exec->n_child >= 0)
-		ft_waitpid(-1);
+		ft_waitpid(data, -1);
 	return (0);
 }

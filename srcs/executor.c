@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 16:38:53 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/28 16:41:03 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/29 20:43:15 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,26 +41,21 @@ int	ft_struct_exec(t_info *data)
 	return (0);
 }
 
-int	ft_preparation(t_info *data)
+int	ft_preparation(t_info *data, t_cmds *head)
 {
 	t_cmds	*tmp;
 
-	tmp = data->group_head->cmds_head;
-	// printf("new->qtt_cmd - %d\n\n", data->exec->qtt_cmd); //del
+	tmp = head;
+	data->exec->qtt_cmd = 0;
 	while (tmp)
 	{
-		// printf("tmp->infile - %d\n", tmp->infile); //del
-		// printf("tmp->outfile - %d\n", tmp->outfile); //del
-		// printf("tmp1.cmd_path - %s\n", tmp->cmd_path); //del
-		// printf("tmp1.cmd_str - %s\n\n", tmp->cmd_str); //del
 		tmp = tmp->next;
 		data->exec->qtt_cmd++;
 	}
-	// printf("new->qtt_cmd - %d\n\n", data->exec->qtt_cmd); //del
 	tmp = data->group_head->cmds_head;
 	if (data->exec->qtt_cmd == 1) //одна команда, проверяем cmd_str и исполняем
 	{
-		if (tmp->cmd_path != NULL && ft_exec_one_cmd(data))
+		if (tmp->cmd_path != NULL && ft_exec_one_cmd(data, head))
 			return (1);
 	}
 	else if (data->exec->qtt_cmd > 1) //много команд, нужны трубы
@@ -71,15 +66,90 @@ int	ft_preparation(t_info *data)
 	return (0);
 }
 
+int	ft_check_operation(t_info *data)
+{
+	int		res;
+	t_group	*tmp;
+
+	res = 0;
+	tmp = data->group_head;
+	while (tmp)
+	{
+		if (tmp->logical_operation == 10)
+		{
+			if (res == 0 || res == 10)
+				res = 10;
+			else
+				res = 11; //оба 
+		}
+		else if (tmp->logical_operation == 9)
+		{
+			if (res == 0 || res == 9)
+				res = 9;
+			else
+				res = 11; //оба
+		}
+		tmp = tmp->right;
+	}
+	return (res);
+}
+
+void	ft_only_ten(t_info *data)
+{
+	t_group	*tmp;
+
+	tmp = data->group_head;
+	while (tmp)
+	{
+		ft_preparation(data, tmp->cmds_head);
+		if (data->status == 0)
+			break ;
+		if (tmp->right != NULL)
+			tmp = tmp->right->right;
+	}
+}
+
+void	ft_only_nine(t_info *data)
+{
+	t_group	*tmp;
+
+	tmp = data->group_head;
+	while (tmp)
+	{	
+		ft_preparation(data, tmp->cmds_head);
+		if (tmp->right == NULL)
+			break ;
+		if (data->status != 0)
+			break ;
+		if (tmp->right != NULL)
+			tmp = tmp->right->right;
+	}
+}
+
+void	ft_logical_operation(t_info *data)
+{
+	int	branch;
+
+	branch = ft_check_operation(data);
+	if (branch == 9) //&&
+		ft_only_nine(data);
+	if (branch == 10) //||
+		ft_only_ten(data);
+	// else if (branch == 11) //оба
+}
+
 int	ft_executor(t_info *data)
 {
+	if (data->group_head == NULL)
+		return (0);
 	if (data->exec == NULL) //при первом заходе инициализирую структуру exec
 		if (ft_struct_exec(data))
-			return (1); //ошибка функции
-	if (data->group_head != NULL && ft_preparation(data))
-		return (1);
+			ft_perror_exit_child("", 12);
+	if (data->group_head->right == NULL && data->group_head->left == NULL)
+		ft_preparation(data, data->group_head->cmds_head);
+	else if (data->group_head->right->logical_operation != 0)
+		ft_logical_operation(data);
 	if (data->exec != NULL)
 		ft_free_exec(data); //освобождаю exec перед выходом
-	// printf("\nHERE\n"); //del
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 18:55:57 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/27 17:53:47 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/29 17:45:50 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,4 +150,5 @@ void	ft_export(t_info *data, char **arr)
 		ft_print_sort(data);
 	else if (arr[0] != NULL && arr[1] != NULL)
 		ft_adding_to_struct(data, arr);
+	data->envp_f = 1;
 }

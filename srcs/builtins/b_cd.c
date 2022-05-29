@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 18:55:57 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/27 14:25:02 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/29 17:45:16 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,4 +140,5 @@ void	ft_cd(t_info *data, char **arr)
 	}
 	if (mistake == 0) //переписываем все PWD
 		ft_added_pwd_oldpwd(oldpwd, data->envp_list);
+	data->envp_f = 1;
 }

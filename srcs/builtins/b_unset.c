@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 18:55:57 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/28 16:44:27 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/29 17:45:28 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,4 +101,5 @@ void	ft_unset(t_info *data, t_llist *envp_l, char **arr)
 {
 	ft_check_arguments_unset(data, arr);
 	ft_find_argument(envp_l, arr);
+	data->envp_f = 1;
 }
