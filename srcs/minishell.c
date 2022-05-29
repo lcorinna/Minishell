@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:33:09 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/28 17:41:14 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/28 19:43:53 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,8 @@ int	main(int argc, char **argv, char **envp)
 		// ft_build_bin_tree(&data.root);
 		// ft_check_bin_tree(data.root);
 		// // executor
-		if (ft_executor(&data))
-			printf("im found mistake in executor\n"); //del
+		// if (ft_executor(&data))
+		// 	printf("im found mistake in executor\n"); //del
 	}
 	ft_cleanup(&data);
 	ft_clean_struct(&data);
