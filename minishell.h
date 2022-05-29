@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/29 20:09:06 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/29 20:48:33 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -312,8 +312,19 @@ void		ft_check_parser(t_info *data);
 void		ft_check_bin_tree(t_group *root);
 
 /* wildcards.c */
-int			ft_perror_wcds(t_info *data, char *file);
+
 char		*ft_do_wildcards_file(t_info *data, char *str);
 char		*ft_do_wildcards_argv(t_info *data, char *str);
+
+/* wildcards_filename.c */
+char		*ft_do_wildcards_file(t_info *data, char *str);
+
+/* wildcards_argv.c */
+char		*ft_do_wildcards_argv(t_info *data, char *str);
+
+/* wildcards_utils.c */
+int			ft_perror_wcds(t_info *data, char *file);
+void		ft_get_dir_files(t_info *data);
+char		*ft_compare_filenames(t_info *data, char *str);
 
 #endif

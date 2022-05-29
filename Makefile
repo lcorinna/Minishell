@@ -6,7 +6,7 @@
 #    By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/20 19:17:52 by lcorinna          #+#    #+#              #
-#    Updated: 2022/05/29 17:27:08 by lcorinna         ###   ########.fr        #
+#    Updated: 2022/05/29 20:49:15 by lcorinna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ FILES			=	minishell.c \
 					ft_check_redir_out.c ft_check_redir_append.c \
 					ft_check_words.c ft_perror.c \
 					bin_tree.c bin_tree_utils.c bin_tree_branches_utils.c \
-					wildcards.c checkers.c \
+					wildcards_argv.c wildcards_filename.c wildcards_utils.c \
+					checkers.c \
 					executor.c executor_one_cmd.c executor_many_cmd.c \
 					executor_utils.c builtins/builtin_utils.c builtins/b_pwd.c \
 					builtins/b_cd.c builtins/b_cd_utils.c builtins/b_unset.c \
