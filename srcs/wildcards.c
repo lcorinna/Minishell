@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 23:18:06 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/27 22:38:57 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/29 16:12:41 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,24 @@ static void	ft_get_dir_files(t_info *data)
 	DIR				*curr_dir;
 	struct dirent	*s_dir;
 
+	ft_lstclear(&data->dir_files, free);
 	curr_dir = opendir("./");
-	s_dir = readdir(curr_dir);
-	while (s_dir)
-	{
+	while ((s_dir = readdir(curr_dir)))
 		ft_lstadd_back(&data->dir_files, ft_lstnew(ft_strdup(s_dir->d_name)));
-		s_dir = readdir(curr_dir);
-	}
 	closedir(curr_dir);
+	data->dir_head = data->dir_files;
+	while (data->dir_head)
+	{
+		// printf("%s\n", data->dir_head->content);
+		data->dir_head = data->dir_head->next;
+	}
+	// printf("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&\n");
 }
 
 static char	*ft_compare_filenames(t_info *data, char *str)
 {
 	int		ind;
-	char	*filename;
+	char 	*filename;
 	char	*tmp;
 
 	ind = ft_search(str, '*');
@@ -55,7 +59,9 @@ static char	*ft_compare_filenames(t_info *data, char *str)
 	{
 		tmp = ft_strrchr(filename, str[ind + 1]);
 		if (tmp && !ft_strncmp(tmp, str + ind + 1, ft_strlen(str) - ind))
+		{
 			return (filename);
+		}
 	}
 	return (NULL);
 }
@@ -74,25 +80,31 @@ char	*ft_do_wildcards_file(t_info *data, char *str)
 		s = ft_compare_filenames(data, str);
 		if (s)
 			ft_lstadd_back(&wcds, ft_lstnew(ft_strdup(s)));
+		// printf("%s\n", s);
 		data->dir_head = data->dir_head->next;
-	}
-	if (ft_lstsize(wcds) == 1)
+	}	
+	if (!wcds)
+	{}
+	else if (ft_lstsize(wcds) == 1)
 	{
 		free(str);
 		str = ft_strdup(wcds->content);
 	}
-	else if (ft_lstsize(wcds) > 1)
+	else
 	{
-		ft_cleaning_str(str);
+		free(str);
+		str = NULL;
 	}
 	ft_lstclear(&wcds, free);
+	ft_lstclear(&data->dir_files, free);
+	// printf("#######\n%s\n", str);
 	return (str);
 }
 
 char	*ft_do_wildcards_argv(t_info *data, char *str)
 {
 	char	*s;
-	char	*tmp;
+	char 	*tmp;
 	char	*res;
 
 	s = NULL;
@@ -107,15 +119,18 @@ char	*ft_do_wildcards_argv(t_info *data, char *str)
 		{
 			tmp = res;
 			res = ft_strjoin_three(tmp, s, " ");
+			// printf("%s\n", res);
 			free(tmp);
 		}
 		data->dir_head = data->dir_head->next;
 	}
 	res[ft_strlen(res) - 1] = '\0';
+	// printf("%s\n", res);
 	if (ft_strlen(res))
 	{
 		free(str);
 		str = res;
 	}
+	ft_lstclear(&data->dir_files, free);
 	return (str);
 }

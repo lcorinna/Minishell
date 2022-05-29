@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:33:09 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/28 17:41:14 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/29 16:27:34 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ void	ft_cleanup(t_info *data)
 	// data->priority_step = 1;
 	ft_group_lstclear(&data->group_head);
 	data->nesting_level = 0;
-	// data->status = 0;
 	ft_token_lstclear(&data->tokens);
 	// ft_free_bin_tree(&data->root);
 	data->group_head = NULL;
@@ -131,11 +130,3 @@ int	main(int argc, char **argv, char **envp)
 	ft_clean_struct(&data);
 	return (0);
 }
-
-// 1. инициализация структур 
-// 2. цикл (1)
-// 	2.1 ридлайн
-// 	2.2 лексер
-// 	2.3 парсер
-// 	2.4 экзекве
-// 3. деструктор

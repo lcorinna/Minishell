@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 16:38:53 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/28 17:41:46 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/29 15:53:00 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	ft_waitpid(int pid)
 	{
 		if (WTERMSIG(status) == 3)
 			ft_putstr_fd("Quit: 3\n", 1); //back slash
-		else
+		else if (WTERMSIG(status) == 2)
 			ft_putstr_fd("\n", 1); //^C //yes | head // проверить
 	}
 }
