@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 18:02:28 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/29 20:44:06 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/30 19:16:44 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void	ft_last_entry(t_info *data, t_cmds	*tmp)
 {
 	close(data->exec->pipe[data->exec->n_child - 1][1]);
 	ft_pipe_closure(data);
-	// write(1, "\n", 1); //del
 	if (tmp->infile != 0)
 	{
 		// printf("last_entry infile\n"); //del
@@ -144,12 +143,12 @@ int	ft_pipe_many_cmd(t_info	*data)
 	return (0);
 }
 
-int	ft_exec_many_cmd(t_info *data)
+int	ft_exec_many_cmd(t_info *data, t_cmds *head)
 {
 	t_cmds	*tmp;
 
 	ft_pipe_many_cmd(data);
-	tmp = data->group_head->cmds_head;
+	tmp = head;
 	while (tmp) // || data->exec->n_child <= data->exec->qtt_cmd)
 	{	
 		ft_signal(data, 2);

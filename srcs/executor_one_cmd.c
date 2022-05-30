@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 16:38:53 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/29 20:31:06 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/30 19:08:17 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,19 @@ void	ft_perror_exit_child(char *str, int error)
 	exit(error);
 }
 
-void	ft_pipe_one_cmd(t_info *data)
+void	ft_pipe_one_cmd(t_cmds *head)
 {
-	if (data->group_head->cmds_head->infile != 0) //тогда читаем из infile
+	if (head->infile != 0) //тогда читаем из infile
 	{
-		if (dup2(data->group_head->cmds_head->infile, 0) == -1) //меняем infile
+		if (dup2(head->infile, 0) == -1) //меняем infile
 			ft_perror_exit_child("Inside dup error", DUP);
-		close(data->group_head->cmds_head->infile);
+		close(head->infile);
 	}
-	if (data->group_head->cmds_head->outfile != 1) //тогда читаем в outfile
+	if (head->outfile != 1) //тогда читаем в outfile
 	{
-		if (dup2(data->group_head->cmds_head->outfile, 1) == -1) //меняем outfile
+		if (dup2(head->outfile, 1) == -1) //меняем outfile
 			ft_perror_exit_child("Inside dup error", DUP);
-		close(data->group_head->cmds_head->outfile);
+		close(head->outfile);
 	}
 }
 
@@ -40,15 +40,14 @@ void	ft_birth_child(t_info *data, t_cmds *head)
 	ft_signal(data, 2);
 	data->exec->pid = fork();
 	if (data->exec->pid == -1)
-		ft_perror_exit_child("", 1);
+		ft_perror_exit_child("Inside child execve error", 1);
 	else if (head->cmd_path == NULL && data->exec->pid == 0)
 		exit(1);
 	else if (data->exec->pid == 0) //ребенок
 	{
 		ft_signal(data, 3);
-		if (data->group_head->cmds_head->infile != 0 || \
-		data->group_head->cmds_head->outfile != 1) //сделать dup2
-			ft_pipe_one_cmd(data);
+		if (head->infile != 0 || head->outfile != 1) //сделать dup2
+			ft_pipe_one_cmd(head);
 		ft_builtins_command(data, head->cmd_argv); //не билтын ли?
 		data->status = execve(head->cmd_path, head->cmd_argv, data->envp);
 		ft_perror_exit_child("Inside child execve error", 1);
@@ -84,7 +83,7 @@ int	ft_exec_one_cmd(t_info	*data, t_cmds *head)
 	if (control == 0)
 	{
 		ft_birth_child(data, head);
-		ft_waitpid(data, data->exec->pid);
+		ft_waitpid(data, -1);
 	}
 	else if (control)
 		ft_builtins_command(data, data->group_head->cmds_head->cmd_argv);

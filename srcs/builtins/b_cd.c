@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 18:55:57 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/29 17:45:16 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/30 16:29:42 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ int	ft_without_argument(t_llist *envp_l, char *path)
 	tmp = envp_l;
 	while (tmp)
 	{
-		if (ft_memcmp_l("HOME", tmp->key, 5) == 5)
+		if (ft_strncmp("HOME", tmp->key, 5) == 0)
 			break ;
 		tmp = tmp->next;
 	}
-	if (ft_memcmp_l("HOME", tmp->key, 5) == 5)
+	if (tmp != NULL && ft_strncmp("HOME", tmp->key, 5) == 0)
 	{
 		path = tmp->value;
 		chdir(path);
@@ -69,7 +69,7 @@ void	ft_cd_oldpwd(t_llist *tmp, int flag, t_llist *envp_l, char *oldpwd)
 
 	if (flag == 1)
 	{
-		printf("oldpwd - %s\n", oldpwd); //del
+		// printf("oldpwd - %s\n", oldpwd); //del
 		free(tmp->value);
 		tmp->value = oldpwd;
 	}
@@ -103,7 +103,7 @@ void	ft_added_pwd_oldpwd(char *oldpwd, t_llist *envp_l)
 			ft_cd_pwd(tmp, 1, NULL);
 			pwd_f = 0;
 		}
-		else if (ft_memcmp_l("OLDPWD", tmp->key, 4) == 4) //сделать его если не существуует
+		else if (ft_memcmp_l("OLDPWD", tmp->key, 4) == 4) //сделать если нет
 		{
 			ft_cd_oldpwd(tmp, 1, NULL, oldpwd);
 			oldpwd_f = 0;
@@ -130,13 +130,13 @@ void	ft_cd(t_info *data, char **arr)
 	{
 		mistake = ft_without_argument(data->envp_list, path);
 		if (mistake == 1) //если 1, то ошибка
-			ft_cd_error(data, arr, 1);
+			ft_cd_error(data, arr, 1, oldpwd);
 	}
 	else
 	{
 		mistake = chdir(arr[1]); //пытаемся перейти в другую папку
 		if (mistake == -1)
-			ft_cd_error(data, arr, 2);
+			ft_cd_error(data, arr, 2, oldpwd);
 	}
 	if (mistake == 0) //переписываем все PWD
 		ft_added_pwd_oldpwd(oldpwd, data->envp_list);

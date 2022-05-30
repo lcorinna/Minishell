@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/30 20:25:22 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/30 20:43:12 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 # include <term.h>
 # include <fcntl.h>
 
-# define SHELL			"\nminishell$ "
+# define SHELL			"minishell$ "
 # define HEREDOC		".here_doc"
 # define SPACES			" \f\n\r\t\v"
 # define QUOTES			"\'\""
@@ -103,10 +103,10 @@ typedef struct s_token
 
 typedef struct s_f_exec
 {
-	int		qtt_cmd;
-	pid_t	pid;
-	int		**pipe;
-	int		n_child;
+	int				qtt_cmd;
+	pid_t			pid;
+	int				**pipe;
+	int				n_child;
 }	t_f_exec;
 
 typedef struct s_info
@@ -151,7 +151,7 @@ void		ft_cd(t_info *data, char **arr);
 
 /* builtins/b_cd_utils.c */
 void		ft_search_oldpwd(char **oldpwd, t_llist *envp_l);
-void		ft_cd_error(t_info *data, char **arr, int flag);
+void		ft_cd_error(t_info *data, char **arr, int flag, char *oldpwd);
 
 /* builtins/b_pwd.c */
 void		ft_pwd(char **arr);
@@ -196,7 +196,7 @@ void		ft_readline(t_info *data, char *prompt, int print_exit);
 /* exit.c */
 int			ft_cleaning_str(char *str);
 int			ft_cleaning_array(char **arr);
-void		ft_clean_envp_list(t_info *data);
+void		ft_clean_envp_list(t_llist *llist);
 void		ft_clean_struct(t_info *data);
 void		ft_error_exit(t_info *data, int i);
 
@@ -279,16 +279,16 @@ t_group		*ft_get_logic_min_left(t_group *root);
 t_group		*ft_get_logic_min_right(t_group *root);
 
 /* executor */
-int			ft_executor(t_info *data);
+void		ft_executor(t_info *data, t_group *head);
 
 /* executor_one_cmd */
-void		ft_pipe_one_cmd(t_info *data);
+void		ft_pipe_one_cmd(t_cmds *head);
 int			ft_exec_one_cmd(t_info	*data, t_cmds *head);
 void		ft_perror_exit_child(char *str, int error);
 void		ft_waitpid(t_info *data, int pid);
 
 /* executor_many_cmd */
-int			ft_exec_many_cmd(t_info *data);
+int			ft_exec_many_cmd(t_info *data, t_cmds *head);
 void		ft_first_entry(t_info *data, t_cmds	*tmp);
 void		ft_last_entry(t_info *data, t_cmds	*tmp);
 void		ft_routine(t_info *data, t_cmds	*tmp);

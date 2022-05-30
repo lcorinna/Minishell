@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 18:55:57 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/29 17:45:50 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/30 15:58:49 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,30 @@ char	*ft_strndup(const char *s, int n)
 	return (ptr);
 }
 
+int	ft_change_value(t_llist *llist, char *key, char *value)
+{
+	t_llist	*tmp;
+	int		len;
+
+	tmp = llist;
+	len = ft_strlen(key);
+	while (tmp)
+	{
+		if (ft_strncmp(key, tmp->key, (len + 1)) == 0)
+			break ;
+		tmp = tmp->next;
+	}
+	if (tmp == NULL)
+		return (0);
+	else if (ft_strncmp(key, tmp->key, (len + 1)) == 0)
+	{
+		free(tmp->value);
+		tmp->value = value;
+		free(key);
+	}
+	return (1);
+}
+
 void	ft_newelem_export(t_info *data, char *str)
 {
 	int		i;
@@ -93,7 +117,8 @@ void	ft_newelem_export(t_info *data, char *str)
 	value = ft_strdup(str + i);
 	if (key == NULL || value == NULL)
 		ft_perror_exit_child("", 12);
-	// printf("export			key - %s,	value - %s\n", key, value); //del
+	if (ft_change_value(data->export, key, value))
+		return ;
 	new = ft_llstnew(key, value);
 	if (new == NULL)
 		ft_perror_exit_child("", 12);
@@ -116,7 +141,8 @@ void	ft_newelem_env(t_info *data, char *str)
 	value = ft_strdup(str + i);
 	if (key == NULL || value == NULL)
 		ft_perror_exit_child("", 12);
-	// printf("env				key - %s,	value - %s\n", key, value); //del
+	if (ft_change_value(data->envp_list, key, value))
+		return ;
 	new = ft_llstnew(key, value);
 	if (new == NULL)
 		ft_perror_exit_child("", 12);
