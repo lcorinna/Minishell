@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/29 20:48:33 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/30 20:25:22 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,12 +226,13 @@ void		ft_token_lstmerge_next(t_token *node);
 /* lexer_utils_3.c */
 size_t		ft_search(char *s, char c);
 int			ft_check_quotes(char *str, int index);
+void		ft_cut_all_quotes(t_info *data);
 
 /* lexer_env_var.c */
 void		ft_expand(t_info *data);
 
-/* ft_handle_symbols.c */
-void		ft_handle_symbols(t_info *data);
+/* ft_split_symbols.c */
+void		ft_split_symbols(t_info *data);
 
 /* parser.c */
 int			ft_get_logic_group(t_info *data);

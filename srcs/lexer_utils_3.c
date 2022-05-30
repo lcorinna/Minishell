@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lexer_utils_3.c                                 :+:      :+:    :+:   */
+/*   lexer_utils_3.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 23:00:20 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/27 23:01:05 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/30 20:30:21 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,50 @@ int	ft_check_quotes(char *str, int index)
 	else if (double_q)
 		res = 2;
 	return (res);
+}
+
+static char	*ft_cut_quotes(char *str, int ind)
+{
+	char	*before;
+	char	*after;
+
+	if (str)
+	{
+		before = ft_substr(str, 0, ind);
+		after = ft_substr(str, ind + 1, ft_strlen(str + ind + 1));
+		free(str);
+		str = ft_strjoin(before, after);
+		free(before);
+		free(after);
+	}
+	return (str);
+}
+
+static void	ft_check_and_cut(t_info *data)
+{
+	int		i;
+	char	*s;
+
+	i = 0;
+	s = data->token_head->str_val;
+	while (s[i])
+	{
+		if (s[i] == '\'' || s[i] == '\"')
+		{
+			data->token_head->str_val = ft_cut_quotes(s, i);
+			s = data->token_head->str_val;
+		}
+		else
+			i++;
+	}
+}
+
+void	ft_cut_all_quotes(t_info *data)
+{
+	data->token_head = data->tokens;
+	while (data->token_head)
+	{
+		ft_check_and_cut(data);
+		data->token_head = data->token_head->next;
+	}
 }

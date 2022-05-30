@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_handle_symbols.c                                :+:      :+:    :+:   */
+/*   ft_split_symbols.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 20:32:06 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/27 23:01:07 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/30 20:26:32 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static void	ft_merge(t_info *data)
 	}
 }
 
-void	ft_handle_symbols(t_info *data)
+void	ft_split_symbols(t_info *data)
 {
 	data->token_head = data->tokens;
 	while (data->token_head)
