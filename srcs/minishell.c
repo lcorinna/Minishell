@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:33:09 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/30 20:42:59 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/30 20:56:52 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int	ft_lexer(t_info *data)
 	last_type = UNDEFINED;
 	if (ft_get_tokens(data->str, data))
 		return (data->status);
+	// Ошибка при 
 	ft_expand(data);
 	ft_split_symbols(data);
 	ft_set_tokens_type(data);
@@ -86,12 +87,9 @@ int	ft_lexer(t_info *data)
 
 void	ft_cleanup(t_info *data)
 {
-	// data->priority = 1;
-	// data->priority_step = 1;
-	ft_group_lstclear(&data->group_head);
 	data->nesting_level = 0;
 	ft_token_lstclear(&data->tokens);
-	// ft_free_bin_tree(&data->root);
+	ft_free_bin_tree(&data->root);
 	data->group_head = NULL;
 	unlink(HEREDOC);
 }
@@ -120,7 +118,10 @@ int	main(int argc, char **argv, char **envp)
 		ft_check_lexer(&data);
 		// parser
 		if (ft_get_logic_group(&data))
+		{
+			ft_group_lstclear(&data.group_head);
 			continue ;
+		}
 		// ft_check_parser(&data);
 		data.root = ft_get_logic_min_last(data.group_head);
 		ft_build_bin_tree(&data.root);
@@ -128,7 +129,7 @@ int	main(int argc, char **argv, char **envp)
 		// // executor
 		ft_executor(&data, data.root);
 	}
-	// ft_cleanup(&data);
+	ft_cleanup(&data);
 	ft_clean_struct(&data);
 	return (0);
 }

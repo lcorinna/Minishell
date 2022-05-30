@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_words.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 21:58:31 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/30 19:35:12 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/30 21:03:46 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,20 +68,21 @@ static int	ft_check_builtins(t_info *data)
 int	ft_check_cmd_path(t_info *data)
 {
 	char	*cmd;
-	char	**cmd_paths;
+	// char	**cmd_paths;
 
 	if (data->token_head->type == WORD)
 	{
 		cmd = data->token_head->str_val;
-		if (!ft_check_builtins(data))
-		{
-			cmd_paths = ft_get_cmd_paths(data);
-			data->cmds_head->cmd_path = ft_get_bin(cmd_paths, cmd);
-			ft_cleaning_array(cmd_paths);
-			if (!data->cmds_head->cmd_path)
-				return (ft_perror_cmd(data, cmd));
-		}
-		else
+		// if (!ft_check_builtins(data))
+		// {
+		// 	// cmd_paths = ft_get_cmd_paths(data);
+		// 	// data->cmds_head->cmd_path = ft_get_bin(cmd_paths, cmd);
+		// 	// ft_cleaning_array(cmd_paths);
+		// 	// if (!data->cmds_head->cmd_path)
+		// 	// 	return (ft_perror_cmd(data, cmd));
+		// 	NULL;
+		// }
+		// else
 			data->cmds_head->cmd_path = ft_strdup(cmd);
 		data->cmds_head->cmd_str = ft_strdup(data->cmds_head->cmd_path);
 		data->token_head = data->token_head->next;
