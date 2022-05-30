@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:33:09 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/29 20:50:36 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/30 19:44:05 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,6 @@ int	main(int argc, char **argv, char **envp)
 	{
 		ft_signal(&data, 1);
 		ft_cleanup(&data);
-		// data.envp_f = 1; //проверяю как перезаписывается наш envp из односвязного списка t_llist //del
 		if (data.envp_f) //флаг нужен?
 			ft_array_envp(&data); //переписываю envp
 		ft_readline(&data, SHELL, 1);
@@ -119,14 +118,13 @@ int	main(int argc, char **argv, char **envp)
 		if (ft_get_logic_group(&data))
 			continue ;
 		// ft_check_parser(&data);
-		// data.root = ft_get_logic_min_last(data.group_head);
-		// ft_build_bin_tree(&data.root);
-		// ft_check_bin_tree(data.root);
+		data.root = ft_get_logic_min_last(data.group_head);
+		ft_build_bin_tree(&data.root);
+		ft_check_bin_tree(data.root);
 		// // executor
-		if (ft_executor(&data))
-			printf("im found mistake in executor\n"); //del
+		ft_executor(&data, data.root);
 	}
-	ft_cleanup(&data);
+	// ft_cleanup(&data);
 	ft_clean_struct(&data);
 	return (0);
 }

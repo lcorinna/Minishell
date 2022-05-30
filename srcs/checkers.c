@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 00:00:05 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/28 17:47:40 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/30 17:04:25 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,15 @@ void	ft_check_bin_tree(t_group *root)
 	if (root)
 	{
 		ft_check_bin_tree(root->left);
-		if (root->logical_operation == 9)
-			printf("&&\n");
-		if (root->logical_operation == 10)
-			printf("||\n");
-		if (root->logical_operation == 0)
-		{
-			if (root->cmds_head)
-				printf("%s\n", root->cmds_head->cmd_str);
-		}
+		// if (root->logical_operation == 9)
+		// 	printf("&&\n");
+		// if (root->logical_operation == 10)
+		// 	printf("||\n");
+		// if (root->logical_operation == 0)
+		// {
+		// 	if (root->cmds_head)
+		// 		printf("%s\n", root->cmds_head->cmd_str);
+		// }
 		ft_check_bin_tree(root->right);
 	}
 }

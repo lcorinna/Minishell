@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 16:38:53 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/19 12:38:17 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/30 19:04:23 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,6 @@ void	ft_pipe_closure(t_info *data)
 		j = 0;
 		while (j != 2)
 		{
-			// if (data->exec->n_child != i && data->exec->n_child - 1 != i) //del
-				// printf("Pipe - [%d][%d]\n", i, j); //del
 			if (data->exec->n_child != i && data->exec->n_child - 1 != i)
 				close(data->exec->pipe[i][j]);
 			j++;
