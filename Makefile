@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+         #
+#    By: merlich <merlich@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/20 19:17:52 by lcorinna          #+#    #+#              #
-#    Updated: 2022/05/31 19:22:17 by lcorinna         ###   ########.fr        #
+#    Updated: 2022/05/31 21:08:38 by merlich          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,10 @@ NAME_M			=	minishell
 
 FILES			=	minishell.c \
 					envp.c envp_utils.c llist.c ft_readline.c exit.c \
-					lexer.c lexer_utils.c lexer_utils_2.c lexer_utils_3.c \
-					lexer_utils_4.c lexer_env_var.c ft_split_symbols.c \
+					lexer.c ft_get_tokens.c \
+					lexer_utils_1.c lexer_utils_2.c lexer_utils_3.c \
+					lexer_utils_4.c lexer_env_var.c lexer_env_var_utils.c \
+					ft_split_symbols.c \
 					parser.c parser_cmd_utils.c parser_group_utils.c \
 					ft_check_redir_insource.c ft_check_redir_in.c \
 					ft_check_redir_out.c ft_check_redir_append.c \

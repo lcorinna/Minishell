@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/31 19:52:57 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/31 21:31:06 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,15 +209,20 @@ void		ft_clean_struct(t_info *data);
 void		ft_error_exit(t_info *data, int i);
 
 /* minishell.c */
-// int			ft_lexer(t_info *data);
+
 void		ft_cleanup(t_info *data);
 
 /* lexer.c */
+void		ft_fill_builtins(t_info *data);
+int			ft_check_parentheses(t_info *data);
+int			ft_lexer(t_info *data);
+
+/* ft_get_tokens.c */
 void		ft_set_flags(int *single_q, int *double_q, char *str, int k);
 int			ft_get_tokens(char *str, t_info *data);
 void		ft_set_tokens_type(t_info *data);
 
-/* lexer_utils.c */
+/* lexer_utils_1.c */
 t_token		*ft_token_lstnew(char *value);
 int			ft_token_lstsize(t_token *head);
 t_token		*ft_token_lstlast(t_token *head);
@@ -241,6 +246,12 @@ int			ft_check_tokens(t_info *data);
 
 /* lexer_env_var.c */
 void		ft_expand(t_info *data);
+
+/* lexer_env_var_utils.c */
+int			ft_find_ind(char *str);
+int			ft_excl_search(char *s);
+void		ft_replace(t_llist *envp, char **token_str);
+void		ft_replace_2(t_info *data, char **token_str);
 
 /* ft_split_symbols.c */
 void		ft_split_symbols(t_info *data);
