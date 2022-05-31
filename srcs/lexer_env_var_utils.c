@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 20:55:03 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/31 21:50:57 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/31 21:54:38 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,7 @@ void	ft_replace(t_llist *envp, char **token_str)
 		free(s2);
 	}
 	else
-	{
 		*token_str = ft_strjoin(s1, s3);
-		// printf("s1 = %s\n", s1);
-		// printf("s3 = %s\n", s3);
-		// printf("res = %s\n", *token_str);
-	}
 	free(s1);
 	free(s3);
 }

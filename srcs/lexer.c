@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 21:01:40 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/31 21:08:51 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/31 22:21:18 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	ft_check_parentheses(t_info *data)
 	return (res);
 }
 
-int	ft_lexer(t_info *data)
+int	ft_get_tokens_from_string(t_info *data)
 {
 	int	parn_num;
 	int	last_type;
@@ -61,10 +61,7 @@ int	ft_lexer(t_info *data)
 	if (parn_num || (data->tokens && (last_type == PIPE || last_type == AND \
 		|| last_type == IF_AND || last_type == IF_OR)))
 	{
-		ft_readline(data, "> ", 0);
-		if (!data->str)
-			return (ft_perror_eof(data));
-		if (ft_lexer(data))
+		if (!ft_readline(data, "> ", 0) || ft_get_tokens_from_string(data))
 			return (data->status);
 	}
 	return (0);

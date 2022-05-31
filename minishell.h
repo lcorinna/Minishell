@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/31 21:31:06 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/31 22:09:52 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,7 @@ t_llist		*ft_llstlast(t_llist *lst);
 void		ft_llstadd_back(t_llist **lst, t_llist *new);
 
 /* ft_readline.c */
-void		ft_readline(t_info *data, char *prompt, int print_exit);
+char		*ft_readline(t_info *data, char *prompt, int print_exit);
 
 /* exit.c */
 int			ft_cleaning_str(char *str);
@@ -209,13 +209,12 @@ void		ft_clean_struct(t_info *data);
 void		ft_error_exit(t_info *data, int i);
 
 /* minishell.c */
-
+void		ft_fill_builtins(t_info *data);
 void		ft_cleanup(t_info *data);
 
 /* lexer.c */
-void		ft_fill_builtins(t_info *data);
 int			ft_check_parentheses(t_info *data);
-int			ft_lexer(t_info *data);
+int			ft_get_tokens_from_string(t_info *data);
 
 /* ft_get_tokens.c */
 void		ft_set_flags(int *single_q, int *double_q, char *str, int k);
@@ -342,7 +341,6 @@ void		ft_check_parser(t_info *data);
 void		ft_check_bin_tree(t_group *root);
 
 /* wildcards.c */
-
 char		*ft_do_wildcards_file(t_info *data, char *str);
 char		*ft_do_wildcards_argv(t_info *data, char *str);
 

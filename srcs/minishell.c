@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:33:09 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/31 21:09:15 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/31 22:14:16 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,32 @@ void	ft_cleanup(t_info *data)
 	unlink(HEREDOC);
 }
 
+static int	ft_lexer(t_info *data)
+{
+	if (ft_get_tokens_from_string(data))
+		return (data->status);
+	if (ft_check_tokens(data))
+		return (data->status);
+	// Обрезать кавычки " '
+	ft_cut_all_quotes(data);
+	// ft_check_lexer(data);
+	return (0);
+}
+
+static int	ft_parser(t_info *data)
+{
+	if (ft_get_logic_group(data))
+	{
+		ft_group_lstclear(&data->group_head);
+		return (data->status);
+	}
+	// ft_check_parser(data);
+	data->root = ft_get_logic_min_last(data->group_head);
+	ft_build_bin_tree(&data->root);
+	// ft_check_bin_tree(data.root);
+	return (0);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_info				data;
@@ -53,31 +79,17 @@ int	main(int argc, char **argv, char **envp)
 		ft_cleanup(&data);
 		if (data.envp_f) //флаг нужен?
 			ft_array_envp(&data); //переписываю envp
-		ft_readline(&data, SHELL, 1);
-		if (!data.str) //обработка сигнала "control + d"
+		if (!ft_readline(&data, SHELL, 1)) //обработка сигнала "control + d"
 			break ;
 		// lexer
 		if (ft_lexer(&data))
 			continue ;
-		if (ft_check_tokens(&data))
-			continue ;
-		// Обрезать кавычки " '
-		ft_cut_all_quotes(&data);
-		// ft_check_lexer(&data);
 		// parser
-		if (ft_get_logic_group(&data))
-		{
-			ft_group_lstclear(&data.group_head);
+		if (ft_parser(&data))
 			continue ;
-		}
-		// ft_check_parser(&data);
-		data.root = ft_get_logic_min_last(data.group_head);
-		ft_build_bin_tree(&data.root);
-		ft_check_bin_tree(data.root);
 		// // executor
 		ft_executor(&data, data.root);
 	}
-	ft_cleanup(&data);
 	ft_clean_struct(&data);
 	return (0);
 }

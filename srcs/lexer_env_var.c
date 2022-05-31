@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 21:11:40 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/31 21:48:56 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/31 21:53:19 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@ static void	ft_interpret(t_info *data)
 	t_llist	*envp;
 
 	token_str = &data->token_head->str_val;
-	envp = data->envp_list;
 	str = *token_str + ft_excl_search(*token_str);
-	sub_str = NULL;
 	while (str[0] != '\0')
 	{
 		if (str[1] == '?')
