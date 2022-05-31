@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 21:31:23 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/31 18:19:40 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/31 20:13:43 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	ft_check_tokens(t_info *data)
 		{
 			t = data->token_head;
 			t1 = data->token_head->next;
-			if (t->type == !WORD && t->type != WORD)
+			if (t->type != WORD && t1->type != WORD)
 			{
 				return (ft_perror_token_symbol(data, t1->str_val));
 			}
@@ -52,24 +52,3 @@ int	ft_check_tokens(t_info *data)
 	}
 	return (0);
 }
-// int	ft_check_readline_str(t_info *data)
-// {
-// 	int		i;
-// 	char	*s;
-
-// 	i = 0;
-// 	s = data->str;
-// 	if (s)
-// 	{
-// 		while (s[i])
-// 		{
-// 			if (ft_strchr(NOT_DOUBLE, s[i]) && s[i + 1] == ' ' && s[i + 2] == s[i])
-// 			{
-// 				printf("HELLO!\n");
-// 				return (ft_perror_token_symbol(data, s + i + 2));
-// 			}
-// 			i++;
-// 		}
-// 	}
-// 	return (0);
-// }

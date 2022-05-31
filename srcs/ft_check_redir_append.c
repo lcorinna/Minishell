@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 00:06:17 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/27 23:21:29 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/31 20:19:39 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ int	ft_check_redir_append(t_info *data)
 		else
 		{
 			outfile = ft_strdup(data->token_head->str_val);
-			if (data->cmds_head->outfile != 1)
-				close(data->cmds_head->outfile);
 			if (ft_strchr(outfile, '*'))
 				outfile = ft_do_wildcards_file(data, outfile);
 			if (!outfile)

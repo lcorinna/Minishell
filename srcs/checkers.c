@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checkers.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 00:00:05 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/31 19:35:08 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/31 20:16:11 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,15 @@ void	ft_check_bin_tree(t_group *root)
 	if (root)
 	{
 		ft_check_bin_tree(root->left);
-		// if (root->logical_operation == 9)
-		// 	printf("&&\n");
-		// if (root->logical_operation == 10)
-		// 	printf("||\n");
-		// if (root->logical_operation == 0)
-		// {
-		// 	if (root->cmds_head)
-		// 		printf("%s\n", root->cmds_head->cmd_str);
-		// }
+		if (root->logical_operation == 9)
+			printf("&&\n");
+		if (root->logical_operation == 10)
+			printf("||\n");
+		if (root->logical_operation == 0)
+		{
+			if (root->cmds_head)
+				printf("%s\n", root->cmds_head->cmd_str);
+		}
 		ft_check_bin_tree(root->right);
 	}
 }

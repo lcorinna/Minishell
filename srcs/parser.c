@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 22:09:17 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/30 20:56:39 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/31 20:25:35 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,8 @@ static int	ft_fill_cmd(t_info *data)
 			return (data->status);
 		if (data->token_head && ft_check_redir_append(data))
 			return (data->status);
-		if (count == 0)
-		{
-			if (data->token_head && ft_check_cmd_path(data))
-				return (data->status);
-			count++;
-		}
+		if (!count++ && data->token_head && ft_check_cmd_path(data))
+			return (data->status);
 		if (data->token_head && ft_check_cmd_str(data))
 			return (data->status);
 	}

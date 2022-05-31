@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_perror.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 14:57:39 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/30 19:43:28 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/31 20:14:17 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,8 @@ int	ft_perror_cmd(t_info *data, char *cmd)
 
 	s1 = ft_strjoin(SHELL, "\b\b: ");
 	s2 = ft_strjoin(s1, cmd);
-	// printf("s1 - %p\n", s1); //del
 	free(s1);
 	ft_putstr_fd(s2, 2);
-	// printf("s2 - %p\n", s2); //del
-	// printf("cmd - %p\n", cmd); //del
 	free(s2);
 	ft_putstr_fd(": command not found\n", 2);
 	data->status = CMD_NOT_FOUND;
