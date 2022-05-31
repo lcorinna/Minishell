@@ -5,89 +5,98 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/03 11:24:42 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/31 19:48:39 by merlich          ###   ########.fr       */
+/*   Created: 2021/10/08 12:05:58 by merlich           #+#    #+#             */
+/*   Updated: 2022/05/31 22:54:23 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char	**ft_clean_memory(char **array, int i)
-{
-	while (i > -1)
-	{
-		free (array[i]);
-		array [i] = NULL;
-		i--;
-	}
-	free (array);
-	array = NULL;
-	return (NULL);
-}
+static size_t	ft_char_counter(char const *s, char c)
+{	
+	size_t	i;
+	size_t	counter;
 
-static char	**ft_mem_for_array(char const *s, char c)
-{
-	char	**array;
-	int		i;
-	int		m;
-
-	m = 0;
 	i = 0;
-	while (s[i])
+	counter = 0;
+	while (s[i] != '\0')
 	{
-		if (s[i] != c)
+		if ((s[i] == c) && (s[i + 1] != c))
 		{
-			m++;
-			while (s[i] != c && s[i])
-				i++;
-			i--;
+			counter++;
 		}
 		i++;
 	}
-	array = (char **) malloc((m + 1) * sizeof(char *));
-	if (m == 0)
-		array[0] = NULL;
-	return (array);
+	return (counter);
 }
 
-static char	**ft_write_array(char **array, char *s, char c)
+static size_t	ft_search(char *s, char c, size_t *index)
 {
-	int	j;
-	int	m;
+	size_t	start;
 
-	j = 0;
-	m = 0;
-	while (*s)
+	start = 0;
+	while ((start < ft_strlen(s)) && (s[start] != c))
 	{
-		if (*s != c)
-		{
-			while (*s != c && *s)
-			{
-				s++;
-				j++;
-			}
-			array[m] = ft_substr(s - j, 0, j);
-			if (array[m] == NULL)
-				return (ft_clean_memory(array, m));
-			m++;
-			s--;
-			j = 0;
-		}
-		s++;
+		start = start + 1;
 	}
-	array[m] = NULL;
-	return (array);
+	*index = start;
+	while ((*index < ft_strlen(s)) && (s[*index] == c))
+	{
+		*index = *index + 1;
+	}
+	return (start);
+}
+
+static char	**ft_action(char **tab, char *tmp, char c, size_t count)
+{
+	size_t	i;
+	size_t	index;
+
+	i = 0;
+	index = 0;
+	while ((index < ft_strlen(tmp)) && (i < count + 1))
+	{
+		tab[i] = ft_substr(tmp, 0, ft_search(tmp, c, &index));
+		if (NULL == tab[i])
+		{
+			while (i > 0)
+			{
+				free(tab[i]);
+				i--;
+			}
+			free(tab[0]);
+			return (NULL);
+		}
+		tmp = tmp + index;
+		index = 0;
+		i++;
+	}
+	tab[i] = NULL;
+	return (tab);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	char	*str;
-	char	**array;
+	size_t	count;
+	char	**tab;
+	char	*tmp;
 
-	str = (char *) s;
-	array = ft_mem_for_array(s, c);
-	if (array == NULL)
-		return (array);
-	array = ft_write_array(array, str, c);
-	return (array);
+	if (NULL == s)
+		return (NULL);
+	tmp = ft_strtrim(s, &c);
+	if (NULL == tmp)
+	{
+		free(tmp);
+		return (NULL);
+	}
+	count = ft_char_counter(tmp, c);
+	tab = (char **)malloc(sizeof(char *) * (count + 2));
+	if (NULL == tab)
+	{
+		free (tmp);
+		return (NULL);
+	}
+	tab = ft_action(tab, tmp, c, count);
+	free (tmp);
+	return (tab);
 }
