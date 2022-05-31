@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/31 18:11:34 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/31 19:14:10 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,7 @@ void		ft_cd(t_info *data, char **cmd_argv);
 /* builtins/b_cd_utils.c */
 void		ft_search_oldpwd(char **oldpwd, t_llist *envp_l);
 void		ft_cd_error(t_info *data, char **arr, int flag, char *oldpwd);
+void		ft_print_shell(char *str, char *shell);
 
 /* builtins/b_pwd.c */
 void		ft_pwd(t_info *data, char **arr);
@@ -235,6 +236,9 @@ size_t		ft_search(char *s, char c);
 int			ft_check_quotes(char *str, int index);
 void		ft_cut_all_quotes(t_info *data);
 
+/* lexer_utils_4.c */
+int			ft_check_tokens(t_info *data);
+
 /* lexer_env_var.c */
 void		ft_expand(t_info *data);
 
@@ -259,6 +263,9 @@ int			ft_check_redir_append(t_info *data);
 /* ft_check_words.c */
 int			ft_check_cmd_path(t_info *data);
 int			ft_check_cmd_str(t_info *data);
+char		*ft_get_bin(char **path, char *bin);
+int			ft_check_builtins(t_info *data, t_cmds *head);
+char		**ft_get_cmd_paths(t_info *data);
 
 /* parser_cmd_utils.c */
 t_cmds		*ft_cmd_lstnew(void);

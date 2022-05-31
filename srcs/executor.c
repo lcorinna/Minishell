@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 16:38:53 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/31 17:11:28 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/31 18:49:02 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,17 @@ int	ft_struct_exec(t_info *data)
 	return (0);
 }
 
+void	ft_get_and_check_cmd(t_info *data, t_cmds *tmp)
+{
+	char	**cmd_paths;
+
+	cmd_paths = ft_get_cmd_paths(data);
+	data->cmds_head->cmd_path = ft_get_bin(cmd_paths, tmp->cmd_path);
+	ft_cleaning_array(cmd_paths);
+	if (!data->cmds_head->cmd_path)
+		ft_perror_cmd(data, tmp->cmd_path);
+}
+
 int	ft_preparation(t_info *data, t_cmds *head)
 {
 	t_cmds	*tmp;
@@ -51,7 +62,8 @@ int	ft_preparation(t_info *data, t_cmds *head)
 	data->exec->qtt_cmd = 0;
 	while (tmp)
 	{
-		// printf("cmd.str - %s\n", tmp->cmd_str); //del
+		if (!ft_check_builtins(data, tmp))
+			ft_get_and_check_cmd(data, tmp);
 		tmp = tmp->next;
 		data->exec->qtt_cmd++;
 	}

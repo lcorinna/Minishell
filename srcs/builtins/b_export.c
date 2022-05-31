@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 18:55:57 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/31 16:32:37 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/31 19:13:09 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	ft_print_sort(t_info *data)
 
 int	ft_error_message_export(t_info *data, char *str)
 {
-	ft_putstr_fd("minishell: export: \'", 2);
+	ft_print_shell(NULL, SHELL);
+	ft_putstr_fd(": export: \'", 2);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd("\': not a valid identifier\n", 2);
 	data->status = 1;

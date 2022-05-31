@@ -6,7 +6,7 @@
 #    By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/20 19:17:52 by lcorinna          #+#    #+#              #
-#    Updated: 2022/05/31 17:28:48 by lcorinna         ###   ########.fr        #
+#    Updated: 2022/05/31 18:32:58 by lcorinna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME_M			=	minishell
 FILES			=	minishell.c \
 					envp.c envp_utils.c llist.c ft_readline.c exit.c \
 					lexer.c lexer_utils.c lexer_utils_2.c lexer_utils_3.c \
-					lexer_env_var.c ft_split_symbols.c \
+					lexer_utils_4.c lexer_env_var.c ft_split_symbols.c \
 					parser.c parser_cmd_utils.c parser_group_utils.c \
 					ft_check_redir_insource.c ft_check_redir_in.c \
 					ft_check_redir_out.c ft_check_redir_append.c \
@@ -46,7 +46,7 @@ DEP				=	$(SRC:.c=.d)
 INCLUDE			=	./includes
 INCLUDE_SYS		=	$(HOMEBREW_PREFIX)/opt/readline/include
 LIB_SYS			=	$(HOMEBREW_PREFIX)/opt/readline/lib
-CFLAGS			=	-Wall -Wextra  -MMD -g #-fsanitize=address #удобно сразу смотреть где читаем память мимо\
+CFLAGS			=	-Wall -Wextra  -MMD -g -fsanitize=address #удобно сразу смотреть где читаем память мимо\
 													# make && Leaks --atExit -- ./minishell
 all				:	libmake $(NAME_M)
 

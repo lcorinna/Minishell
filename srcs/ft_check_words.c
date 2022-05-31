@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_words.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 21:58:31 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/30 21:03:46 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/31 18:39:22 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static char	**ft_get_cmd_paths(t_info *data)
+char	**ft_get_cmd_paths(t_info *data)
 {
 	char	**ptr;
 
@@ -27,7 +27,7 @@ static char	**ft_get_cmd_paths(t_info *data)
 	return (ptr);
 }
 
-static char	*ft_get_bin(char **path, char *bin)
+char	*ft_get_bin(char **path, char *bin)
 {
 	char	*tmp;
 	char	*full_path;
@@ -49,16 +49,16 @@ static char	*ft_get_bin(char **path, char *bin)
 	return (NULL);
 }
 
-static int	ft_check_builtins(t_info *data)
+int	ft_check_builtins(t_info *data, t_cmds *head)
 {
 	int	i;
 	int	len;
 
 	i = 0;
-	len = ft_strlen(data->token_head->str_val);
+	len = ft_strlen(head->cmd_path);
 	while (data->res_words[i])
 	{
-		if (!ft_strncmp(data->res_words[i], data->token_head->str_val, len + 1))
+		if (!ft_strncmp(data->res_words[i], head->cmd_path, len + 1))
 			return (++i);
 		i++;
 	}
@@ -75,12 +75,11 @@ int	ft_check_cmd_path(t_info *data)
 		cmd = data->token_head->str_val;
 		// if (!ft_check_builtins(data))
 		// {
-		// 	// cmd_paths = ft_get_cmd_paths(data);
-		// 	// data->cmds_head->cmd_path = ft_get_bin(cmd_paths, cmd);
-		// 	// ft_cleaning_array(cmd_paths);
-		// 	// if (!data->cmds_head->cmd_path)
-		// 	// 	return (ft_perror_cmd(data, cmd));
-		// 	NULL;
+		// 	cmd_paths = ft_get_cmd_paths(data);
+		// 	data->cmds_head->cmd_path = ft_get_bin(cmd_paths, cmd);
+		// 	ft_cleaning_array(cmd_paths);
+		// 	if (!data->cmds_head->cmd_path)
+		// 		return (ft_perror_cmd(data, cmd));
 		// }
 		// else
 			data->cmds_head->cmd_path = ft_strdup(cmd);

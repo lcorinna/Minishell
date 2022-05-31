@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 16:38:53 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/28 13:58:15 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/31 19:12:26 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,13 @@ void	ft_exit(t_info *data, char **arr)
 		exit(data->status);
 	else if (arr[2] != NULL && !ft_is_number(arr[1]))
 	{
-		ft_putstr_fd("exit\nminishell: exit", 2);
-		ft_putstr_fd(": too many arguments\n", 2);
+		ft_print_shell("exit\n", SHELL);
+		ft_putstr_fd(": exit: too many arguments\n", 2);
 	}
 	else if (ft_is_number(arr[1]))
 	{
-		ft_putstr_fd("exit\nminishell: exit: ", 2);
+		ft_print_shell("exit\n", SHELL);
+		ft_putstr_fd(": exit: ", 2);
 		ft_putstr_fd(arr[1], 2);
 		ft_putstr_fd(": numeric argument required\n", 2);
 		exit(255);
