@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 14:28:23 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/30 19:18:49 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/31 18:07:02 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,37 +32,36 @@ int	ft_memcmp_l(const void *s1, const void *s2, size_t n)
 
 int	ft_only_parent_need(char **arr)
 {
-	if (ft_memcmp_l("exit", arr[0], 5) == 5)
+	if (!ft_strncmp("exit", arr[0], 5) || !ft_strncmp("EXIT", arr[0], 5))
 		return (1);
-	else if (ft_memcmp_l("cd", arr[0], 3) == 3)
+	else if (!ft_strncmp("cd", arr[0], 3) || !ft_strncmp("CD", arr[0], 3))
 		return (1);
-	else if (ft_memcmp_l("export", arr[0], 7) == 7)
+	else if (!ft_strncmp("export", arr[0], 7) \
+										|| !ft_strncmp("EXPORT", arr[0], 7))
 		return (1);
-	else if (ft_memcmp_l("unset", arr[0], 6) == 6)
+	else if (!ft_strncmp("unset", arr[0], 6) || !ft_strncmp("UNSET", arr[0], 6))
 		return (1);
 	return (0);
 }
 
 int	ft_builtins_command(t_info *data, char **arr)
 {
-	if (ft_memcmp_l("exit", arr[0], 5) == 5) //exit with no options
+	if (!ft_strncmp("exit", arr[0], 5) || !ft_strncmp("EXIT", arr[0], 5))
 		ft_exit(data, arr);
-	else if (ft_memcmp_l("cd", arr[0], 3) == 3) //cd with only a relative or absolute path
+	else if (!ft_strncmp("cd", arr[0], 3) || !ft_strncmp("CD", arr[0], 3))
 		ft_cd(data, arr);
-	else if (ft_memcmp_l("export", arr[0], 7) == 7) //export with no options
+	else if (!ft_strncmp("export", arr[0], 7) \
+										|| !ft_strncmp("EXPORT", arr[0], 7))
 		ft_export(data, arr);
-	else if (ft_memcmp_l("unset", arr[0], 6) == 6) //unset with no options
+	else if (!ft_strncmp("unset", arr[0], 6) || !ft_strncmp("UNSET", arr[0], 6))
 		ft_unset(data, data->envp_list, arr);
-	else if (ft_memcmp_l("echo", arr[0], 5) == 5) //echo with option -n
-		ft_echo(arr);
-	else if (ft_memcmp_l("pwd", arr[0], 4) == 4) //pwd with no options
-		ft_pwd(arr);
-	else if (ft_memcmp_l("env", arr[0], 4) == 4) //env with no options or arguments
+	else if (!ft_strncmp("echo", arr[0], 5) || !ft_strncmp("ECHO", arr[0], 5))
+		ft_echo(data, arr);
+	else if (!ft_strncmp("pwd", arr[0], 4) || !ft_strncmp("PWD", arr[0], 4))
+		ft_pwd(data, arr);
+	else if (!ft_strncmp("env", arr[0], 4) || !ft_strncmp("env", arr[0], 4))
 		ft_env(data);
-	else if (ft_memcmp_l("./minishell", arr[0], 12) == 12) //./minishell SHLVL=1
-	{
-		ft_array_envp(data);
-		return (0);
-	}
+	else if (!ft_strncmp("./minishell", arr[0], 12))
+		return (ft_array_envp(data));
 	return (1);
 }

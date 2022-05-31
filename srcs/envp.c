@@ -6,52 +6,22 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 12:52:50 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/26 19:48:45 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/31 17:31:06 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*ft_strjoin_three(char *s1, char *s2, char *s3)
-{
-	size_t	i;
-	char	*new_str;
-
-	i = -1;
-	if (s1 == NULL || s2 == NULL || s3 == NULL)
-		return (NULL);
-	new_str = malloc(ft_strlen(s1) + ft_strlen(s2) + ft_strlen(s3) + 1);
-	if (NULL == new_str)
-		return (NULL);
-	while (s1[++i] != '\0')
-		new_str[i] = s1[i];
-	while (*s2 != '\0')
-	{
-		new_str[i++] = *s2;
-		s2++;
-	}
-	while (*s3 != '\0')
-	{
-		new_str[i++] = *s3;
-		s3++;
-	}
-	new_str[i] = '\0';
-	return (new_str);
-}
-
-void	ft_array_envp(t_info *data)
+int	ft_array_envp(t_info *data)
 {
 	t_llist	*tmp;
-	int		i; //можно data->envp_f использовать счетчиком. В конце занулить!!!
+	int		i;
 
 	i = 0;
 	tmp = data->envp_list;
 	ft_cleaning_array(data->envp); //перед заходом чистим, чтобы избежать утечек
-	while (tmp)
-	{
+	while (tmp && ++i != -1)
 		tmp = tmp->next;
-		i++;
-	}
 	data->envp = malloc(sizeof(char *) * (i + 1));
 	if (!data->envp)
 		ft_error_exit(data, 2);
@@ -60,7 +30,6 @@ void	ft_array_envp(t_info *data)
 	while (tmp)
 	{
 		data->envp[i] = ft_strjoin_three(tmp->key, "=", tmp->value);
-		// printf("data->envp[%d] - %s\n", i, data->envp[i]); //del
 		if (!data->envp[i])
 			ft_error_exit(data, 2);
 		tmp = tmp->next;
@@ -68,6 +37,7 @@ void	ft_array_envp(t_info *data)
 	}
 	data->envp[i] = NULL;
 	data->envp_f = 0; //зануляем флаг, чтобы не заходить сюда без надобности
+	return (0);
 }
 
 int	ft_envp2(char *envp, char **key, char **value, int j)
@@ -75,74 +45,27 @@ int	ft_envp2(char *envp, char **key, char **value, int j)
 	int	m;
 
 	m = -1;
-	while (envp[j+1] != '=') // A: 28.04.2022 убрал знак = из key
+	while (envp[j+1] != '=')
 		j++;
 	*key = malloc(sizeof(char) * (j + 2));
 	if (!*key)
 		return (1);
-	while (envp[(++m)+1] != '=')  // A: 28.04.2022 убрал знак = из key
+	while (envp[(++m)+1] != '=')
 		(*key)[m] = envp[m];
 	(*key)[m] = envp[m];
 	(*key)[++m] = '\0';
-	// printf("\nkey - %s \n", *key); //del ДЕБАГЕР
 	j++;
 	m = j;
 	while (envp[j])
 		j++;
 	*value = malloc(sizeof(char) * (j - m));
 	if (!*value)
-		return (ft_cleaning_str(*key)); //чистим key, выходим и все завершаем
+		return (ft_cleaning_str(*key));
 	j = -1;
 	while (envp[++m])
 		(*value)[++j] = envp[m];
 	(*value)[++j] = '\0';
-	// printf("value - %s \n", *value); //del ДЕБАГЕР
 	return (0);
-}
-
-void	ft_added_shlvl(t_info *data, t_llist **new)
-{
-	char	*key;
-	char	*value;
-
-	key = ft_strdup("SHLVL");
-	value = ft_strdup("1");
-	if (key == NULL || value == NULL)
-		ft_error_exit(data, 1);
-	(*new) = ft_llstnew(key, value);
-	if (!new)
-		ft_error_exit(data, 1);
-}
-
-void	ft_check_shlvl(t_info *data)
-{
-	t_llist	*tmp;
-	t_llist	*new;
-	int		lvl;
-	int		flag;
-
-	flag = 1;
-	new = NULL;
-	tmp = data->envp_list;
-	while (tmp)
-	{
-		if ((ft_memcmp_l("SHLVL", tmp->key, 6) == 6))
-		{
-			lvl = ft_atoi(tmp->value);
-			lvl++;
-			free(tmp->value);
-			tmp->value = ft_itoa(lvl);
-			if (tmp->value == NULL)
-				ft_error_exit(data, 1);
-			flag = 0;
-		}
-		tmp = tmp->next;
-	}
-	if (flag == 1)
-	{
-		ft_added_shlvl(data, &new);
-		ft_llstadd_back(&data->envp_list, new);
-	}
 }
 
 void	ft_envp(t_info *data)
@@ -151,15 +74,14 @@ void	ft_envp(t_info *data)
 	char	*key;
 	char	*value;
 	int		i;
-	int		j; //чтобы привести к норме: массивы int i[2]; и/или char *str[2];
+	int		j;
 
 	i = 0;
 	key = NULL;
 	value = NULL;
 	while (data->envp[i])
-	{
+	{	
 		j = 0;
-		// printf("\nenvp[%d] = %s \n", i, envp[i]); //del ДЕБАГЕР
 		if (ft_envp2(data->envp[i], &key, &value, j)) //парсинг на key и value
 			ft_error_exit(data, 1);
 		new = ft_llstnew(key, value); //создаю новый элемент

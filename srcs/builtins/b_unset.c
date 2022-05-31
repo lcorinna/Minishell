@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 18:55:57 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/29 17:45:28 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/31 16:36:43 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,31 +22,30 @@ void	ft_error_message_unset(t_info *data, char *str)
 
 void	ft_check_arguments_unset(t_info *data, char **arr)
 {
-	int	i;
-	int	j;
+	int	i[2];
 
-	i = 1;
-	while (arr[i])
+	i[0] = 1;
+	while (arr[i[0]])
 	{
-		j = 0;
-		while (arr[i][j])
+		i[1] = 0;
+		while (arr[i[0]][i[1]])
 		{
-			if (j == 0 && arr[i][j] >= '0' && arr[i][j] <= '9')
+			if (i[1] == 0 && arr[i[0]][i[1]] >= '0' && arr[i[0]][i[1]] <= '9')
 			{
-				ft_error_message_unset(data, arr[i]);
+				ft_error_message_unset(data, arr[i[0]]);
 				break ;
 			}
-			if ((arr[i][j] >= '!' && arr[i][j] <= '/') || \
-				(arr[i][j] >= ':' && arr[i][j] <= '@') || \
-				(arr[i][j] >= '[' && arr[i][j] <= '^') || \
-				(arr[i][j] >= '{' && arr[i][j] <= '~'))
+			if ((arr[i[0]][i[1]] >= '!' && arr[i[0]][i[1]] <= '/') || \
+				(arr[i[0]][i[1]] >= ':' && arr[i[0]][i[1]] <= '@') || \
+				(arr[i[0]][i[1]] >= '[' && arr[i[0]][i[1]] <= '^') || \
+				(arr[i[0]][i[1]] >= '{' && arr[i[0]][i[1]] <= '~'))
 			{
-				ft_error_message_unset(data, arr[i]);
+				ft_error_message_unset(data, arr[i[0]]);
 				break ;
 			}
-			j++;
+			i[1]++;
 		}
-		i++;
+		i[0]++;
 	}
 }
 
@@ -66,7 +65,7 @@ void	ft_delete_argument(t_llist *del, t_llist *envp_l, int num)
 	{
 		free(del->key);
 		free(del->value);
-		free(del); //оно точно чистится?
+		free(del);
 	}
 }
 

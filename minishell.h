@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/30 20:43:12 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/31 18:11:34 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,20 +144,21 @@ int			ft_only_parent_need(char **arr);
 int			ft_builtins_command(t_info *data, char **arr);
 
 /* builtins/b_echo.c */
-void		ft_echo(char **cmd_argv);
+void		ft_echo(t_info *data, char **cmd_argv);
 
 /* builtins/b_cd.c */
-void		ft_cd(t_info *data, char **arr);
+void		ft_cd(t_info *data, char **cmd_argv);
 
 /* builtins/b_cd_utils.c */
 void		ft_search_oldpwd(char **oldpwd, t_llist *envp_l);
 void		ft_cd_error(t_info *data, char **arr, int flag, char *oldpwd);
 
 /* builtins/b_pwd.c */
-void		ft_pwd(char **arr);
+void		ft_pwd(t_info *data, char **arr);
 
 /* builtins/b_export.c */
 void		ft_export(t_info *data, char **arr);
+int			ft_check_arguments_export(t_info *data, char *arr);
 
 /* builtins/b_export_utils.c */
 void		ft_cp_env_in_exp(t_info *data, t_llist *envp_l);
@@ -166,6 +167,9 @@ char		*ft_max_key(t_llist *export);
 /* builtins/b_export_print.c */
 void		ft_print_exp(t_llist *export);
 void		ft_need_sort(t_llist *export);
+
+/* builtins/b_export_print.c */
+void		ft_adding_to_struct(t_info *data, char **arr);
 
 /* builtins/b_unset.c */
 void		ft_unset(t_info *data, t_llist *envp_l, char **arr);
@@ -178,11 +182,14 @@ void		ft_exit(t_info *data, char **arr);
 int			ft_is_number(char *str);
 
 /* envp.c */
-char		*ft_strjoin_three(char *s1, char *s2, char *s3);
-void		ft_array_envp(t_info *data);
+int			ft_array_envp(t_info *data);
 int			ft_envp2(char *envp, char **key, char **value, int j);
 void		ft_envp(t_info *data);
 void		ft_transfer(int argc, char **argv, char **envp, t_info *data);
+
+/* envp_utils.c */
+char		*ft_strjoin_three(char *s1, char *s2, char *s3);
+void		ft_check_shlvl(t_info *data);
 
 /* llist.c */
 t_llist		*ft_llstnew(void *key, void *value);
@@ -288,11 +295,15 @@ void		ft_perror_exit_child(char *str, int error);
 void		ft_waitpid(t_info *data, int pid);
 
 /* executor_many_cmd */
-int			ft_exec_many_cmd(t_info *data, t_cmds *head);
+void		ft_exec_many_cmd(t_info *data, t_cmds *head);
 void		ft_first_entry(t_info *data, t_cmds	*tmp);
 void		ft_last_entry(t_info *data, t_cmds	*tmp);
 void		ft_routine(t_info *data, t_cmds	*tmp);
-int			ft_pipe_many_cmd(t_info	*data);
+
+/* exec_m_c_utils */
+void		ft_pipe_many_cmd(t_info	*data);
+void		ft_dup_with_zero(int infile);
+void		ft_dup_with_one(int outfile);
 
 /* executor_utils */
 void		ft_free_exec(t_info *data);

@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: merlich <merlich@student.42.fr>            +#+  +:+       +#+         #
+#    By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/20 19:17:52 by lcorinna          #+#    #+#              #
-#    Updated: 2022/05/30 20:43:07 by merlich          ###   ########.fr        #
+#    Updated: 2022/05/31 17:28:48 by lcorinna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME_M			=	minishell
 
 FILES			=	minishell.c \
-					envp.c llist.c ft_readline.c exit.c \
+					envp.c envp_utils.c llist.c ft_readline.c exit.c \
 					lexer.c lexer_utils.c lexer_utils_2.c lexer_utils_3.c \
 					lexer_env_var.c ft_split_symbols.c \
 					parser.c parser_cmd_utils.c parser_group_utils.c \
@@ -24,11 +24,13 @@ FILES			=	minishell.c \
 					wildcards_argv.c wildcards_filename.c wildcards_utils.c \
 					checkers.c \
 					executor.c executor_one_cmd.c executor_many_cmd.c \
-					executor_utils.c builtins/builtin_utils.c builtins/b_pwd.c \
+					exec_m_c_utils.c executor_utils.c \
+					builtins/builtin_utils.c builtins/b_pwd.c \
 					builtins/b_cd.c builtins/b_cd_utils.c builtins/b_unset.c \
 					builtins/b_echo.c builtins/b_env.c builtins/b_exit.c \
 					builtins/b_export.c builtins/b_export_print.c \
-					builtins/b_export_utils.c signal.c\
+					builtins/b_export_utils.c builtins/b_export_new_elem.c \
+					signal.c \
 				
 
 PATH_LIBFT		=	./libft/

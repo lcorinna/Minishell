@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 18:55:57 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/27 13:32:35 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/31 16:28:10 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	ft_cp_env_in_exp(t_info *data, t_llist *envp_l)
 		if (new == NULL)
 			ft_perror_exit_child("", 12);
 		ft_llstadd_back(&data->export, new);
-		// printf("key - %s\n", tmp->key); //del
 		tmp = tmp->next;
 	}
 }

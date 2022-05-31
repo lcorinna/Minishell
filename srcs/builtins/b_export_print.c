@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 18:55:57 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/27 13:40:58 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/31 16:24:34 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	ft_print_exp(t_llist *export)
 		tmp = export;
 		while (tmp)
 		{
-			// printf("%d - %s\n", tmp->num, tmp->key); //del
 			if (i == tmp->num)
 				ft_printing_machine(tmp);
 			tmp = tmp->next;
@@ -72,19 +71,15 @@ void	ft_sort_export(t_llist *export)
 	number = 0;
 	tmp = export;
 	while (tmp && ++number != -1) //считаю сколько всего элементов
-	{
-		// printf("%d - %s\n", number, tmp->key); //del
 		tmp = tmp->next;
-	}
-	// printf("num - %d\n", number); //del
 	while (number != 0)
 	{
 		tmp = export;
 		max = ft_max_key(export);
-		// printf("\n%d - %s\n", number, max); //del
 		while (tmp)
 		{
-			if (tmp->num == 0 && ft_strncmp(max, tmp->key, ft_strlen(tmp->key)) == 0)
+			if (tmp->num == 0 && \
+						ft_strncmp(max, tmp->key, ft_strlen(tmp->key)) == 0)
 			{
 				tmp->num = number;
 				break ;

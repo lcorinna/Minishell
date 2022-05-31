@@ -6,13 +6,13 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 18:27:38 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/30 18:51:42 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/31 16:19:52 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	ft_echo(char **cmd_argv)
+void	ft_echo(t_info *data, char **cmd_argv)
 {
 	int	i;
 	int	flag;
@@ -34,6 +34,7 @@ void	ft_echo(char **cmd_argv)
 		}
 		if (flag)
 			ft_putstr_fd("\n", 1);
+		data->status = 0;
 	}
 	exit(0);
 }

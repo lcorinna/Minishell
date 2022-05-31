@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 20:25:41 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/30 19:01:20 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/31 17:05:10 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_cleaning_str(char *str)
 		free(str);
 		str = NULL;
 	}
-	return (1); //Д: использую эту единичку
+	return (1);
 }
 
 int	ft_cleaning_array(char **arr)
@@ -38,7 +38,7 @@ int	ft_cleaning_array(char **arr)
 		free(arr);
 		arr = NULL;
 	}
-	return (1); //Д: использую эту единичку
+	return (1);
 }
 
 void	ft_clean_envp_list(t_llist *llist)
@@ -68,15 +68,9 @@ void	ft_clean_struct(t_info *data)
 		data->str = NULL;
 	}
 	if (data->envp) //наш envp
-	{
-		// printf("2\n"); //del
 		ft_cleaning_array(data->envp);
-	}
 	if (data->envp_list) //односвязный список
-	{
-		// printf("3\n"); //del
 		ft_clean_envp_list(data->envp_list);
-	}
 	if (data->export) //наш envp
 		ft_clean_envp_list(data->export);
 }
@@ -88,5 +82,6 @@ void	ft_error_exit(t_info *data, int i)
 	else if (i == 2)
 		perror("Failed to create envp from the list");
 	ft_clean_struct(data);
+	data->status = 1;
 	exit (1);
 }
