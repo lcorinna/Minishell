@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 16:38:53 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/31 18:49:02 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/31 19:38:32 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ void	ft_get_and_check_cmd(t_info *data, t_cmds *tmp)
 	char	**cmd_paths;
 
 	cmd_paths = ft_get_cmd_paths(data);
-	data->cmds_head->cmd_path = ft_get_bin(cmd_paths, tmp->cmd_path);
+	tmp->cmd_path = ft_get_bin(cmd_paths, tmp->cmd_path);
 	ft_cleaning_array(cmd_paths);
-	if (!data->cmds_head->cmd_path)
+	if (!tmp->cmd_path)
 		ft_perror_cmd(data, tmp->cmd_path);
 }
 
@@ -92,8 +92,7 @@ void	ft_executor(t_info *data, t_group *head)
 			return ;
 		else if (head->logical_operation == 10 && data->status == 0)
 			return ;
-		if (ft_preparation(data, head->cmds_head))
-			ft_perror_exit_child("", 1);
+		ft_preparation(data, head->cmds_head);
 		ft_executor(data, head->right);
 	}
 	if (data->exec != NULL)

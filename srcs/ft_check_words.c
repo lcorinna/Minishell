@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 21:58:31 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/31 18:39:22 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/31 19:26:19 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,10 @@ char	*ft_get_bin(char **path, char *bin)
 		full_path = ft_strjoin(tmp, bin);
 		free(tmp);
 		if (access(full_path, X_OK) == 0)
+		{
+			free(bin);
 			return (full_path);
+		}
 		free(full_path);
 		path++;
 	}

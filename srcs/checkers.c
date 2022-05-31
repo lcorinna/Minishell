@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 00:00:05 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/30 17:04:25 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/05/31 19:35:08 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static void	ft_print_groups_elems(t_group *grp, t_cmds *tmp)
 		else if (grp->logical_operation == 10)
 			printf("||\n");
 		printf("tmp->cmd_str[%d] = %s\n\n", m, tmp->cmd_str);
+		printf("tmp->argv[%d] = %s\n\n", m, tmp->cmd_argv[m]);
 		tmp = tmp->next;
 		m++;
 	}
