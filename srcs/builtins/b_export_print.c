@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 18:55:57 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/31 16:24:34 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/06/01 22:06:59 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	ft_sort_export(t_llist *export)
 
 	number = 0;
 	tmp = export;
-	while (tmp && ++number != -1) //считаю сколько всего элементов
+	while (tmp && ++number != -1)
 		tmp = tmp->next;
 	while (number != 0)
 	{

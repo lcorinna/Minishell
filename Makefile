@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: merlich <merlich@student.42.fr>            +#+  +:+       +#+         #
+#    By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/20 19:17:52 by lcorinna          #+#    #+#              #
-#    Updated: 2022/06/01 21:40:23 by merlich          ###   ########.fr        #
+#    Updated: 2022/06/01 22:10:30 by lcorinna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,8 +48,8 @@ DEP				=	$(SRC:.c=.d)
 INCLUDE			=	./includes
 INCLUDE_SYS		=	$(HOMEBREW_PREFIX)/opt/readline/include
 LIB_SYS			=	$(HOMEBREW_PREFIX)/opt/readline/lib
-CFLAGS			=	-Wall -Wextra -Werror -MMD -g  #-fsanitize=address #удобно сразу смотреть где читаем память мимо\
-													# make && Leaks --atExit -- ./minishell
+CFLAGS			=	-Wall -Wextra -Werror -MMD -g
+
 all				:	libmake $(NAME_M)
 
 libmake			:
@@ -58,7 +58,8 @@ libmake			:
 bonus			:	all
 
 $(NAME_M)		:	$(OBJ) $(PATH_LIBFT)$(LIBFT)
-					cc $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME_M) -lreadline -L$(LIB_SYS)
+					cc $(CFLAGS) $(OBJ) $(PATH_LIBFT)$(LIBFT) -o $(NAME_M) \
+					-lreadline -L$(LIB_SYS)
 
 %.o				:	%.c Makefile
 					cc $(CFLAGS) -c $< -o $@ -I$(LIB_SYS) -I$(INCLUDE_SYS)
@@ -73,12 +74,6 @@ fclean			:	clean
 
 re				:	fclean all
 
-
 -include $(DEP)
 
 .PHONY			:	all clean fclean re bonus
-
-# cc -lreadline -I/Users/lcorinna/.brew/opt/readline/include -I/Users/lcorinna/.brew/opt/readline/lib -g -L/Users/lcorinna/.brew/opt/readline/lib ./srcs/test.c -o minishell
-
-# -I каталог	-	Вызывает просмотр указанного каталога в поисках включаемых файлов, имена которых не начинаются с /, 
-# перед просмотром стандартных каталогов. Если используется несколько опций -I, каталоги просматриваются в указанном порядке.

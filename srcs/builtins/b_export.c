@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   b_export.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 18:55:57 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/06/01 17:36:38 by merlich          ###   ########.fr       */
+/*   Updated: 2022/06/01 22:07:16 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	ft_print_sort(t_info *data)
 
 int	ft_error_message_export(t_info *data, char *str)
 {
-	printf("str - %s\n", str); //del
 	ft_print_shell(NULL, SHELL);
 	ft_putstr_fd(": export: \'", 2);
 	ft_putstr_fd(str, 2);

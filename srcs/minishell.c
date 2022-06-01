@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:33:09 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/06/01 21:08:19 by merlich          ###   ########.fr       */
+/*   Updated: 2022/06/01 22:08:51 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,7 @@ static int	ft_lexer(t_info *data)
 		return (data->status);
 	if (ft_check_tokens(data))
 		return (data->status);
-	// Обрезать кавычки " '
 	ft_cut_all_quotes(data);
-	// ft_check_lexer(data);
 	return (0);
 }
 
@@ -59,10 +57,8 @@ static int	ft_parser(t_info *data)
 		ft_group_lstclear(&data->group_head);
 		return (data->status);
 	}
-	// ft_check_parser(data);
 	data->root = ft_get_logic_min_last(data->group_head);
 	ft_build_bin_tree(&data->root);
-	// ft_check_bin_tree(data.root);
 	return (0);
 }
 
@@ -81,13 +77,10 @@ int	main(int argc, char **argv, char **envp)
 			ft_array_envp(&data);
 		if (!ft_readline(&data, SHELL, 1))
 			break ;
-		// lexer
 		if (ft_lexer(&data))
 			continue ;
-		// parser
 		if (ft_parser(&data))
 			continue ;
-		// // executor
 		ft_executor(&data, data.root);
 	}
 	ft_clean_struct(&data);

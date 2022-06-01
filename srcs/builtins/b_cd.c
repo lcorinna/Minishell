@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 18:55:57 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/06/01 13:15:06 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/06/01 22:07:42 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_without_argument(t_llist *envp_l, char *path)
 		chdir(path);
 	}
 	else
-		return (1); //ошибка. Удалили HOME
+		return (1);
 	return (0);
 }
 
@@ -48,7 +48,7 @@ void	ft_cd_pwd(t_llist *tmp, int flag, t_llist *envp_l)
 		if (tmp->value == NULL)
 			ft_perror_exit_child("", 12);
 	}
-	else if (flag == 2) //делаем новый
+	else if (flag == 2)
 	{
 		key = ft_strdup("PWD");
 		value = ft_strdup(tmp1);
@@ -102,7 +102,7 @@ void	ft_added_pwd_oldpwd(char *oldpwd, t_llist *envp_l)
 			ft_cd_pwd(tmp, 1, NULL);
 			pwd_f = 0;
 		}
-		else if (!ft_strncmp("OLDPWD", tmp->key, 7)) //сделать если нет
+		else if (!ft_strncmp("OLDPWD", tmp->key, 7))
 		{
 			ft_cd_oldpwd(tmp, 1, NULL, oldpwd);
 			oldpwd_f = 0;
@@ -128,16 +128,16 @@ void	ft_cd(t_info *data, char **arr)
 	if (arr[1] == NULL)
 	{
 		mistake = ft_without_argument(data->envp_list, path);
-		if (mistake == 1) //если 1, то ошибка
+		if (mistake == 1)
 			ft_cd_error(data, arr, 1, oldpwd);
 	}
 	else
 	{
-		mistake = chdir(arr[1]); //пытаемся перейти в другую папку
+		mistake = chdir(arr[1]);
 		if (mistake == -1)
 			ft_cd_error(data, arr, 2, oldpwd);
 	}
-	if (mistake == 0) //переписываем все PWD
+	if (mistake == 0)
 		ft_added_pwd_oldpwd(oldpwd, data->envp_list);
 	data->envp_f = 1;
 }

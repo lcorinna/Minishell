@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 16:38:53 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/06/01 17:29:37 by merlich          ###   ########.fr       */
+/*   Updated: 2022/06/01 22:06:21 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ int	ft_struct_exec(t_info *data)
 	new = malloc(sizeof(t_f_exec));
 	if (new == NULL)
 		return (1);
-	*new = (t_f_exec){}; // все занулиляем
-	data->exec = new; //привязываем к основной структуре t_info
+	*new = (t_f_exec){};
+	data->exec = new;
 	return (0);
 }
 
@@ -71,12 +71,12 @@ int	ft_preparation(t_info *data, t_cmds *head)
 		data->exec->qtt_cmd++;
 	}
 	tmp = head;
-	if (data->exec->qtt_cmd == 1) //одна команда, проверяем cmd_str и исполняем
+	if (data->exec->qtt_cmd == 1)
 	{
 		if (tmp->cmd_path != NULL && ft_exec_one_cmd(data, head))
 			return (1);
 	}
-	else if (data->exec->qtt_cmd > 1) //много команд, нужны трубы
+	else if (data->exec->qtt_cmd > 1)
 		ft_exec_many_cmd(data, head);
 	return (0);
 }
@@ -85,7 +85,7 @@ void	ft_executor(t_info *data, t_group *head)
 {
 	if (head == NULL)
 		return ;
-	if (data->exec == NULL) //при первом заходе инициализирую структуру exec
+	if (data->exec == NULL)
 		if (ft_struct_exec(data))
 			ft_perror_exit_child("", 12);
 	if (head)
@@ -99,5 +99,5 @@ void	ft_executor(t_info *data, t_group *head)
 		ft_executor(data, head->right);
 	}
 	if (data->exec != NULL)
-		ft_free_exec(data); //освобождаю exec перед выходом
+		ft_free_exec(data);
 }
