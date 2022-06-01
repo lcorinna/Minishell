@@ -6,29 +6,11 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 14:28:23 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/31 19:43:03 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/06/01 13:15:20 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-int	ft_memcmp_l(const void *s1, const void *s2, size_t n)
-{
-	int				i;
-	unsigned char	*a;
-	unsigned char	*b;
-
-	i = 0;
-	a = (unsigned char *) s1;
-	b = (unsigned char *) s2;
-	while (i < (int) n)
-	{
-		if (a[i] != b[i])
-			return (a[i] - b[i]);
-		i++;
-	}
-	return (i);
-}
 
 int	ft_only_parent_need(char **arr)
 {

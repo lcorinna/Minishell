@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 18:55:57 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/30 16:29:42 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/06/01 13:15:06 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ void	ft_cd_oldpwd(t_llist *tmp, int flag, t_llist *envp_l, char *oldpwd)
 
 	if (flag == 1)
 	{
-		// printf("oldpwd - %s\n", oldpwd); //del
 		free(tmp->value);
 		tmp->value = oldpwd;
 	}
@@ -98,12 +97,12 @@ void	ft_added_pwd_oldpwd(char *oldpwd, t_llist *envp_l)
 	oldpwd_f = 1;
 	while (tmp)
 	{
-		if (ft_memcmp_l("PWD", tmp->key, 4) == 4)
+		if (!ft_strncmp("PWD", tmp->key, 4))
 		{
 			ft_cd_pwd(tmp, 1, NULL);
 			pwd_f = 0;
 		}
-		else if (ft_memcmp_l("OLDPWD", tmp->key, 4) == 4) //сделать если нет
+		else if (!ft_strncmp("OLDPWD", tmp->key, 7)) //сделать если нет
 		{
 			ft_cd_oldpwd(tmp, 1, NULL, oldpwd);
 			oldpwd_f = 0;

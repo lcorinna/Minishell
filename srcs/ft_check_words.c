@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_words.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 21:58:31 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/31 20:14:49 by merlich          ###   ########.fr       */
+/*   Updated: 2022/06/01 14:44:45 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ char	**ft_get_cmd_paths(t_info *data)
 	{
 		data->envp_head = data->envp_head->next;
 	}
+	if (data->envp_head == NULL)
+		return (NULL);
 	if (data->envp_head)
 		ptr = ft_split(data->envp_head->value, ':');
 	return (ptr);
@@ -32,8 +34,11 @@ char	*ft_get_bin(char **path, char *bin)
 	char	*tmp;
 	char	*full_path;
 
-	if (bin && bin[0] == '/' && access(bin, X_OK))
+	if ((bin && bin[0] == '/' && access(bin, X_OK)) || path == NULL)
+	{
+		ft_cleaning_str(bin);
 		return (NULL);
+	}
 	else if (!access(bin, X_OK))
 		return (ft_strdup(bin));
 	while (*path)

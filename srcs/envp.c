@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 12:52:50 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/31 17:31:06 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/06/01 15:18:36 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	ft_envp2(char *envp, char **key, char **value, int j)
 	int	m;
 
 	m = -1;
-	while (envp[j+1] != '=')
+	while (envp[j + 1] != '=')
 		j++;
 	*key = malloc(sizeof(char) * (j + 2));
 	if (!*key)

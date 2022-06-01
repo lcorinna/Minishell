@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 18:55:57 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/31 19:13:24 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/06/01 12:55:06 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	ft_find_argument(t_llist *envp_l, char **arr)
 		len = ft_strlen(arr[i]);
 		while (tmp)
 		{
-			if (ft_memcmp_l(arr[i], tmp->key, len) == len)
+			if (!ft_strncmp(arr[i], tmp->key, len))
 			{
 				ft_delete_argument(tmp, envp_l, num);
 				break ;

@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 18:55:57 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/31 19:11:14 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/06/01 13:13:47 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_search_oldpwd(char **oldpwd, t_llist *envp_l)
 	new = NULL;
 	while (tmp)
 	{
-		if (ft_memcmp_l("PWD", tmp->key, 4) == 4)
+		if (!ft_strncmp("PWD", tmp->key, 4))
 			break ;
 		tmp = tmp->next;
 	}

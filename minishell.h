@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:17:58 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/31 22:09:52 by merlich          ###   ########.fr       */
+/*   Updated: 2022/06/01 13:15:25 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,6 @@ typedef struct s_info
 void		ft_signal(t_info *data, int i);
 
 /* builtins/builtins_utils.c */
-int			ft_memcmp_l(const void *s1, const void *s2, size_t n);
 int			ft_only_parent_need(char **arr);
 int			ft_builtins_command(t_info *data, char **arr);
 

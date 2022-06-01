@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 12:52:50 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/31 17:01:50 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/06/01 13:13:15 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	ft_check_shlvl(t_info *data)
 	tmp = data->envp_list;
 	while (tmp)
 	{
-		if ((ft_memcmp_l("SHLVL", tmp->key, 6) == 6))
+		if (!ft_strncmp("SHLVL", tmp->key, 6))
 		{
 			lvl = ft_atoi(tmp->value);
 			lvl++;

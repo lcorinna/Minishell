@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:33:09 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/31 22:57:53 by merlich          ###   ########.fr       */
+/*   Updated: 2022/06/01 14:08:56 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,9 @@ int	main(int argc, char **argv, char **envp)
 	{
 		ft_signal(&data, 1);
 		ft_cleanup(&data);
-		if (data.envp_f) //флаг нужен?
-			ft_array_envp(&data); //переписываю envp
-		if (!ft_readline(&data, SHELL, 1)) //обработка сигнала "control + d"
+		if (data.envp_f)
+			ft_array_envp(&data);
+		if (!ft_readline(&data, SHELL, 1))
 			break ;
 		// lexer
 		if (ft_lexer(&data))

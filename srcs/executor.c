@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 16:38:53 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/31 19:38:32 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/06/01 15:17:51 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_cmds	*ft_t_cmdsnew(int infile, int outfile, void *path, void *argv)
 
 int	ft_struct_exec(t_info *data)
 {
-	t_f_exec	*new; //структура для pipex
+	t_f_exec	*new;
 
 	new = malloc(sizeof(t_f_exec));
 	if (new == NULL)
