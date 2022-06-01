@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 16:38:53 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/06/01 15:17:51 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/06/01 16:56:00 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,16 @@ int	ft_struct_exec(t_info *data)
 
 void	ft_get_and_check_cmd(t_info *data, t_cmds *tmp)
 {
+	char	*ptr;
 	char	**cmd_paths;
 
+	ptr = tmp->cmd_path;
 	cmd_paths = ft_get_cmd_paths(data);
-	tmp->cmd_path = ft_get_bin(cmd_paths, tmp->cmd_path);
+	tmp->cmd_path = ft_get_bin(cmd_paths, ptr);
 	ft_cleaning_array(cmd_paths);
 	if (!tmp->cmd_path)
-		ft_perror_cmd(data, tmp->cmd_path);
+		ft_perror_cmd(data, ptr);
+	free(ptr);
 }
 
 int	ft_preparation(t_info *data, t_cmds *head)

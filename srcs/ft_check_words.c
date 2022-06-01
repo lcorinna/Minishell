@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_words.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 21:58:31 by merlich           #+#    #+#             */
-/*   Updated: 2022/06/01 14:44:45 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/06/01 16:50:54 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*ft_get_bin(char **path, char *bin)
 		free(tmp);
 		if (access(full_path, X_OK) == 0)
 		{
-			free(bin);
+			// free(bin);
 			return (full_path);
 		}
 		free(full_path);
