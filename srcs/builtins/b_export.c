@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   b_export.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 18:55:57 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/31 19:13:09 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/06/01 17:36:38 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	ft_print_sort(t_info *data)
 
 int	ft_error_message_export(t_info *data, char *str)
 {
+	printf("str - %s\n", str); //del
 	ft_print_shell(NULL, SHELL);
 	ft_putstr_fd(": export: \'", 2);
 	ft_putstr_fd(str, 2);
@@ -39,8 +40,8 @@ int	ft_check_arguments_export(t_info *data, char *arr)
 	{
 		if (i == 0 && arr[i] >= '0' && arr[i] <= '9')
 			return (ft_error_message_export(data, arr));
-		if ((arr[i] >= '!' && arr[i] <= '/') || \
-				(arr[i] >= ':' && arr[i] <= '<') || \
+		if ((arr[i] >= '!' && arr[i] <= '-') || \
+				(arr[i] >= ';' && arr[i] <= '<') || \
 					(arr[i] >= '>' && arr[i] <= '@') || \
 						(arr[i] >= '[' && arr[i] <= '^') || \
 							(arr[i] >= '{' && arr[i] <= '~'))

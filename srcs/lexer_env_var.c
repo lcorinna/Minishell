@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 21:11:40 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/31 21:53:19 by merlich          ###   ########.fr       */
+/*   Updated: 2022/06/01 21:27:35 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ static void	ft_interpret(t_info *data)
 			envp = data->envp_list;
 			while (envp && ft_strncmp(sub_str, envp->key, ft_strlen(sub_str)))
 				envp = envp->next;
+			free(sub_str);
 			ft_replace(envp, token_str);
 			str = *token_str + ft_excl_search(*token_str);
-			free(sub_str);
 		}
 	}
 }

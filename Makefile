@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+         #
+#    By: merlich <merlich@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/20 19:17:52 by lcorinna          #+#    #+#              #
-#    Updated: 2022/06/01 14:41:17 by lcorinna         ###   ########.fr        #
+#    Updated: 2022/06/01 21:40:23 by merlich          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,11 +54,10 @@ all				:	libmake $(NAME_M)
 
 libmake			:
 					make -C $(PATH_LIBFT)
-					cp $(PATH_LIBFT)$(LIBFT) $(LIBFT)
 
 bonus			:	all
 
-$(NAME_M)		:	$(OBJ) $(LIBFT)
+$(NAME_M)		:	$(OBJ) $(PATH_LIBFT)$(LIBFT)
 					cc $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME_M) -lreadline -L$(LIB_SYS)
 
 %.o				:	%.c Makefile

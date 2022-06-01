@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 16:38:53 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/06/01 16:56:00 by merlich          ###   ########.fr       */
+/*   Updated: 2022/06/01 17:29:37 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	ft_get_and_check_cmd(t_info *data, t_cmds *tmp)
 	ft_cleaning_array(cmd_paths);
 	if (!tmp->cmd_path)
 		ft_perror_cmd(data, ptr);
-	free(ptr);
+	ft_cleaning_str(ptr);
 }
 
 int	ft_preparation(t_info *data, t_cmds *head)

@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 20:55:03 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/31 21:54:38 by merlich          ###   ########.fr       */
+/*   Updated: 2022/06/01 21:39:34 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,31 @@ int	ft_excl_search(char *s)
 {
 	int		i;
 
-	i = ft_search(s, '$');
-	while (s[i] != '\0' && (ft_check_quotes(s, i) == 1 || \
+	i = 0;
+	if (s)
+	{
+		i = ft_search(s, '$');
+		while (s[i] != '\0' && (ft_check_quotes(s, i) == 1 || \
 			(s[i + 1] != '_' && s[i + 1] != '?' && !ft_isalnum(s[i + 1]))))
 		i += ft_search(s + i + 1, '$') + 1;
+	}
 	return (i);
+}
+
+static char	*ft_handle_condition(t_llist *envp, char *s1, char *s2, char *s3)
+{
+	char	*res;
+
+	res = NULL;
+	if (envp)
+	{
+		s2 = ft_strjoin(s1, envp->value);
+		res = ft_strjoin(s2, s3);
+		free(s2);
+	}
+	else
+		res = ft_strjoin(s1, s3);
+	return (res);
 }
 
 void	ft_replace(t_llist *envp, char **token_str)
@@ -46,15 +66,13 @@ void	ft_replace(t_llist *envp, char **token_str)
 	s1 = ft_substr(s0, 0, ind);
 	s2 = NULL;
 	s3 = ft_substr(s0, ind + 1 + ft_find_ind(s0 + ind + 1), ft_strlen(s0));
-	free(s0);
-	if (envp)
+	*token_str = ft_handle_condition(envp, s1, s2, s3);
+	if (*token_str[0] == '\0')
 	{
-		s2 = ft_strjoin(s1, envp->value);
-		*token_str = ft_strjoin(s2, s3);
-		free(s2);
+		free(*token_str);
+		*token_str = ft_strdup("\t");
 	}
-	else
-		*token_str = ft_strjoin(s1, s3);
+	free(s0);
 	free(s1);
 	free(s3);
 }

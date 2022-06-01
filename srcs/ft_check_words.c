@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 21:58:31 by merlich           #+#    #+#             */
-/*   Updated: 2022/06/01 16:50:54 by merlich          ###   ########.fr       */
+/*   Updated: 2022/06/01 17:56:21 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,7 @@ char	*ft_get_bin(char **path, char *bin)
 	char	*full_path;
 
 	if ((bin && bin[0] == '/' && access(bin, X_OK)) || path == NULL)
-	{
-		ft_cleaning_str(bin);
 		return (NULL);
-	}
 	else if (!access(bin, X_OK))
 		return (ft_strdup(bin));
 	while (*path)
@@ -47,10 +44,7 @@ char	*ft_get_bin(char **path, char *bin)
 		full_path = ft_strjoin(tmp, bin);
 		free(tmp);
 		if (access(full_path, X_OK) == 0)
-		{
-			// free(bin);
 			return (full_path);
-		}
 		free(full_path);
 		path++;
 	}
