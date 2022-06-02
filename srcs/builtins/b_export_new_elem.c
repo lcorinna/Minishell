@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 18:55:57 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/31 16:30:33 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/06/01 22:07:06 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void	ft_adding_to_struct(t_info *data, char **arr)
 	i = 1;
 	while (arr[i])
 	{
-		put = ft_check_arguments_export(data, arr[i]); //-1 ошибка, 1 exp, 2 оба
+		put = ft_check_arguments_export(data, arr[i]);
 		if (put > 0)
 		{
 			ft_newelem_export(data, arr[i]);

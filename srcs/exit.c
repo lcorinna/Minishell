@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 20:25:41 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/31 17:05:10 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/06/01 22:08:09 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,11 @@ void	ft_clean_struct(t_info *data)
 		free(data->str);
 		data->str = NULL;
 	}
-	if (data->envp) //наш envp
+	if (data->envp)
 		ft_cleaning_array(data->envp);
-	if (data->envp_list) //односвязный список
+	if (data->envp_list)
 		ft_clean_envp_list(data->envp_list);
-	if (data->export) //наш envp
+	if (data->export)
 		ft_clean_envp_list(data->export);
 }
 

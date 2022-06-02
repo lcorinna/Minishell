@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 21:31:23 by merlich           #+#    #+#             */
-/*   Updated: 2022/06/01 21:40:05 by merlich          ###   ########.fr       */
+/*   Updated: 2022/06/02 16:53:18 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,11 @@ int	ft_check_tokens(t_info *data)
 		{
 			t = data->token_head;
 			t1 = data->token_head->next;
-			if (t->type != WORD && t1->type != WORD)
+			if (((t->type != PARN_L && t->type != PARN_R) && t->type != WORD \
+				&& t1->type != WORD \
+				&& (t1->type != PARN_L && t1->type != PARN_R)) \
+				&& (t->type != PIPE \
+				&& (t1->type != REDIR_IN && t1->type != REDIR_INSOURCE)))
 			{
 				return (ft_perror_token_symbol(data, t1->str_val));
 			}

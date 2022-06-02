@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 22:09:17 by merlich           #+#    #+#             */
-/*   Updated: 2022/06/01 21:28:03 by merlich          ###   ########.fr       */
+/*   Updated: 2022/06/02 16:41:10 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,13 @@ static int	ft_check_parn_l(t_info *data)
 	if (data->token_head->prev && data->token_head->prev->type != PIPE \
 		&& data->token_head->prev->type != IF_AND \
 		&& data->token_head->prev->type != IF_OR \
+		&& data->token_head->prev->type != REDIR_IN \
 		&& data->token_head->prev->type != PARN_L)
 		return (ft_perror_token(data, data->token_head->next->str_val));
 	if (!data->token_head->prev \
 		|| data->token_head->prev->type == IF_AND \
 		|| data->token_head->prev->type == IF_OR \
+		|| data->token_head->prev->type == REDIR_IN \
 		|| data->token_head->prev->type == PARN_L)
 	{
 		data->nesting_level++;
@@ -35,11 +37,15 @@ static int	ft_check_parn_r(t_info *data)
 	if (data->token_head->next && data->token_head->next->type != PIPE \
 		&& data->token_head->next->type != IF_AND \
 		&& data->token_head->next->type != IF_OR \
+		&& data->token_head->next->type != REDIR_OUT \
+		&& data->token_head->next->type != REDIR_APPEND \
 		&& data->token_head->next->type != PARN_R)
 		return (ft_perror_token(data, data->token_head->next->str_val));
 	if (!data->token_head->next \
 		|| data->token_head->next->type == IF_AND \
 		|| data->token_head->next->type == IF_OR \
+		|| data->token_head->next->type == REDIR_OUT \
+		|| data->token_head->next->type == REDIR_APPEND \
 		|| data->token_head->next->type == PARN_R)
 	{
 		data->nesting_level--;
@@ -87,6 +93,9 @@ static int	ft_get_groups_cmds(t_info *data)
 		if (data->token_head && data->token_head->type == PIPE)
 			data->token_head = data->token_head->next;
 		data->cmds_head->cmd_argv = ft_split(data->cmds_head->cmd_str, ' ');
+		ft_cut_all_quotes(data);
+		ft_cleaning_str(data->cmds_head->cmd_path);
+		data->cmds_head->cmd_path = ft_strdup(data->cmds_head->cmd_argv[0]);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 12:52:50 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/06/01 15:18:36 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/06/01 22:05:55 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_array_envp(t_info *data)
 
 	i = 0;
 	tmp = data->envp_list;
-	ft_cleaning_array(data->envp); //перед заходом чистим, чтобы избежать утечек
+	ft_cleaning_array(data->envp);
 	while (tmp && ++i != -1)
 		tmp = tmp->next;
 	data->envp = malloc(sizeof(char *) * (i + 1));
@@ -36,7 +36,7 @@ int	ft_array_envp(t_info *data)
 		i++;
 	}
 	data->envp[i] = NULL;
-	data->envp_f = 0; //зануляем флаг, чтобы не заходить сюда без надобности
+	data->envp_f = 0;
 	return (0);
 }
 
@@ -82,12 +82,12 @@ void	ft_envp(t_info *data)
 	while (data->envp[i])
 	{	
 		j = 0;
-		if (ft_envp2(data->envp[i], &key, &value, j)) //парсинг на key и value
+		if (ft_envp2(data->envp[i], &key, &value, j))
 			ft_error_exit(data, 1);
-		new = ft_llstnew(key, value); //создаю новый элемент
+		new = ft_llstnew(key, value);
 		if (!new)
 			ft_error_exit(data, 1);
-		ft_llstadd_back(&data->envp_list, new); //кладу новый элемент в конец
+		ft_llstadd_back(&data->envp_list, new);
 		i++;
 	}
 	ft_check_shlvl(data);
@@ -96,7 +96,7 @@ void	ft_envp(t_info *data)
 void	ft_transfer(int argc, char **argv, char **envp, t_info *data)
 {	
 	(void)argv;
-	argc = 0; //пользуюсь как счетчиком для экономии строк
+	argc = 0;
 	if (!envp)
 		return ;
 	while (envp[argc])
@@ -105,16 +105,16 @@ void	ft_transfer(int argc, char **argv, char **envp, t_info *data)
 	if (!data->envp)
 		ft_perror_exit_child("", 12);
 	argc = 0;
-	while (envp[argc]) //копирую все в наш массив чтобы работал ft_clean_struct
+	while (envp[argc])
 	{
 		data->envp[argc] = ft_strdup(envp[argc]);
 		if (!data->envp[argc])
 		{
 			perror("");
-			exit(ft_cleaning_array(data->envp)); //ошибка с чисткой и выходом
+			exit(ft_cleaning_array(data->envp));
 		}
 		argc++;
 	}
 	data->envp[argc] = NULL;
-	ft_envp(data); //переношу наш массив в односвязный список
+	ft_envp(data);
 }

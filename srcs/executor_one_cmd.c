@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_one_cmd.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 16:38:53 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/06/01 18:03:50 by merlich          ###   ########.fr       */
+/*   Updated: 2022/06/01 22:06:47 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@ void	ft_perror_exit_child(char *str, int error)
 
 void	ft_pipe_one_cmd(t_cmds *head)
 {
-	if (head->infile != 0) //тогда читаем из infile
+	if (head->infile != 0)
 	{
-		if (dup2(head->infile, 0) == -1) //меняем infile
+		if (dup2(head->infile, 0) == -1)
 			ft_perror_exit_child("Inside dup error", DUP);
 		close(head->infile);
 	}
-	if (head->outfile != 1) //тогда читаем в outfile
+	if (head->outfile != 1)
 	{
-		if (dup2(head->outfile, 1) == -1) //меняем outfile
+		if (dup2(head->outfile, 1) == -1)
 			ft_perror_exit_child("Inside dup error", DUP);
 		close(head->outfile);
 	}
@@ -43,12 +43,12 @@ void	ft_birth_child(t_info *data, t_cmds *head)
 		ft_perror_exit_child("Inside child execve error", 1);
 	else if (head->cmd_path == NULL && data->exec->pid == 0)
 		exit(1);
-	else if (data->exec->pid == 0) //ребенок
+	else if (data->exec->pid == 0)
 	{
 		ft_signal(data, 3);
-		if (head->infile != 0 || head->outfile != 1) //сделать dup2
+		if (head->infile != 0 || head->outfile != 1)
 			ft_pipe_one_cmd(head);
-		ft_builtins_command(data, head->cmd_argv); //не билтын ли?
+		ft_builtins_command(data, head->cmd_argv);
 		data->status = execve(head->cmd_path, head->cmd_argv, data->envp);
 		ft_perror_exit_child("Inside child execve error", 1);
 	}
@@ -65,12 +65,12 @@ void	ft_waitpid(t_info *data, int pid)
 		if (WTERMSIG(status) == 3)
 		{
 			data->status = 131;
-			ft_putstr_fd("Quit: 3\n", 1); //back slash
+			ft_putstr_fd("Quit: 3\n", 1);
 		}
 		else if (WTERMSIG(status) == 2)
 		{
 			data->status = 132;
-			ft_putstr_fd("\n", 1); //^C //yes | head // проверить
+			ft_putstr_fd("\n", 1);
 		}
 	}
 }

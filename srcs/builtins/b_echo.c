@@ -6,7 +6,7 @@
 /*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 18:27:38 by merlich           #+#    #+#             */
-/*   Updated: 2022/06/01 13:36:48 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/06/01 22:07:56 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ void	ft_echo(t_info *data, char **cmd_argv)
 
 	i = 1;
 	flag = 0;
-	// printf("1 - %s\n", cmd_argv[0]);
-	// printf("2 - %s\n", cmd_argv[1]);
 	if (cmd_argv && cmd_argv[1] != NULL)
 	{
 		if (cmd_argv[0] && cmd_argv[1])

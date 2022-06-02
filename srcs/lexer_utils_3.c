@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 23:00:20 by merlich           #+#    #+#             */
-/*   Updated: 2022/06/01 19:39:48 by merlich          ###   ########.fr       */
+/*   Updated: 2022/06/02 16:53:02 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,36 +71,41 @@ static char	*ft_cut_quotes(char *str, int *ind)
 		free(before);
 		free(medium);
 		free(after);
-		*ind = *ind + j - 1;
+		*ind = *ind + j - 1 + 1;
 	}
 	return (str);
 }
 
-static void	ft_check_and_cut(t_info *data)
+static void	ft_check_and_cut(t_info *data, int i)
 {
-	int		i;
+	int		j;
 	char	*s;
 
-	i = 0;
-	s = data->token_head->str_val;
-	while (s[i])
+	j = 0;
+	s = data->cmds_head->cmd_argv[i];
+	while (s[j])
 	{
-		if (s[i] == '\'' || s[i] == '\"')
+		if (s[j] == '\'' || s[j] == '\"')
 		{
-			data->token_head->str_val = ft_cut_quotes(s, &i);
-			s = data->token_head->str_val;
+			data->cmds_head->cmd_argv[i] = ft_cut_quotes(s, &j);
+			s = data->cmds_head->cmd_argv[i];
 		}
 		else
-			i++;
+			j++;
 	}
 }
 
 void	ft_cut_all_quotes(t_info *data)
 {
-	data->token_head = data->tokens;
-	while (data->token_head)
+	int		i;
+
+	i = 0;
+	if (data->cmds_head && data->cmds_head->cmd_argv)
 	{
-		ft_check_and_cut(data);
-		data->token_head = data->token_head->next;
+		while (data->cmds_head->cmd_argv[i])
+		{
+			ft_check_and_cut(data, i);
+			i++;
+		}
 	}
 }
