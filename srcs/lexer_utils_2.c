@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 22:51:34 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/05 22:13:05 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/11 21:26:07 by lcorinna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,18 @@ t_token	*ft_token_last_but_one(t_token *head)
 void	ft_token_dellast(t_token **head)
 {
 	t_token	*last;
-	t_token *last_but_one;
+	t_token	*last_but_one;
 
 	last_but_one = ft_token_last_but_one(*head);
 	last = ft_token_lstlast(*head);
 	last_but_one->next = NULL;
 	if (ft_strncmp(last->str_val, " ", ft_strlen(last->str_val)))
-			free(last->str_val);
+	{
+		free(last->str_val);
+		last->str_val = NULL;
+	}
 	free(last);
+	last = NULL;
 }
 
 void	ft_token_lstclear(t_token **head)
@@ -46,8 +50,12 @@ void	ft_token_lstclear(t_token **head)
 		tmp = *head;
 		*head = tmp->next;
 		if (ft_strncmp(tmp->str_val, " ", ft_strlen(tmp->str_val)))
+		{
 			free(tmp->str_val);
+			tmp->str_val = NULL;
+		}	
 		free(tmp);
+		tmp = NULL;
 	}
 }
 
