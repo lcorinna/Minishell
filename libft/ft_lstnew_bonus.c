@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merlich <merlich@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 15:28:43 by merlich           #+#    #+#             */
-/*   Updated: 2021/10/24 17:17:05 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/28 19:57:04 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,16 @@ t_list	*ft_lstnew(void *content)
 {
 	t_list	*new;
 
-	new = malloc(sizeof(t_list));
-	if (NULL == new)
+	new = NULL;
+	if (content != NULL)
 	{
-		return (NULL);
+		new = malloc(sizeof(t_list));
+		if (NULL == new)
+		{
+			exit(ENOMEM);
+		}
+		new->content = content;
+		new->next = NULL;
 	}
-	new->content = content;
-	new->next = NULL;
 	return (new);
 }

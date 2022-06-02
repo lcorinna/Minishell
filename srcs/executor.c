@@ -3,89 +3,101 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 16:38:53 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/11 21:11:31 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/06/02 18:41:19 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_creating_a_path(char **envp, int *num)
+t_cmds	*ft_t_cmdsnew(int infile, int outfile, void *path, void *argv)
 {
-	int	check;
+	t_cmds	*new;
 
-	check = 1;
-	while (envp[*num] != NULL && check != 0)
-		check = ft_memcmp("PeATH=", envp[(*num)++], 5); //сломано нужно чинить
-	printf("check %d\n", check); //del
-	if (ft_memcmp("PATH=", envp[(*num) - 1], 5))
-		return (0);
-	(*num)++;
-	return (1);
+	new = malloc(sizeof(t_cmds));
+	if (new == NULL)
+	{
+		return (NULL);
+	}
+	new->infile = infile;
+	new->outfile = outfile;
+	new->cmd_path = path;
+	new->cmd_str = argv;
+	new->next = NULL;
+	return (new);
 }
 
-int	ft_parse_path(t_info *data, int i)
+int	ft_struct_exec(t_info *data)
 {
-	if (data->envp != NULL && ft_creating_a_path(data->envp, &i))
-	{
-		printf("HERE\n"); //del
-		data->path = ft_split(data->envp[i] + 5, ':');
-		if (data->path == NULL)
-		{
-			perror("");
-			return (1);
-		}
-	}
+	t_f_exec	*new;
+
+	new = malloc(sizeof(t_f_exec));
+	if (new == NULL)
+		return (1);
+	*new = (t_f_exec){};
+	data->exec = new;
 	return (0);
 }
 
-int	ft_how_many_cmd(t_info *data)
+void	ft_get_and_check_cmd(t_info *data, t_cmds *tmp)
 {
-	t_token	*tmp;
-	int		i;
+	char	*ptr;
+	char	**cmd_paths;
 
-	i = 0;
-	tmp = data->tokens;
-	while (tmp)
-	{
-		tmp = tmp->next;
-		i++;
-	}
-	return (i);
+	ptr = tmp->cmd_path;
+	cmd_paths = ft_get_cmd_paths(data);
+	tmp->cmd_path = ft_get_bin(cmd_paths, ptr);
+	ft_cleaning_array(cmd_paths);
+	if (!tmp->cmd_path)
+		ft_perror_cmd(data, ptr);
+	ft_cleaning_str(ptr);
 }
 
-// void	ft_one_cmd(t_info *data)
-// {
-
-// }
-
-int	ft_executor(t_info *data)
+int	ft_preparation(t_info *data, t_cmds *head)
 {
-	int	i;
-	int	cmd;
-	int	check;
+	t_cmds	*tmp;
 
-	i = 0;
-	cmd = ft_how_many_cmd(data); //считаю кол-во команд, чтобы уйти на ветвление
-	if (cmd == 0)
-		return (0);
-	if (ft_parse_path(data, i))
+	if (head == NULL)
 		return (1);
-	printf("data->envp - %s\n", data->envp[0]); //del
-	// else if (cmd == 1)
-	// 	ft_one_cmd(data);
-	// else if (cmd > 1)
-	printf("\n data.tokens %s\n", data->tokens->str_val); //del
-	check = 1;
-	return (0); //выход чтобы не ругался компилятор (временное решение)
-	while (check != 0 && data->path[i] != NULL)
-		check = access(data->path[i++], F_OK);
-	if (check == -1)
-		ft_exit_with_cleaning(data, NULL, 1); //переделать
-	data->pid = fork();
-	if (data->pid == 0)
-		if (execve(data->path[i], data->free_me.str, data->envp) == -1)
-			ft_exit_with_cleaning(data, NULL, 4); //переделать
+	tmp = head;
+	data->exec->qtt_cmd = 0;
+	while (tmp)
+	{
+		if (!ft_check_builtins(data, tmp))
+			ft_get_and_check_cmd(data, tmp);
+		tmp = tmp->next;
+		data->exec->qtt_cmd++;
+	}
+	tmp = head;
+	if (data->exec->qtt_cmd == 1)
+	{
+		if (tmp->cmd_path != NULL && ft_exec_one_cmd(data, head))
+			return (1);
+	}
+	else if (data->exec->qtt_cmd > 1)
+		ft_exec_many_cmd(data, head);
+	return (0);
+}
+
+void	ft_executor(t_info *data, t_group *head)
+{
+	if (head == NULL)
+		return ;
+	if (data->exec == NULL)
+		if (ft_struct_exec(data))
+			ft_perror_exit_child("", 12);
+	if (head)
+	{
+		ft_executor(data, head->left);
+		if (head->logical_operation == 9 && data->status != 0)
+			return ;
+		else if (head->logical_operation == 10 && data->status == 0)
+			return ;
+		ft_preparation(data, head->cmds_head);
+		ft_executor(data, head->right);
+	}
+	if (data->exec != NULL)
+		ft_free_exec(data);
 }

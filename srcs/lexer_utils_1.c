@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_utils.c                                      :+:      :+:    :+:   */
+/*   lexer_utils_1.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/17 21:17:51 by merlich           #+#    #+#             */
-/*   Updated: 2022/05/07 23:44:04 by merlich          ###   ########.fr       */
+/*   Updated: 2022/06/02 18:41:08 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@ t_token	*ft_token_lstnew(char *value)
 	t_token	*new;
 
 	new = NULL;
-	if (value && value[0] != '\0')
+	if (value)
 	{
 		new = malloc(sizeof(t_token));
 		if (NULL == new)
 		{
 			free(value);
-			return (NULL);  // Отправить сигнал, в основной цикл while о переходе
-		}					// на следующую итерацию (continue) с очисткой памяти
-		new->str_val = value; // выделенной на текущей итерации
+			exit (ENOMEM);
+		}
+		new->str_val = value;
 		new->type = UNDEFINED;
 		new->next = NULL;
 		new->prev = NULL;

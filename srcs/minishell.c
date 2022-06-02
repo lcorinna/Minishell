@@ -3,66 +3,85 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcorinna <lcorinna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:33:09 by lcorinna          #+#    #+#             */
-/*   Updated: 2022/05/11 21:26:17 by lcorinna         ###   ########.fr       */
+/*   Updated: 2022/06/02 18:39:25 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	ft_fill_builtins(t_info *data)
+{
+	data->res_words[0] = "echo";
+	data->res_words[1] = "cd";
+	data->res_words[2] = "pwd";
+	data->res_words[3] = "export";
+	data->res_words[4] = "unset";
+	data->res_words[5] = "env";
+	data->res_words[6] = "exit";
+	data->res_words[7] = "ECHO";
+	data->res_words[8] = "CD";
+	data->res_words[9] = "PWD";
+	data->res_words[10] = "EXPORT";
+	data->res_words[11] = "UNSET";
+	data->res_words[12] = "ENV";
+	data->res_words[13] = "EXIT";
+	data->res_words[14] = NULL;
+}
+
+void	ft_cleanup(t_info *data)
+{
+	data->nesting_level = 0;
+	ft_token_lstclear(&data->tokens);
+	ft_free_bin_tree(&data->root);
+	data->group_head = NULL;
+	unlink(HEREDOC);
+}
+
+static int	ft_lexer(t_info *data)
+{
+	if (ft_get_tokens_from_string(data))
+		return (data->status);
+	if (ft_check_tokens(data))
+		return (data->status);
+	return (0);
+}
+
+static int	ft_parser(t_info *data)
+{
+	if (ft_get_logic_group(data))
+	{
+		ft_group_lstclear(&data->group_head);
+		return (data->status);
+	}
+	data->root = ft_get_logic_min_last(data->group_head);
+	ft_build_bin_tree(&data->root);
+	return (0);
+}
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_info				data;
 
 	data = (t_info){};
-
+	ft_fill_builtins(&data);
 	ft_transfer(argc, argv, envp, &data);
-	// ft_signal(); //буду делать в конце
 	while (!data.exit_f)
 	{
-		ft_token_lstclear(&data.tokens);  // А: Чистим выделенную память,
-		// data.envp_f = 1; //проверяю как перезаписывается наш envp из односвязного списка t_llist //del
+		ft_signal(&data, 1);
+		ft_cleanup(&data);
 		if (data.envp_f)
-			ft_array_envp(&data); //переписываю наш envp, если это нужно
-		ft_readline(&data);
-		if (!data.free_me.str) //обработка сигнала "control + d"
+			ft_array_envp(&data);
+		if (!ft_readline(&data, SHELL, 1))
 			break ;
-
-
-
-		// char *str = "cat          >	$9 $	$USER;	   '\"file	$ $USER1; $USER2  \"'ffff user  | $USER3 cat< file"; просто тестовая строка
-		// if (!ft_strncmp(data.free_me.str, "\n", 1))
-		// 	continue ;
-		// lexer
-		if (ft_get_tokens(data.free_me.str, &data))
+		if (ft_lexer(&data))
 			continue ;
-		ft_expand(&data);
-		ft_symsplit(&data);
-		// ft_set_tokens_type(&data);
-		data.token_head = data.tokens;
-		printf("\n------------------\n");
-		while (data.token_head)  // УТЕЧКИ на $PWD... тут - это не страшно, этот принт нужен просто для наглядности в процессе разработки
-		{
-			printf("string = %s\n", data.token_head->str_val);
-			// printf("type == %d\n\n", data.token_head->type);
-			data.token_head = data.token_head->next;
-		}
-		printf("------------------\n");
-		// ft_parser(&data);
-		// if (ft_executor(&data))
-		// 	printf("im found mistake in executor\n"); //del
+		if (ft_parser(&data))
+			continue ;
+		ft_executor(&data, data.root);
 	}
-	ft_token_lstclear(&data.tokens);
 	ft_clean_struct(&data);
 	return (0);
 }
-
-// 1. инициализация структур 
-// 2. цикл (1)
-// 	2.1 ридлайн
-// 	2.2 лексер
-// 	2.3 парсер
-// 	2.4 экзекве
-// 3. деструктор
